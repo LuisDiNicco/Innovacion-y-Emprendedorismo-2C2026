@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#00873E">
 <title>Desafío Bienestar · UNLaM</title>
-<meta name="description" content="Desafío Bienestar: pausas cortas y jornadas colectivas para el bienestar de estudiantes universitarios. Salud mental, vínculos y campus más verde. MVP Grupo 7 · UNLaM.">
+<meta name="description" content="Desafío Bienestar: pausas cortas y jornadas colectivas para el bienestar de estudiantes universitarios. Bienestar, vínculos y campus más verde. MVP Grupo 7 · UNLaM.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="styles-v2.css">
 <link rel="stylesheet" href="styles-v3.css">
+<link rel="stylesheet" href="styles-v4.css">
 <link rel="stylesheet" href="styles-report.css">
 </head>
 <body>
@@ -21,9 +22,9 @@
   <!-- ================= IZQUIERDA: qué es ================= -->
   <aside class="side side-l">
     <div class="mono kicker">La app de bienestar para estudiantes universitarios</div>
-    <div class="brand-row"><h1 class="brand">Desafío<br>Bienestar<span>.</span></h1><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9m0 0c-4.2 0-6.5-2.8-6.5-7.5C9.7 4.5 12 7.3 12 12Zm0 3c3.3 0 5.5-2.2 5.5-5.8-3.3 0-5.5 2.2-5.5 5.8Z"/></svg></span></div>
+    <div class="brand-row"><h1 class="brand">Desafío<br>Bienestar<span>.</span></h1><span class="logo-mark logo3-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#7FBF5E" transform="rotate(-42 32 52)"/><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#005A29" transform="rotate(42 32 52) scale(-1 1) translate(-64 0)"/><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z" fill="#00873E"/><path d="M32 50V18" stroke="#F3F1E6" stroke-width="1.6" stroke-linecap="round" opacity=".55"/></svg></span></div>
     <p class="tagline slogan" id="slogan" aria-live="polite">Poco tiempo, mucho impacto.</p>
-    <p class="pitch">Pausas cortas <b>entre clases</b> y <b>jornadas colectivas</b> con gente de toda la facu para desconectarte, conocer gente y dejar huella en tu universidad.</p>
+    <p class="pitch">Actividades cortas y <b>jornadas colectivas</b> con gente de toda la facu para desconectarte, conocer gente y dejar huella en tu universidad. Sumás puntos y los canjeás en <b>comercios de la zona</b>.</p>
     <div class="pillars4">
       <span><i>♥</i>Bienestar emocional</span>
       <span><i>◎</i>Conexión social</span>
@@ -37,12 +38,12 @@
     <div class="how">
       <div class="mono card-k">Cómo funciona</div>
       <ol>
-        <li><b>Elegí</b><span>una pausa, una ronda de estudio o una jornada solidaria</span></li>
+        <li><b>Elegí</b><span>una caminata, una huerta, una ronda de estudio o una jornada solidaria</span></li>
         <li><b>Andá con tu ronda</b><span>gente de tus horarios y de otras carreras</span></li>
-        <li><b>Sellá y mirá tu huella</b><span>social, ambiental y económica</span></li>
+        <li><b>Sellá y sumá puntos</b><span>mirá tu impacto y canjealos en comercios aliados</span></li>
       </ol>
     </div>
-    <div class="mono starts">Piloto 2C2026 · UNLaM · San Justo <button class="reset mono" id="resetBtn" title="Reiniciar la demo">↺ reiniciar demo</button></div>
+    <div class="mono starts">Piloto 2C2026 · UNLaM y UBA <button class="reset mono" id="resetBtn" title="Reiniciar la demo">↺ reiniciar demo</button></div>
   </aside>
 
   <!-- ================= CENTRO: el teléfono ================= -->
@@ -64,11 +65,11 @@
         <main id="view" class="view"></main>
 
         <nav class="tabbar" id="tabbar">
-          <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5V20h-5v-5.5H9V20H4z"/></svg><span>Hoy</span></button>
+          <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5V20h-5v-5.5H9V20H4z"/></svg><span>Inicio</span></button>
           <button data-tab="list"><svg viewBox="0 0 24 24"><path d="M9 4h10M9 12h10M9 20h10"/><circle cx="4.5" cy="4" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="20" r="1.2"/></svg><span>Desafíos</span></button>
           <button data-tab="stamp" class="tab-stamp" aria-label="Sellar asistencia"><span class="seal"><svg viewBox="0 0 24 24"><path d="M9 3h6v5l3 3v3H6v-3l3-3zM5 18h14M7 21h10"/></svg></span></button>
           <button data-tab="community"><svg viewBox="0 0 24 24"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M16 4.2a3.4 3.4 0 0 1 0 6.6M18 14.8c2 .6 3.2 2.4 3.5 5.2"/></svg><span>Comunidad</span></button>
-          <button data-tab="impact"><svg viewBox="0 0 24 24"><path d="M3 20h18M8 20v-6m0 0c-3 0-4.5-2-4.5-5 3 0 4.5 2 4.5 5Zm0 0c0-3 2-5 4.5-5 0 3-1.5 5-4.5 5ZM16.5 20V8.5m0 0c-2.2 0-3.5-1.6-3.5-4 2.2 0 3.5 1.6 3.5 4Zm0 2.5c2 0 3.5-1.3 3.5-3.5-2 0-3.5 1.3-3.5 3.5Z"/></svg><span>Impacto</span></button>
+          <button data-tab="impact"><svg viewBox="0 0 24 24"><path d="M3 20h18M8 20v-6m0 0c-3 0-4.5-2-4.5-5 3 0 4.5 2 4.5 5Zm0 0c0-3 2-5 4.5-5 0 3-1.5 5-4.5 5ZM16.5 20V8.5m0 0c-2.2 0-3.5-1.6-3.5-4 2.2 0 3.5 1.6 3.5 4Zm0 2.5c2 0 3.5-1.3 3.5-3.5-2 0-3.5 1.3-3.5 3.5Z"/></svg><span>Mi impacto</span></button>
         </nav>
 
         <div class="scrim" id="scrim"></div>
@@ -97,7 +98,7 @@
         <div class="mono card-k">Problema → Solución</div>
         <div class="ps">
           <div><span class="mono">Problema</span>Sobrecarga académica, actividades poco difundidas y hábitos saludables que no se sostienen.</div>
-          <div class="sol"><span class="mono">Solución</span>Pausas cortas entre clases y jornadas colectivas, avisos con día, hora y lugar, y puntos que validan la asistencia.</div>
+          <div class="sol"><span class="mono">Solución</span>Desafíos cortos y jornadas colectivas, avisos con día, hora y lugar, y puntos canjeables en comercios de la zona.</div>
         </div>
         <p class="vp">“Poco tiempo, mucho impacto.”</p>
       </section>
@@ -135,10 +136,10 @@
         <ul class="money">
           <li><b>Universidad</b><span>Licencia anual por estudiante activo</span></li>
           <li><b>Municipio</b><span>Insumos y logística</span></li>
-          <li><b>Empresas y comercios</b><span>Desafíos patrocinados (ej. maratón 5K) y beneficios para estudiantes</span></li>
+          <li><b>Comercios y empresas</b><span>Desafíos patrocinados y beneficios canjeables</span></li>
           <li><b>Obras sociales</b><span>Programas de prevención</span></li>
         </ul>
-        <button class="mono go-biz" data-jump="business">Ver números en la app →</button>
+        <a class="mono go-biz" href="#sostiene">Ver cómo se sostiene →</a>
       </section>
 
       <section class="slide">
@@ -153,10 +154,10 @@
       <section class="slide">
         <div class="mono card-k">Triple impacto</div>
         <ul class="tri-list">
-          <li><b>Social</b>Vínculos y salud mental · ODS 3 · 4</li>
+          <li><b>Social</b>Vínculos y bienestar · ODS 3 · 4</li>
           <li><b>Ambiental</b>Campus más verde · ODS 11 · 13 · 15</li>
           <li><b>Comunidad</b>Apoyo escolar y viandas en el barrio · ODS 1 · 4 · 10</li>
-          <li><b>Económico</b>Alianzas que lo financian · ODS 17</li>
+          <li><b>Económico</b>Comercios de cercanía y alianzas · ODS 8 · 17</li>
         </ul>
       </section>
 
@@ -191,7 +192,7 @@
       </div>
       <i class="tour-bar"><i id="tourBar"></i></i>
     </div>
-    <a class="scroll-cue" href="#entrega"><i></i><span><b>Ver la entrega completa</b>FODA · Mapa de empatía · Lean Canvas</span></a>
+    <a class="scroll-cue" href="#entrega"><i></i><span><b>Conocé el proyecto</b>FODA · Empatía · Lean Canvas · Fundamentos</span></a>
   </aside>
 </div>
 
@@ -200,13 +201,15 @@
 <main class="report" id="entrega">
 
   <header class="rp-intro reveal">
-    <span class="mono rp-kicker">Trabajo Final Integrador · Grupo N°7 · Innovación y Emprendedorismo · UNLaM</span>
-    <h2>La entrega</h2>
+    <span class="mono rp-kicker">Grupo N°7 · Innovación y Emprendedorismo · UNLaM</span>
+    <h2>El proyecto</h2>
     <p>Desafío 6: Salud y bienestar mental en estudiantes universitarios con apoyos de tecnologías digitales.</p>
     <nav class="rp-nav">
       <a href="#foda"><b>01</b>Análisis estratégico · FODA</a>
       <a href="#empatia"><b>02</b>Descubrimiento del cliente · Mapa de empatía</a>
       <a href="#canvas"><b>03</b>Arquitectura comercial · Modelo de negocio</a>
+      <a href="#fundamentos"><b>04</b>Marco teórico · Fundamentos</a>
+      <a href="#sostiene"><b>05</b>Modelo de ingresos · Cómo se sostiene</a>
     </nav>
   </header>
 
@@ -276,19 +279,21 @@
       <div><span class="mono">Descubrimiento del cliente</span><h2>Mapa de empatía</h2></div>
     </div>
 
-    <div class="who-grid">
+    <div class="emp-wrap">
+    <div class="emp-who">
       <article class="who-card reveal">
         <span class="mono">Usuario final</span>
         <p>El/la estudiante universitario que atraviesa estrés, ansiedad, sobrecarga de materias y falta de comprensión sobre su experiencia personal en la universidad.</p>
       </article>
       <article class="who-card payer reveal">
         <span class="mono">Cliente pagador</span>
-        <ul>
-          <li><b>Universidades y Facultades (Unidades Académicas):</b> A través de sus Secretarías de Bienestar Estudiantil o de Extensión Universitaria, que contratan la plataforma para reducir la deserción académica, fomentar la retención estudiantil y cumplir con metas institucionales de sustentabilidad en el campus. Pueden contratarla a nivel Rectorado (toda la universidad) o por Facultad específica.</li>
-          <li><b>Municipalidades y Organismos del Estado (Local, Provincial o Nacional):</b> A través de áreas de Juventud, Salud Comunitaria o Ambiente, que financian o licitan la solución como herramienta de política pública para promover espacios verdes urbanos, participación ciudadana juvenil y salud mental comunitaria.</li>
-          <li><b>Obras Sociales y Prepagas (especialmente las universitarias o sindicales):</b> Interesadas en financiar programas de prevención primaria y promoción de la salud, buscando reducir los índices de estrés y ansiedad estudiantil antes de que deriven en patologías que requieran atención clínica de mayor costo.</li>
-          <li><b>Organizaciones privadas:</b> Empresas vinculadas con la sostenibilidad ambiental, tecnología, alimentación saludable, movilidad sustentable o bienestar podrían financiar desafíos, aportar recursos materiales o brindar servicios mediante convenios.</li>
+        <ul class="payer-sum">
+          <li><b>Universidades</b> vía Bienestar o Extensión: retención y campus sustentable.</li>
+          <li><b>Municipios y Estado</b>: juventud, salud comunitaria y ambiente.</li>
+          <li><b>Obras sociales y prepagas</b>: prevención y promoción de la salud.</li>
+          <li><b>Empresas y comercios</b>: patrocinan desafíos y dan beneficios.</li>
         </ul>
+        <button class="mono payer-more" type="button" data-dlg="payerDlg">Ver detalle completo →</button>
       </article>
     </div>
 
@@ -348,7 +353,8 @@
       </article>
     </div>
 
-    <div class="pg-grid">
+
+    <div class="pg-col">
       <article class="pg-card pain reveal">
         <h3>¿Qué es lo que le duele?</h3>
         <ul>
@@ -373,6 +379,17 @@
         </ul>
       </article>
     </div>
+    </div>
+
+    <dialog class="rp-dlg" id="payerDlg">
+      <header><span class="mono">Mapa de empatía · Cliente pagador</span><button type="button" class="rp-dlg-x" aria-label="Cerrar">×</button></header>
+      <ul>
+          <li><b>Universidades y Facultades (Unidades Académicas):</b> A través de sus Secretarías de Bienestar Estudiantil o de Extensión Universitaria, que contratan la plataforma para reducir la deserción académica, fomentar la retención estudiantil y cumplir con metas institucionales de sustentabilidad en el campus. Pueden contratarla a nivel Rectorado (toda la universidad) o por Facultad específica.</li>
+          <li><b>Municipalidades y Organismos del Estado (Local, Provincial o Nacional):</b> A través de áreas de Juventud, Salud Comunitaria o Ambiente, que financian o licitan la solución como herramienta de política pública para promover espacios verdes urbanos, participación ciudadana juvenil y salud mental comunitaria.</li>
+          <li><b>Obras Sociales y Prepagas (especialmente las universitarias o sindicales):</b> Interesadas en financiar programas de prevención primaria y promoción de la salud, buscando reducir los índices de estrés y ansiedad estudiantil antes de que deriven en patologías que requieran atención clínica de mayor costo.</li>
+          <li><b>Organizaciones privadas:</b> Empresas vinculadas con la sostenibilidad ambiental, tecnología, alimentación saludable, movilidad sustentable o bienestar podrían financiar desafíos, aportar recursos materiales o brindar servicios mediante convenios.</li>
+        </ul>
+    </dialog>
   </section>
 
   <!-- ================= 03 · LEAN CANVAS ================= -->
@@ -387,7 +404,7 @@
         <li>Actividades universitarias poco difundidas y sin propuesta de integración.</li>
         <li>Dificultad para sostener hábitos saludables en el tiempo.</li></ul></article>
       <article class="cv sol reveal"><h3><i>4</i>Solución</h3><ul>
-        <li>Desafíos semanales cortos, compatibles con tu tiempo de cursada.</li>
+        <li>Desafíos semanales cortos y jornadas colectivas, compatibles con la cursada.</li>
         <li>Notificaciones con día, horario y lugar del desafío.</li>
         <li>Sistema de puntos que valida asistencia y progreso.</li></ul></article>
       <article class="cv met reveal"><h3><i>8</i>Métricas clave</h3><ul>
@@ -397,7 +414,7 @@
       <article class="cv pvu reveal"><h3><i>3</i>Proposición de valor única</h3>
         <p class="pvu-big">Poco tiempo, mucho impacto.</p>
         <ul>
-        <li>Pausas de 10 a 20 minutos para desconectarte, conocer gente y generar una huella positiva en TU universidad.</li>
+        <li>Actividades cortas y jornadas en grupo para desconectarte, conocer gente y generar una huella positiva en TU universidad, con puntos canjeables en comercios de la zona.</li>
         <li>La universidad puede difundir sus actividades en un solo lugar y medir la participación.</li></ul></article>
       <article class="cv vent reveal"><h3><i>9</i>Ventaja especial</h3><ul>
         <li>Equipo de la propia universidad que conocen el proceso universitario y generan identificación entre pares.</li>
@@ -416,15 +433,81 @@
         <li><b>Costos variables</b>Insumos necesarios para los desafíos</li></ul></article>
       <article class="cv ing reveal"><h3><i>6</i>Flujo de ingresos</h3><ul>
         <li><b>Universidad nacional de La Matanza (B2B):</b> aporta espacio y fondos de extensión.</li>
-        <li><b>Municipalidad (B2G):</b> Insumos y logística.</li></ul></article>
+        <li><b>Municipalidad (B2G):</b> Insumos y logística.</li>
+        <li><b>Comercios de cercanía (B2B):</b> beneficios y desafíos patrocinados.</li></ul></article>
+    </div>
+  </section>
+
+  <!-- ================= 04 · FUNDAMENTOS ================= -->
+  <section class="rp-sec" id="fundamentos">
+    <div class="rp-h reveal">
+      <span class="rp-n">04</span>
+      <div><span class="mono">Marco teórico</span><h2>Fundamentos · por qué estas actividades</h2></div>
+    </div>
+    <div class="ev-wrap">
+      <div class="ev-grid">
+        <article class="ev reveal ev-problem"><span class="mono">El problema · burnout académico</span><b>3</b><p>dimensiones del burnout en estudiantes: agotamiento, cinismo y baja eficacia académica.</p><cite>Maslach &amp; Jackson (1981) · Schaufeli et al. (2002), <i>J. of Cross-Cultural Psychology</i></cite></article>
+        <article class="ev reveal" style="--c:var(--river)"><span class="mono">Caminatas</span><b>−25%</b><p>riesgo de depresión con unas 2,5 h por semana de caminata a paso ligero.</p><cite>Pearce et al. (2022), <i>JAMA Psychiatry</i>, 79(6)</cite></article>
+        <article class="ev reveal" style="--c:var(--moss)"><span class="mono">Forestación · aire libre</span><b>143</b><p>estudios revisados: más contacto con espacios verdes, menos cortisol (marcador de estrés).</p><cite>Twohig-Bennett &amp; Jones (2018), <i>Environmental Research</i></cite></article>
+        <article class="ev reveal" style="--c:var(--soil)"><span class="mono">Huerta</span><b>22</b><p>estudios: la jardinería se asocia con menos depresión y ansiedad y más sentido de comunidad.</p><cite>Soga, Gaston &amp; Yamaura (2017), <i>Preventive Medicine Reports</i>, 5</cite></article>
+        <article class="ev reveal" style="--c:var(--indigo)"><span class="mono">Vínculos · rondas</span><b>+50%</b><p>de probabilidad de supervivencia en personas con relaciones sociales fuertes (148 estudios).</p><cite>Holt-Lunstad, Smith &amp; Layton (2010), <i>PLoS Medicine</i></cite></article>
+        <article class="ev reveal" style="--c:var(--tomato)"><span class="mono">Desconexión</span><b>30′</b><p>de redes por día durante 3 semanas redujo la soledad y la depresión en universitarios.</p><cite>Hunt et al. (2018), <i>J. of Social and Clinical Psychology</i>, 37(10)</cite></article>
+        <article class="ev reveal" style="--c:var(--clay)"><span class="mono">Solidarias · voluntariado</span><b>−22%</b><p>de mortalidad en voluntarios, con mejor bienestar y satisfacción con la vida.</p><cite>Jenkinson et al. (2013), <i>BMC Public Health</i>, 13</cite></article>
+        <article class="ev reveal ev-next"><span class="mono">Cómo lo medimos</span><b>Antes y después</b><p>Junto a Bienestar Estudiantil, con el cuestionario validado de burnout estudiantil.</p><cite>Maslach Burnout Inventory · Student Survey (MBI-SS)</cite></article>
+      </div>
+      <div class="ev-foot">
+        <article class="ev-note reveal"><span class="mono">Nuestro enfoque</span><p>Actividades <b>simples, en grupo y al aire libre</b>: lo que la evidencia asocia con más bienestar. Proponemos encuentros, no tratamientos.</p></article>
+        <article class="ev-note ev-care reveal"><span class="mono">Cómo cuidamos la salud mental</span><p>La app <b>no diagnostica ni da consejos clínicos</b>: propone actividades y deriva a Bienestar Estudiantil (o a la línea 135 en una urgencia). Respeta la Ley de Salud Mental <b>26.657</b> y la de Protección de Datos Personales <b>25.326</b>: la institución solo ve datos agregados.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 · CÓMO SE SOSTIENE ================= -->
+  <section class="rp-sec" id="sostiene">
+    <div class="rp-h reveal">
+      <span class="rp-n">05</span>
+      <div><span class="mono">Modelo de ingresos</span><h2>Cómo se sostiene</h2></div>
+    </div>
+    <div class="ss-wrap">
+      <div class="ss-left">
+        <div class="ss-flow reveal">
+          <div><span class="mono">La usa</span><b>Estudiante</b><small>Gratis. Actividades, gente, puntos.</small></div>
+          <i>→</i>
+          <div class="pay"><span class="mono">La paga</span><b>Universidad</b><small>Retención, difusión en un solo lugar y métricas.</small></div>
+        </div>
+        <div class="ss-streams">
+          <article class="ss-s reveal" style="--c:var(--unlam)"><span class="mono">B2B · núcleo</span><b>Universidades</b><p>Licencia anual por estudiante activo, vía Bienestar Estudiantil o Extensión. La UNLaM es el piloto; el producto sirve para cualquier universidad.</p></article>
+          <article class="ss-s reveal" style="--c:var(--soil)"><span class="mono">B2B · comercios de cercanía</span><b>Beneficios y desafíos patrocinados</b><p>Viveros, cafeterías, librerías y gimnasios ponen beneficios a cambio de visitas de estudiantes. Para ellos es una acción de responsabilidad social medible.</p></article>
+          <article class="ss-s reveal" style="--c:var(--moss)"><span class="mono">B2G · en especie</span><b>Municipio</b><p>Plantines, insumos y logística para las jornadas, como política pública de espacios verdes.</p></article>
+          <article class="ss-s reveal" style="--c:var(--river)"><span class="mono">B2B · expansión</span><b>Obras sociales</b><p>Programas de promoción de la salud y prevención, siempre con profesionales detrás.</p></article>
+        </div>
+      </div>
+      <div class="ss-right">
+        <article class="ss-calc reveal">
+          <span class="mono">Calculadora · licencia universidad</span>
+          <div class="calc-n"><b id="rcN">5.000</b><span>estudiantes activos</span></div>
+          <input type="range" min="1000" max="20000" step="500" value="5000" id="rcR" aria-label="Estudiantes activos">
+          <div class="calc-rows">
+            <div><span>Ingreso anual</span><b id="rcRev">US$ 15.000</b></div>
+            <div><span>Costos fijos (hosting + operación)</span><b id="rcFix">− US$ 7.440</b></div>
+            <div class="tot"><span>Margen anual</span><b id="rcMar">US$ 7.560</b></div>
+          </div>
+          <p>Licencia de US$ 3 por estudiante activo por año. Hosting US$ 120 por mes y operación US$ 6.000 por año. Los insumos los cubren el Municipio y los comercios aliados.</p>
+        </article>
+        <article class="ss-ref reveal">
+          <span class="mono">Beneficios</span>
+          <b>Tus puntos valen en el barrio</b>
+          <p>Cada actividad suma puntos que se canjean con un <b>código de 4 dígitos</b> en viveros, cafeterías, librerías y gimnasios cerca del campus. Un canje por comercio cada 15 días.</p>
+        </article>
+      </div>
     </div>
   </section>
 
   <footer class="rp-foot reveal">
-    <div class="logo-mark sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9m0 0c-4.2 0-6.5-2.8-6.5-7.5C9.7 4.5 12 7.3 12 12Zm0 3c3.3 0 5.5-2.2 5.5-5.8-3.3 0-5.5 2.2-5.5 5.8Z"/></svg></div>
+    <div class="logo-mark logo3-mark sm" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#7FBF5E" transform="rotate(-42 32 52)"/><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#005A29" transform="rotate(42 32 52) scale(-1 1) translate(-64 0)"/><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z" fill="#00873E"/><path d="M32 50V18" stroke="#F3F1E6" stroke-width="1.6" stroke-linecap="round" opacity=".55"/></svg></div>
     <div>
       <b>Desafío Bienestar</b>
-      <span>Trabajo Final Integrador · Grupo N°7 · Innovación y Emprendedorismo · UNLaM 2C2026</span>
+      <span>Grupo N°7 · Innovación y Emprendedorismo · UNLaM 2C2026</span>
     </div>
     <a href="#top" class="mono rp-top">↑ Volver a la app</a>
   </footer>
@@ -435,7 +518,7 @@
 /* slogan rotativo */
 (() => {
   const el = document.getElementById("slogan");
-  const list = ["Poco tiempo, mucho impacto.", "Tu cabeza también cursa.", "Nadie debería cursar solo.", "Entre clases, también se crece."];
+  const list = ["Poco tiempo, mucho impacto.", "Tu cabeza también cursa.", "Nadie debería cursar solo.", "Sumá puntos, cuidá tu campus."];
   let k = 0;
   setInterval(() => {
     el.classList.add("out");
@@ -463,6 +546,20 @@
 </script>
 <script src="tour.js"></script>
 <script>
+/* calculadora de la sección 05 */
+(() => {
+  const r = document.getElementById("rcR"); if (!r) return;
+  const fmt = v => "US$ " + Math.round(v).toLocaleString("es-AR");
+  const upd = () => { const n = +r.value, rev = n * 3, fix = 120 * 12 + 6000;
+    document.getElementById("rcN").textContent = n.toLocaleString("es-AR");
+    document.getElementById("rcRev").textContent = fmt(rev);
+    document.getElementById("rcFix").textContent = "− " + fmt(fix);
+    const m = document.getElementById("rcMar"); m.textContent = fmt(rev - fix); m.parentElement.classList.toggle("neg", rev - fix < 0); };
+  r.addEventListener("input", upd); upd();
+})();
+/* diálogos de la entrega */
+document.querySelectorAll("[data-dlg]").forEach(b => b.addEventListener("click", () => document.getElementById(b.dataset.dlg).showModal()));
+document.querySelectorAll(".rp-dlg").forEach(d => { d.addEventListener("click", e => { if (e.target === d || e.target.closest(".rp-dlg-x")) d.close(); }); });
 /* aparición de la entrega al scrollear */
 (() => {
   const els = document.querySelectorAll(".reveal");

@@ -17,41 +17,34 @@
   const fresh = () => { closeSheet(); trail.length = 0; };
 
   const STEPS = [
-    { k: 'Inicio', slide: 0, ms: 9000,
+    { k: 'Bienvenida', slide: 0, ms: 7000,
       t: 'Desafío Bienestar, una app para estudiantes universitarios',
-      p: 'Arranca en la UNLaM: pausas cortas entre clases y jornadas colectivas con gente de toda la facu.',
-      run: async ok => { fresh(); S.onboarded = false; S.step = -1; go('welcome');
-        await sleep(4300); if (!ok()) return; S.step = 0; go('welcome'); } },
+      p: 'Arranca en la UNLaM como piloto: actividades cortas y jornadas colectivas para desconectarte, conocer gente y cuidar tu campus.',
+      run: async ok => { fresh(); S.onboarded = false; S.step = -1; go('welcome'); } },
 
     { k: 'Registro', slide: 4, ms: 6000,
-      t: 'Entrás con tu mail de la UNLaM',
-      p: 'Con tu departamento y tu turno te arma una ronda: gente de tus horarios y de otras carreras.',
+      t: 'Entrás con tu mail y, si querés, contás qué estudiás',
+      p: 'Es opcional: sirve para mostrarte primero lo que te puede gustar. Se puede saltar.',
       run: async ok => { fresh(); S.onboarded = false; S.step = 1; go('welcome');
-        await sleep(1800); if (!ok()) return; S.turno = 'Tarde'; S.carrera = 'Ingeniería'; refresh(); } },
+        await sleep(1800); if (!ok()) return; S.carrera = 'Ingeniería'; if (!S.interests.includes('huerta')) S.interests.push('huerta'); refresh(); } },
 
-    { k: 'Tu día', slide: 1, ms: 6500,
-      t: 'Tu cursada, con los huecos ya pensados',
-      p: 'La app conoce tu horario y te propone qué hacer entre clase y clase. Poco tiempo, mucho impacto.',
-      run: async ok => { fresh(); S.onboarded = true; S.mood = null; S.filter = 'all'; go('home');
-        await sleep(1600); if (!ok()) return; scrollToSel('.myday', 90); } },
-
-    { k: 'Ánimo', slide: 3, ms: 7500,
-      t: 'Check-in de energía en 2 segundos',
-      p: 'Según cómo llegás te sugiere qué hacer. Si la semana pesa, te acerca el espacio de escucha de Bienestar.',
-      run: async ok => { fresh(); S.onboarded = true; S.mood = null; go('home');
-        await sleep(900); if (!ok()) return; scrollToSel('.mood-ask', 90);
-        await sleep(1900); if (!ok()) return; S.mood = 2; save(); refresh(); scrollToSel('.mood-reply', 90); } },
+    { k: 'Inicio', slide: 1, ms: 8000,
+      t: 'Tu semana de un vistazo',
+      p: 'El desafío de la semana, tus puntos, tu progreso y un mapa del campus con lo que pasa cerca tuyo.',
+      run: async ok => { fresh(); S.onboarded = true; S.filter = 'all'; go('home');
+        await sleep(2600); if (!ok()) return; scrollToSel('.duo', 90);
+        await sleep(2200); if (!ok()) return; scrollToSel('.nearby', 90); } },
 
     { k: 'Desafío', slide: 2, ms: 8000,
       t: 'Cada desafío: cuándo, dónde y con quién',
-      p: 'Jornadas largas o pausas cortas. Ves quién organiza, cuántos van y podés sumar a tu ronda o invitar a alguien.',
+      p: 'Jornadas largas o actividades cortas. Ves quién organiza, cuántos participan y podés ir con tu ronda o invitar a alguien.',
       run: async ok => { fresh(); S.onboarded = true; go('detail', 'fore');
-        await sleep(2600); if (!ok()) return; scrollToSel('.buddy');
+        await sleep(2600); if (!ok()) return; scrollToSel('.going');
         await sleep(2600); if (!ok()) return; scrollToSel('.triple'); } },
 
     { k: 'Sellar', slide: 6, ms: 11000,
       t: 'Sellás tu asistencia en el lugar',
-      p: 'Mantenés apretado el sello: suma puntos, registra cómo te vas y si conociste a alguien.',
+      p: 'Mantenés apretado el sello: suma puntos y registra si conociste a alguien nuevo.',
       run: async ok => {
         fresh(); S.onboarded = true;
         S.done = S.done.filter(x => x !== 'desc'); if (!S.joined.includes('desc')) S.joined.push('desc'); save();
@@ -67,39 +60,37 @@
         const done = document.querySelector('[data-afterdone]'); if (done) done.click();
       } },
 
-    { k: 'Comunidad', slide: 2, ms: 8500,
+    { k: 'Beneficios', slide: 5, ms: 8000,
+      t: 'Los puntos se canjean en comercios de la zona',
+      p: 'Viveros, cafeterías, librerías, gimnasios. Un código de 4 dígitos, un canje por comercio cada 15 días.',
+      run: async ok => { fresh(); S.onboarded = true; go('perks');
+        await sleep(2600); if (!ok()) return;
+        if (!S.codes.cafe) { S.points = Math.max(S.points, 200); S.points -= 80; S.perks.push('cafe'); S.codes.cafe = '4827'; save(); refresh(); }
+        await sleep(400); if (!ok()) return; redeemSheet('cafe'); } },
+
+    { k: 'Comunidad', slide: 3, ms: 8000,
       t: 'Nadie debería cursar solo',
-      p: 'Tu ronda, una dupla con tu mismo hueco libre, postales de otros estudiantes y círculos por interés.',
+      p: 'Tu ronda, una dupla con horarios en común, postales de otros estudiantes y círculos por interés.',
       run: async ok => { fresh(); go('community');
         await sleep(2600); if (!ok()) return; scrollToSel('.peers', 110);
         await sleep(2600); if (!ok()) return; scrollToSel('.postales', 110); } },
 
-    { k: 'Impacto', slide: 7, ms: 10000,
-      t: 'Triple impacto, medido',
-      p: 'Social: los vínculos que generaste. Ambiental: tu jardín crece con cada desafío. Económico: los aliados que lo hacen posible.',
-      run: async ok => { fresh();
-        S.impTab = 'social'; go('impact');
-        await sleep(3300); if (!ok()) return; S.impTab = 'ambiental'; go('impact');
-        await sleep(3500); if (!ok()) return; S.impTab = 'economico'; go('impact'); } },
+    { k: 'Mi impacto', slide: 7, ms: 9000,
+      t: 'Tu impacto, contado desde vos',
+      p: 'Desafíos completados, personas que conociste y lo que sumaste al campus. Y cómo se calcula cada número.',
+      run: async ok => { fresh(); S.impTab = 'yo'; go('impact');
+        await sleep(3000); if (!ok()) return; scrollToSel('.constel', 90);
+        await sleep(2800); if (!ok()) return; scrollToSel('.garden', 90); } },
 
     { k: 'Institución', slide: 4, ms: 7500,
-      t: 'La universidad, que es quien paga, mide todo',
-      p: 'Instalaciones, participación mensual y tasa de actividades realizadas. Además, energía antes y después y aportes de aliados.',
-      run: async ok => { fresh(); go('admin');
+      t: 'La universidad, que es quien paga, ve la participación',
+      p: 'Instalaciones, participación mensual y actividades realizadas. Solo datos agregados: ni nombres ni datos de salud.',
+      run: async ok => { fresh(); S.impTab = 'inst'; go('impact');
         await sleep(2800); if (!ok()) return; scrollToSel('.wbars', 120); } },
 
-    { k: 'Ingresos', slide: 5, ms: 9000,
-      t: 'Cómo genera ingresos',
-      p: 'Licencia anual por estudiante activo, insumos del Municipio, desafíos patrocinados y programas con obras sociales.',
-      run: async ok => { fresh(); S.calcN = 5000; go('business');
-        await sleep(2400); if (!ok()) return; scrollToSel('.calc', 80);
-        await sleep(1400);
-        const r = document.getElementById('calcR');
-        for (let n = 5000; n <= 15000 && r; n += 500) { if (!ok()) return; r.value = n; r.dispatchEvent(new Event('input', { bubbles: true })); await sleep(90); } } },
-
-    { k: 'Pausa', slide: 8, ms: 6500,
-      t: 'Y si estás saturado: 10 minutos sin pantalla',
-      p: 'Una pausa guiada para respirar y volver. La app no reemplaza a un profesional: te acerca a otros.',
+    { k: 'Pausa', slide: 8, ms: 7000,
+      t: 'Y cuando querés frenar: una pausa sin pantalla',
+      p: 'Un círculo que acompaña tu respiración, de 3 a 10 minutos. No reemplaza a un profesional: si lo necesitás, la app te acerca a Bienestar.',
       run: async ok => { fresh(); go('pause'); } },
   ];
 

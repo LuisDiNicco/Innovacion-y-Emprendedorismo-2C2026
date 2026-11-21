@@ -3,7 +3,7 @@
    + localStorage para que la demo recuerde tu progreso.
 
    Triple impacto (Modelo Sistema B):
-   · Social    → vínculos entre estudiantes, salud mental, pertenencia
+   · Social    → vínculos entre estudiantes, bienestar, pertenencia
    · Ambiental → forestación, huertas, reciclaje, espacios verdes
    · Económico → alianzas UNLaM (B2B) + Municipio (B2G) + empresas
    ========================================================= */
@@ -36,8 +36,16 @@ const P = {
   gift:  'M4 10h16v10H4ZM3 7h18v3H3ZM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7Zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7Z',
   shop:  'M4 9 5.5 4h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6',
   soli:  'M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10ZM9 12h6M12 9v6',
+  cup:   'M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5ZM16 10.5h1.5a2.5 2.5 0 0 1 0 5H16M8.5 3.5v2.5M12.5 3.5v2.5',
+  gym:   'M6.5 8v8M17.5 8v8M3.5 10v4M20.5 10v4M6.5 12h11',
   pares: 'M3.5 5.5c3-1.2 5.8-1 8.5 1 2.7-2 5.5-2.2 8.5-1v13c-3-1.2-5.8-1-8.5 1-2.7-2-5.5-2.2-8.5-1ZM12 6.5v13',
 };
+const LOGO = (cls = '') => `<svg class="logo3 ${cls}" viewBox="0 0 64 64" aria-hidden="true">
+  <path class="lf l1" d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#7FBF5E" transform="rotate(-42 32 52)"/>
+  <path class="lf l3" d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#005A29" transform="rotate(42 32 52) scale(-1 1) translate(-64 0)"/>
+  <path class="lf l2" d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z" fill="#00873E"/>
+  <path class="vein" d="M32 50V18" stroke="#F3F1E6" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+</svg>`;
 const ic = (k, cls = 'ic') => `<svg class="${cls}" viewBox="0 0 24 24"><path d="${P[k]}"/></svg>`;
 
 /* ---------- datos mock ---------- */
@@ -134,11 +142,7 @@ const HISTORY = [
 ];
 
 const MOODS = [
-  { k: 1, l: 'Agotado',  say: 'Semana pesada. Hoy no hace falta rendir en nada más: probá una pausa corta o algo tranqui con tu ronda.', rec: ['desc', 'cam'] },
-  { k: 2, l: 'Cargado',  say: 'Mucha cabeza puesta en la cursada. Una caminata entre clases baja un cambio, y estudiar en grupo alivia.', rec: ['cam', 'estudio'] },
-  { k: 3, l: 'Normal',   say: 'Día común. Buen momento para sumarte a algo y conocer a alguien nuevo.', rec: ['estudio', 'viandas'] },
-  { k: 4, l: 'Bien',     say: 'Arriba. ¿Le contagiás las ganas a alguien? Hay lugar en la cocina solidaria.', rec: ['viandas', 'apoyo'] },
-  { k: 5, l: 'Con pila', say: 'Con toda. El sábado se planta: llevá a tu ronda.', rec: ['fore', 'huerta'] },
+  { k: 1, l: 'Agotado' }, { k: 2, l: 'Cargado' }, { k: 3, l: 'Normal' }, { k: 4, l: 'Bien' }, { k: 5, l: 'Con pila' },
 ];
 
 const PEERS = [
@@ -175,27 +179,33 @@ const CIRCLES = [
 ];
 
 const PERKS = [
-  { id: 'vivero',  n: 'Vivero Las Talas',    where: 'San Justo · a 4 cuadras',  what: '15% en plantines y macetas', cost: 150 },
-  { id: 'fotoc',   n: 'Fotocopiadora del CEI', where: 'Planta baja · Ingeniería', what: '50 copias sin cargo',         cost: 120 },
-  { id: 'cafe',    n: 'Buffet del Polideportivo', where: 'Campus UNLaM',          what: 'Café con medialuna',          cost: 80 },
-  { id: 'bici',    n: 'Bicicletería La Rueda', where: 'Av. Illia · San Justo',    what: 'Service de bici a mitad de precio', cost: 300 },
+  { id: 'vivero', n: 'Vivero Las Talas',        cat: 'Vivero',      ic: 'fore',  c: 'var(--moss)',   where: 'San Justo · a 4 cuadras',   what: '15% en plantines y macetas', cost: 150 },
+  { id: 'cafe',   n: 'Café de la Puerta 1',     cat: 'Cafetería',   ic: 'cup',   c: 'var(--soil)',   where: 'Frente al campus',          what: 'Café con medialuna',          cost: 80 },
+  { id: 'libro',  n: 'Librería Illia',          cat: 'Librería',    ic: 'pares', c: 'var(--indigo)', where: 'Av. Illia · San Justo',     what: '10% en libros y útiles',      cost: 120 },
+  { id: 'gym',    n: 'Gimnasio Barrio Activo',  cat: 'Gimnasio',    ic: 'gym',   c: 'var(--river)',  where: 'San Justo centro',          what: 'Una semana libre',            cost: 300 },
+  { id: 'fotoc',  n: 'Fotocopiadora del CEI',   cat: 'Campus',      ic: 'shop',  c: 'var(--teal)',   where: 'Planta baja · Ingeniería',  what: '50 copias sin cargo',         cost: 120 },
+  { id: 'bici',   n: 'Bicicletería La Rueda',   cat: 'Movilidad',   ic: 'cam',   c: 'var(--clay)',   where: 'Av. Illia · San Justo',     what: 'Service de bici a mitad de precio', cost: 300 },
 ];
+/* posición de cada desafío en el mapita del campus (% x, % y) */
+const PINS = { huerta: [20, 30], desc: [52, 46], estudio: [64, 22], cam: [40, 76], rec: [74, 74], fore: [88, 40] };
+/* filtros del listado, como en el wireframe */
+const GROUPS = { nat: ['fore', 'huerta', 'rec'], bien: ['desc', 'cam'], social: ['soli', 'pares'] };
 
 const FACES = [['MB', '#F3C13A'], ['AG', '#E3EADC'], ['FS', '#F1C9B9'], ['IA', '#B9DCC2'], ['PV', '#C9DDE6']];
 const faces = n => FACES.slice(0, n).map(([t, b]) => `<span style="background:${b}">${t}</span>`).join('');
 const rondaFaces = () => RONDA.map(p => `<span style="background:${p.bg}">${p.ini}</span>`).join('');
 
 /* ---------- estado ---------- */
-const DEFAULT = { onboarded: false, name: 'Lu', time: 15, interests: ['fore', 'desc'], carrera: 'Ingeniería', turno: 'Tarde', points: 340,
+const DEFAULT = { uni: 'unlam', onboarded: false, name: 'Lu', pauseMin: 5, interests: ['fore', 'desc'], carrera: 'Ingeniería', turno: 'Tarde', points: 340,
                   joined: ['desc'], done: [], pauses: 0, filter: 'all', mood: null, after: [],
-                  met: 0, buddies: [], circles: ['mate'], perks: [], q: '', hugs: [], posts: [], impTab: 'social', withRonda: [] };
+                  met: 0, buddies: [], circles: ['mate'], perks: [], q: '', hugs: [], posts: [], impTab: 'yo', codes: {}, withRonda: [] };
 let S = load();
-function load() { try { return { ...DEFAULT, ...JSON.parse(localStorage.getItem('brote2') || '{}') }; } catch { return structuredClone(DEFAULT); } }
-function save() { try { localStorage.setItem('brote2', JSON.stringify(S)); } catch {} }
+function load() { try { return { ...DEFAULT, ...JSON.parse(localStorage.getItem('desafio-bienestar') || '{}') }; } catch { return structuredClone(DEFAULT); } }
+function save() { try { localStorage.setItem('desafio-bienestar', JSON.stringify(S)); } catch {} }
 const isJoined = id => S.joined.includes(id);
 const isDone = id => S.done.includes(id);
 
-const LEVELS = [['Semilla', 0], ['Brote', 250], ['Plantín', 500], ['Árbol', 1000]];
+const LEVELS = [['Semilla', 0], ['Raíz', 250], ['Plantín', 500], ['Árbol', 1000]];
 function level() {
   let i = LEVELS.findLastIndex(([, p]) => S.points >= p);
   const next = LEVELS[i + 1];
@@ -214,23 +224,65 @@ function impact() {
   };
 }
 
+/* ---------- universidades: la misma app, configurada para cada una ----------
+   El contenido se escribe una vez (base UNLaM) y cada universidad
+   reemplaza nombres, lugares, mail y color. Sumar otra = sumar un bloque acá. */
+const UNIS = {
+  unlam: { label: 'UNLa&#77;', sub: 'La Matanza', color: '#00873E', short: 'UNLaM', full: 'Universidad Nacional de La Matanza', campus: 'San Justo', mail: '@alumno.unlam.edu.ar',
+           deps: ['Ingeniería', 'Económicas', 'Humanidades', 'Derecho', 'Salud', 'Otra'], rep: [] },
+  fiuba: { label: 'UBA', sub: 'Ingeniería', color: '#1F5FA8', short: 'FIUBA', full: 'Facultad de Ingeniería · UBA', campus: 'Paseo Colón', mail: '@fi.uba.ar',
+           deps: ['Informática', 'Civil', 'Industrial', 'Química', 'Electrónica', 'Otra'],
+           rep: [
+             ['@alumno.unlam.edu.ar', '@fi.uba.ar'],
+             ['Municipio de La Matanza', 'Ciudad de Buenos Aires'],
+             ['Salida Puerta 2 · Florencio Varela 1903', 'Salida principal · Av. Paseo Colón 850'],
+             ['Pulmón verde, frente a la Biblioteca', 'Parque Lezama, a 4 cuadras'],
+             ['Pulmón verde central del campus', 'Parque Lezama'],
+             ['Huerta del Dto. de Ingeniería', 'Terraza verde de Paseo Colón'],
+             ['Huerta del Dto. Ingeniería', 'Terraza verde de Paseo Colón'],
+             ['Parque detrás del Polideportivo', 'Reserva Ecológica Costanera Sur'],
+             ['Hall del Edificio de Ingeniería', 'Hall central de Paseo Colón'],
+             ['Centro comunitario de San Justo', 'Centro comunitario de La Boca'],
+             ['Largada: Puerta 1', 'Largada: Paseo Colón 850'],
+             ['Café de la Puerta 1', 'Café Paseo Colón'],
+             ['Fotocopiadora del CEI', 'Fotocopiadora del CEIT'],
+             ['Planta baja · Ingeniería', 'Subsuelo · Paseo Colón'],
+             ['Vivero Las Talas', 'Vivero Lezama'],
+             ['Librería Illia', 'Librería San Juan'],
+             ['Av. Illia', 'Av. San Juan'],
+             ['DIIT', 'FIUBA'],
+             ['Lic. en Nutrición', 'Ing. Química'],
+             ['de Nutrición', 'de Química'],
+             ['Comunicación Social', 'Ing. Civil'],
+             ['San Justo', 'San Telmo'],
+             ['UNLaM', 'FIUBA'], ['UNLAM', 'FIUBA'],
+           ] },
+};
+const U = () => UNIS[S.uni] || UNIS.unlam;
+const T = html => U().rep.reduce((h, [a, b]) => h.split(a).join(b), html);
+function applyUni() {
+  $('#screen').dataset.uni = S.uni || 'unlam';
+  const push = $('#push'); if (push) { push.dataset.base ??= push.innerHTML; push.innerHTML = T(push.dataset.base); }
+  document.querySelectorAll('[data-setuni]').forEach(b => b.classList.toggle('on', b.dataset.setuni === (S.uni || 'unlam')));
+}
+
 /* ---------- router ---------- */
 const $ = s => document.querySelector(s);
 const view = $('#view');
 let current = { name: null, param: null };
 const trail = [];
-const SUB = ['detail', 'passport', 'admin', 'business'];   // pantallas con "volver"
+const SUB = ['detail', 'passport', 'perks', 'pause'];   // pantallas con "volver"
 
 function go(name, param = null, { back = false, still = false } = {}) {
   if (!back && !still && current.name && SUB.includes(name) && current.name !== name) trail.push([current.name, current.param]);
   const render = () => {
     view.className = 'view' + (name === 'detail' ? ' detail' : '') + (name === 'welcome' ? ' full' : '') + (still ? ' still' : '');
-    view.innerHTML = VIEWS[name](param);
+    view.innerHTML = T(VIEWS[name](param));
     if (!still) view.scrollTop = 0;
     current = { name, param };
     document.querySelectorAll('.tabbar [data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
-    $('#screen').classList.toggle('dark', name === 'welcome' && (S.step === undefined || S.step === null || S.step === -1));
-    $('#tabbar').classList.toggle('hide', ['welcome', 'pause', 'admin', 'business', 'detail'].includes(name));
+    $('#screen').classList.toggle('dark', name === 'welcome' && S.step !== 1);
+    $('#tabbar').classList.toggle('hide', ['welcome', 'pause', 'detail'].includes(name));
     document.querySelectorAll('[data-jump]').forEach(b => b.classList.toggle('on', b.dataset.jump === name));
     afterRender(name);
   };
@@ -248,7 +300,7 @@ const backBtn = (light) => `<button class="back${light ? '' : ' on-paper'}" data
 
 function tag(c, i) {
   const t = TYPES[c.type];
-  const fits = !c.long && c.mins <= S.time;
+  const fits = !c.long && S.interests.includes(c.type);
   const st = isDone(c.id) ? ' done' : isJoined(c.id) ? ' joined' : '';
   const badge = isDone(c.id) ? '<span class="state done">Sellado</span>' : isJoined(c.id) ? '<span class="state">Anotado</span>' : '';
   const ronda = c.ronda ? `<span class="t-ronda"><span class="faces sm">${RONDA.slice(1, 1 + Math.min(c.ronda, 3)).map(p => `<span style="background:${p.bg}">${p.ini}</span>`).join('')}</span>${c.ronda} de tu ronda</span>` : '';
@@ -258,7 +310,7 @@ function tag(c, i) {
       <div class="t-top"><span class="t-type">${t.label}${c.long ? ' · jornada' : ''}</span><span class="t-dur">${durTxt(c.mins)}</span></div>
       <h4>${c.title}</h4>
       <div class="t-when">${c.dow} ${c.time} · ${c.place.split(' · ')[0].split(',')[0]}</div>
-      <div class="t-foot">${ronda || (fits ? '<span class="t-fit">Entra en tu hueco</span>' : c.long ? `<span class="t-fit">${c.going} van</span>` : '<span></span>')}<span class="t-right">${badge}<span class="pts">+${c.pts}</span></span></div>
+      <div class="t-foot">${ronda || (fits ? '<span class="t-fit">Te puede gustar</span>' : c.long ? `<span class="t-fit">${c.going} van</span>` : '<span></span>')}<span class="t-right">${badge}<span class="pts">+${c.pts}</span></span></div>
       ${c.sponsor ? `<div class="spons mono">con el apoyo de ${c.sponsor}</div>` : ''}
     </div>
   </button>`;
@@ -304,119 +356,62 @@ const odsChip = n => `<span class="ods" style="--oc:${ODS[n][1]}"><b>${n}</b>${O
 const VIEWS = {
 
   welcome() {
-    const step = S.step === undefined || S.step === null ? -1 : S.step;
+    const step = S.step === 1 ? 1 : -1;
     if (step === -1) {
-      const word = (w, base) => [...w].map((ch, k) => `<span style="--i:${base + k}">${ch}</span>`).join('');
-      const leaves = Array.from({ length: 9 }, (_, k) =>
-        `<span style="left:${(k * 37 + 8) % 100}%;--dx:${(k % 2 ? 1 : -1) * (18 + k * 5)}px;animation-duration:${10 + (k % 4) * 3}s;animation-delay:-${k * 1.7}s"></span>`).join('');
-      const pillar = (icon, label, k) => `<span class="orb-i" style="--k:${k}" title="${label}">${icon}</span>`;
-      return `<div class="splash">
-        <div class="sp-ht halftone"></div>
-        <div class="sp-leaves">${leaves}</div>
-        <div class="sp-center">
-          <div class="sp-rings"><i></i><i></i><i></i></div>
-          <div class="sp-orbit">
-            ${pillar(ic('heart'), 'Bienestar emocional', 0)}
-            ${pillar(ic('people'), 'Conexión social', 1)}
-            ${pillar(ic('fore'), 'Sostenibilidad', 2)}
-            ${pillar(ic('build'), 'Comunidad universitaria', 3)}
-          </div>
-          <div class="sp-logo">
-            <svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path class="sp-stem" d="M32 54V30" stroke="#005A29" stroke-width="3.4"/>
-              <path class="sp-leaf l1" d="M32 34c-9 0-14-6-14-16 9 0 14 6 14 16Z" fill="#00873E"/>
-              <path class="sp-leaf l2" d="M32 40c7.5 0 12-5 12-13-7.5 0-12 5-12 13Z" fill="#7FBF5E"/>
-              <path class="sp-ground" d="M18 54h28" stroke="#005A29" stroke-width="3.4"/>
-            </svg>
+      const u = U();
+      return `<div class="splash3">
+        <div class="s3-art">
+          <div class="ht halftone"></div>
+          <div class="s3-stack">
+            <div class="s2-tag t1" style="--c:var(--river)">${ic('cam')}<b>Caminata</b></div>
+            <div class="s2-tag t2" style="--c:var(--soil)">${ic('huerta')}<b>Huerta</b></div>
+            <div class="s3-ticket">
+              <div class="s3-logo">${LOGO()}</div>
+              <b>Desafío<br>Bienestar</b>
+              <div class="s2-perf"></div>
+              <div class="s2-row mono"><span>${u.short}</span><span>2C2026</span></div>
+            </div>
+            <div class="s2-stamp">${stampSVG('fore', 'POCO TIEMPO · MUCHO IMPACTO · ')}</div>
           </div>
         </div>
-        <div class="sp-text">
-          <h1 class="sp-name"><span class="w">${word('Desafío', 0)}</span><span class="w">${word('Bienestar', 7)}</span></h1>
-          <span class="sp-pill mono">UNLaM · 2C2026</span>
-          <p class="sp-tag">Poco tiempo, mucho impacto.</p>
-        </div>
-        <div class="sp-foot">
-          <button class="btn sp-btn" data-step="0">Comenzar <span class="arrow">${ic('arrow')}</span></button>
-          <span class="mono">Para estudiantes universitarios · de estudiantes para estudiantes</span>
+        <div class="s3-sheet">
+          <h1>Poco tiempo,<br><em>mucho</em> impacto.</h1>
+          <p>Actividades en grupo para desconectarte y conocer gente.</p>
+          <button class="btn s3-btn" data-step="1">Comenzar <span class="arrow">${ic('arrow')}</span></button>
+          <button class="link s3-login" data-start>Ya tengo cuenta</button>
         </div>
       </div>`;
     }
-
-    const prog = `<div class="ob-prog">${[0, 1, 2].map(i => `<i class="${i <= step ? 'on' : ''}"></i>`).join('')}</div>`;
-    const chip = (attr, val, on, label = val, cls = '') => `<button class="chip ${cls}${on ? ' on' : ''}" data-${attr}="${val}">${label}</button>`;
-    if (step === 0) return `<div class="welcome ob">
-      <div class="ob-body">
-        <div class="sched-art" aria-hidden="true">
-          <div class="sa-sun"></div>
-          <svg class="sa-sprout" viewBox="0 0 250 280" fill="none" stroke="#0D2B1B" stroke-width="3" stroke-linecap="round" aria-hidden="true">
-          <path class="draw" style="--len:260;--d:.9s" d="M120 268 C118 210 126 160 116 100"/>
-          <path class="pop" style="--d:1.5s;--o:100% 100%" d="M118 150 C80 150 56 126 52 86 C92 88 116 112 118 150Z" fill="#00873E" stroke="none"/>
-          <path class="pop" style="--d:1.7s;--o:0% 100%" d="M120 120 C126 84 152 62 192 60 C188 98 162 120 120 120Z" fill="#7FBF5E" stroke="none"/>
-          <path class="pop" style="--d:1.9s;--o:50% 100%" d="M116 102 C104 78 108 52 124 30 C138 54 134 80 116 102Z" fill="#005A29" stroke="none"/>
-        </svg>
-          <div class="sa-day mono">Martes · tu cursada</div>
-          <div class="sa-block cls" style="--d:.15s"><span class="mono">14:00</span><b>Análisis Matemático II</b><small>Aula 312</small></div>
-          <div class="sa-block brote" style="--d:.55s"><span class="mono">16:00</span><b>Desafío · 20′ entre clases</b><small>Mate sin pantallas con tu ronda</small><i class="sa-faces"><span style="background:#F3C13A">LM</span><span style="background:#F1C9B9">ME</span><span style="background:#C9DDE6">JU</span></i></div>
-          <div class="sa-block cls" style="--d:.95s"><span class="mono">16:20</span><b>Sistemas Operativos</b><small>Aula 105</small></div>
-        </div>
-        <div class="for-who" ${r(1)}><span class="mono">Para estudiantes universitarios</span><span class="pill">UNLaM</span></div>
-        <h1 ${r(2)}>Poco tiempo,<br><em>mucho</em> impacto.</h1>
-        <p class="lead" ${r(3)}>Pausas cortas entre clases y jornadas colectivas con gente de toda la facu para desconectarte, conocer gente y dejar huella.</p>
-      </div>
-      <div class="ob-foot" ${r(4)}>
-        <button class="btn" data-step="1">Empezar <span class="arrow">${ic('arrow')}</span></button>
-        <div class="ob-sub"><span class="mono">Entrás con tu mail @alumno.unlam.edu.ar</span><button class="link" data-go="business">Soy institución</button></div>
-      </div>
-    </div>`;
-    if (step === 1) return `<div class="welcome ob">
-      <div class="ob-top">${backBtn(false).replace('data-back', 'data-step="0"')}${prog}</div>
-      <div class="ob-body">
-        <span class="mono ob-k" ${r(0)}>Paso 1 de 2 · Contanos de vos</span>
-        <h2 class="ob-h" ${r(1)}>¿Qué estudiás y cuándo cursás?</h2>
-        <p class="ob-p" ${r(2)}>Así te armamos una ronda con gente de tus horarios.</p>
-        <div class="q" ${r(3)}><div class="mono">Departamento</div><div class="chips">${['Ingeniería', 'Económicas', 'Humanidades', 'Derecho', 'Salud'].map(c => chip('carrera', c, S.carrera === c)).join('')}</div></div>
-        <div class="q" ${r(4)}><div class="mono">Turno</div><div class="chips">${['Mañana', 'Tarde', 'Noche'].map(c => chip('turno', c, S.turno === c)).join('')}</div></div>
-      </div>
-      <div class="ob-foot"><button class="btn" data-step="2">Seguir <span class="arrow">${ic('arrow')}</span></button></div>
-    </div>`;
+    const chip = (attr, val, on, label = val) => `<button class="chip${on ? ' on' : ''}" data-${attr}="${val}">${label}</button>`;
     return `<div class="welcome ob">
-      <div class="ob-top">${backBtn(false).replace('data-back', 'data-step="1"')}${prog}</div>
+      <div class="ob-top">${backBtn(false).replace('data-back', 'data-step="-1"')}<span class="mono ob-k">Opcional · 20 segundos</span></div>
       <div class="ob-body">
-        <span class="mono ob-k" ${r(0)}>Paso 2 de 2 · Tu tiempo</span>
-        <h2 class="ob-h" ${r(1)}>¿Cuánto hueco tenés entre clases?</h2>
-        <div class="q" ${r(2)}><div class="chips">${[10, 15, 20].map(m => chip('time', m, S.time === m, m + '<small> min</small>', 'time')).join('')}</div></div>
-        <div class="q" ${r(3)}><div class="mono">¿Qué te tienta? · elegí los que quieras</div><div class="chips">${Object.entries(TYPES).map(([k, v]) => chip('int', k, S.interests.includes(k), ic(k) + v.label)).join('')}</div></div>
+        <h2 class="ob-h" ${r(1)}>Contanos un poco de vos</h2>
+        <p class="ob-p" ${r(2)}>Lo usamos para mostrarte primero lo que te puede gustar. Podés cambiarlo cuando quieras.</p>
+        <div class="q" ${r(3)}><div class="mono">¿Qué estudiás?</div><div class="chips">${U().deps.map(c => chip('carrera', c, S.carrera === c)).join('')}</div></div>
+        <div class="q" ${r(4)}><div class="mono">¿Qué te tienta? · elegí los que quieras</div><div class="chips">${Object.entries(TYPES).map(([k, v]) => chip('int', k, S.interests.includes(k), ic(k) + v.label)).join('')}</div></div>
       </div>
-      <div class="ob-foot"><button class="btn" data-start>Listo, ver mis desafíos <span class="arrow">${ic('arrow')}</span></button></div>
+      <div class="ob-foot">
+        <button class="btn" data-start>Listo, ver desafíos <span class="arrow">${ic('arrow')}</span></button>
+        <button class="link ob-skip" data-start>Saltar por ahora</button>
+      </div>
     </div>`;
   },
 
   home() {
     const f = CH.find(c => c.featured);
     const done = Math.min(5, 2 + S.done.length);
-    const week = WEEK.map(w => {
-      const dots = CH.filter(c => c.day === w.n).slice(0, 3).map(c => `<i style="background:${TYPES[c.type].c}"></i>`).join('');
-      return `<div class="day${w.n === TODAY ? ' today' : ''}${w.n < TODAY ? ' past' : ''}"><span class="d">${w.d}</span><span class="n">${w.n}</span><span class="dots">${dots}</span></div>`;
-    }).join('');
     const im = impact();
-    const m = MOODS.find(x => x.k === S.mood);
-    const recs = m ? m.rec.map(byId) : [];
-    const moodBlock = m ? `
-        <div class="mood-reply">
-          <div class="mr-top">${moodGlyph(m.k)}<div><span class="mono">Llegás ${m.l.toLowerCase()}</span><p>${m.say}</p></div>
-          <button class="link" data-mood="0">cambiar</button></div>
-          <div class="mr-recs">${recs.map(c => `<button class="mr-rec" style="--c:${TYPES[c.type].c}" data-go="detail" data-p="${c.id}">${ic(c.type)}<span><b>${c.title}</b><small>${c.dow} ${c.time} · ${durTxt(c.mins)}</small></span></button>`).join('')}</div>
-          ${m.k <= 2 ? `<button class="care" data-help>${ic('ear')}<span><b>¿Necesitás hablar con alguien?</b><small>Bienestar Estudiantil tiene espacios de escucha gratuitos.</small></span>${ic('arrow')}</button>` : ''}
-        </div>`
-      : `<div class="mood-ask"><div class="ma-h"><h3>¿Cómo llegás hoy?</h3><span class="mono">Sólo lo ves vos</span></div>${moodScale('mood', null)}</div>`;
     const upcoming = CH.filter(c => !c.featured && !c.long).sort((x, y) => x.day - y.day).slice(0, 3);
     const jornadas = CH.filter(c => c.long);
+    const ally = PERKS[0];
+    const pins = CH.filter(c => PINS[c.id]).map(c => `<button class="pin${c.featured ? ' hot' : ''}" style="--c:${TYPES[c.type].c};left:${PINS[c.id][0]}%;top:${PINS[c.id][1]}%" data-go="detail" data-p="${c.id}" title="${c.title}">${ic(c.type)}</button>`).join('');
     return `
       <div class="top" ${r(0)}><span class="mono" style="color:var(--ink-3)">Mar 17 nov · Semana 14</span>
         <span class="top-r"><button class="bell" data-bell aria-label="Avisos">${ic('bell')}<i></i></button><button class="avatar" data-go="passport">${S.name.slice(0, 2)}</button></span></div>
       <div class="greet pad" ${r(1)}>
-        <h1 class="h-display">Hola, ${S.name}.</h1>
-        <p>Tenés <b>${S.time} min libres</b> entre Análisis II y Sistemas. Esto es lo que hay para vos.</p>
+        <h1 class="h-display">¡Hola, ${S.name}!</h1>
+        <p>Qué bueno verte por acá. Esto es lo que pasa esta semana en tu facu.</p>
       </div>
 
       <div class="ticket-wrap" ${r(2)}>
@@ -424,31 +419,49 @@ const VIEWS = {
           <div class="ht halftone"></div>
           <div class="row1"><span class="mono">Desafío de la semana</span><span class="badge mono">+${f.pts} pts</span></div>
           <h3>${f.title}</h3>
+          <div class="t-facts"><span>${ic('clock')}${durTxt(f.mins)}</span><span>${ic('bell')}${f.dow} · ${f.time} hs</span><span>${ic('pin')}${f.place.split(',')[0]}</span></div>
           <div class="perf"></div>
-          <div class="meta"><span><b>${f.dow} · ${f.time} hs</b> · ${durTxt(f.mins)}</span><span class="faces">${faces(4)}</span></div>
+          <div class="meta"><span class="faces">${faces(4)}</span><span class="t-go">Ver desafío ${ic('arrow')}</span></div>
         </button>
       </div>
 
-      <div class="sec pad" ${r(3)}>${moodBlock}</div>
+      <div class="sec pad duo" ${r(3)}>
+        <button class="pts-card" data-go="perks">
+          <span class="mono">Tus puntos</span>
+          <b data-count="${S.points}">0</b>
+          <small>Canjealos en comercios de la zona ${ic('arrow')}</small>
+        </button>
+        <div class="prog-card">
+          <div class="wc-ring"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" class="bg"/><circle cx="30" cy="30" r="25" class="fg" style="--g:${done / 5}"/></svg><span>${done}<small>/5</small></span></div>
+          <span class="mono">Progreso semanal</span>
+          <small>${done >= 5 ? '¡Meta cumplida!' : 'Te faltan ' + (5 - done) + ' para tu meta'}</small>
+        </div>
+      </div>
 
       <div class="sec pad" ${r(4)}>
-        <div class="weekcard">
-          <div class="wc-h">
-            <div class="wc-ring"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" class="bg"/><circle cx="30" cy="30" r="25" class="fg" style="--g:${done / 5}"/></svg><span>${done}<small>/5</small></span></div>
-            <div><span class="mono">Tu semana</span><b>${done >= 5 ? '¡Meta cumplida!' : 'Te faltan ' + (5 - done) + ' para tu meta'}</b><small>Racha de 4 semanas</small></div>
+        <div class="nearby">
+          <div class="nb-h"><span class="mono">Cerca tuyo · Campus San Justo</span><button class="link" data-tab="list">Ver lista</button></div>
+          <div class="map campus">
+            <svg viewBox="0 0 330 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="330" height="150" fill="#E3EADC"/>
+              <path d="M0 98 C80 86 120 120 200 100 S300 74 330 84" stroke="#F3F1E6" stroke-width="12" fill="none"/>
+              <path d="M118 0 L134 150 M252 0 L238 150" stroke="#F3F1E6" stroke-width="8"/>
+              <rect x="146" y="20" width="78" height="44" rx="7" fill="#C9D8C4"/><rect x="26" y="18" width="70" height="36" rx="7" fill="#C9D8C4"/>
+              <rect x="262" y="112" width="56" height="30" rx="7" fill="#C9D8C4"/><rect x="150" y="112" width="60" height="28" rx="7" fill="#C9D8C4"/>
+              <circle cx="282" cy="34" r="22" fill="#B9DCC2"/><circle cx="58" cy="122" r="18" fill="#B9DCC2"/><circle cx="300" cy="62" r="12" fill="#B9DCC2"/>
+            </svg>
+            ${pins}
+            <span class="map-l mono">UNLaM · San Justo</span>
           </div>
-          <div class="week">${week}</div>
         </div>
       </div>
 
       <div class="sec pad" ${r(5)}>
-        <div class="myday">
-          <div class="md-h"><span class="mono">Tu martes</span><span class="mono exam">Semana de parciales</span></div>
-          <div class="md-row done"><span class="mono">14:00</span><b>Análisis Matemático II</b><small>Aula 312</small></div>
-          <button class="md-row gap" data-go="pause"><span class="mono">16:00</span><b>Pausa de 10 min sin pantalla</b><small>En tu hueco libre</small></button>
-          <div class="md-row"><span class="mono">16:20</span><b>Sistemas Operativos</b><small>Aula 105</small></div>
-          <button class="md-row gap" data-go="detail" data-p="desc"><span class="mono">18:00</span><b>Mate sin pantallas</b><small>Va tu ronda</small></button>
-        </div>
+        <button class="ally-card" data-go="perks">
+          <span class="perk-ic">${ic(ally.ic)}</span>
+          <span><span class="mono">Comercio aliado</span><b>${ally.n}</b><small>${ally.what} · ${ally.where}</small></span>
+          <span class="pill">${ally.cost} pts</span>
+        </button>
       </div>
 
       <div class="sec">
@@ -463,28 +476,31 @@ const VIEWS = {
       </div>
 
       <div class="sec">
-        <div class="sec-h pad" ${r(12)}><h2>Tu huella</h2><button class="link" data-tab="impact">Ver impacto</button></div>
-        <div class="garden mini" ${r(13)}>${garden()}</div>
+        <div class="sec-h pad" ${r(12)}><h2>Tu impacto esta semana</h2><button class="link" data-tab="impact">Ver más</button></div>
         <div class="mini-impact" ${r(13)}>
-          <div><b data-count="${im.people}">0</b><span>personas<br>nuevas</span></div>
-          <div><b data-count="${im.offline}">0</b><span>min sin<br>pantalla</span></div>
+          <div><b data-count="${done}">0</b><span>actividades<br>hechas</span></div>
+          <div><b data-count="${im.people}">0</b><span>personas<br>conectadas</span></div>
           <div><b data-count="${im.trees}">0</b><span>árboles<br>plantados</span></div>
         </div>
+      </div>
+
+      <div class="sec pad" ${r(14)}>
+        <button class="pz-card" data-go="pause">${ic('desc')}<span><b>¿Tenés 5 minutos?</b><small>Una pausa sin pantalla, a tu ritmo</small></span>${ic('arrow')}</button>
       </div>`;
   },
 
   list() {
-    const opts = [['all', 'Todos'], ['short', 'Pausas cortas'], ['long', 'Jornadas']].concat(Object.entries(TYPES).map(([k, v]) => [k, v.label]));
-    const chips = opts.map(([k, l]) => `<button class="chip${S.filter === k ? ' on' : ''}" data-filter="${k}">${P[k] ? ic(k) : ''}${l}</button>`).join('');
+    const opts = [['all', 'Todos', ''], ['nat', 'Naturaleza', 'fore'], ['bien', 'Bienestar', 'desc'], ['social', 'Social', 'soli'], ['long', 'Jornadas', 'people']];
+    const chips = opts.map(([k, l, i]) => `<button class="chip${S.filter === k ? ' on' : ''}" data-filter="${k}">${i ? ic(i) : ''}${l}</button>`).join('');
     const norm = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const q = norm(S.q || '');
-    const items = CH.filter(c => S.filter === 'all' || (S.filter === 'short' ? !c.long : S.filter === 'long' ? c.long : c.type === S.filter))
+    const items = CH.filter(c => S.filter === 'long' ? c.long : GROUPS[S.filter] ? GROUPS[S.filter].includes(c.type) : true)
       .filter(c => !q || norm(c.title + ' ' + c.place + ' ' + TYPES[c.type].label + ' ' + c.org).includes(q));
     return `
       <div class="page-h">
         <div class="eyebrow mono" ${r(0)}>Semana del 16 al 22 de noviembre</div>
         <h1 class="h-display" ${r(1)}>Desafíos</h1>
-        <p ${r(2)}>Todos en un solo lugar, con día, hora y lugar. Pausas que entran en tu hueco de ${S.time}′ y jornadas largas para hacer con gente de toda la facu.</p>
+        <p ${r(2)}>Todos en un solo lugar, con día, hora y lugar. Actividades cortas y jornadas largas para hacer con gente de toda la facu.</p>
       </div>
       <label class="search pad" ${r(3)}>${ic('search')}<input id="q" type="search" placeholder="Buscar: estudio, huerta, maratón…" value="${S.q || ''}" autocomplete="off"></label>
       <div class="filters" ${r(3)}>${chips}</div>
@@ -499,7 +515,7 @@ const VIEWS = {
       ? `<button class="btn ghost" disabled>${ic('check')} Sellado · +${c.pts} pts</button>`
       : joined
         ? `<button class="btn tomato" data-seal="${id}">${ic('seal')} Sellar asistencia</button>`
-        : `<button class="btn" data-join="${id}">Me sumo <span class="arrow">${ic('arrow')}</span></button>`;
+        : `<button class="btn" data-join="${id}">Sumarme <span class="arrow">${ic('arrow')}</span></button>`;
     const peer = PEERS.find(p => p.type === c.type);
     return `
       <div class="detail-hero" style="--c:${t.c}">
@@ -533,8 +549,8 @@ const VIEWS = {
       </div>
       <div class="detail-body">
         ${c.sponsor ? `<div class="sponsor" ${r(4)}><span class="mono">${c.long ? 'Impulsado por una empresa' : 'Desafío patrocinado'}</span><b>Con el apoyo de ${c.sponsor}</b><small>${c.sponsorTxt || 'Aporta contenedores y bolsas: el insumo no lo pagás vos ni la facultad.'}</small></div>` : ''}
-        <div class="going" ${r(4)}><span class="faces">${faces(3)}</span>
-          <p><b>${c.going + (joined ? 1 : 0)} anotados</b> de ${c.cap} lugares.<br>${c.ronda ? `${c.ronda} son de tu ronda.` : '3 cursan con vos Análisis II.'}</p></div>
+        <div class="going" ${r(4)}><span class="faces">${faces(4)}<span class="more">+${c.going + (joined ? 1 : 0) - 4}</span></span>
+          <p><b>Participantes (${c.going + (joined ? 1 : 0)})</b> de ${c.cap} lugares.<br>${c.ronda ? `${c.ronda} son de tu ronda.` : '3 cursan con vos Análisis II.'}</p></div>
 
         <div class="buddy" ${r(5)}>
           <div class="eyebrow mono">No vayas solo</div>
@@ -548,9 +564,9 @@ const VIEWS = {
         <div class="sec" ${r(7)}><div class="eyebrow mono">Qué llevar</div><ul class="bring">${c.bring.map(b => `<li>${b}</li>`).join('')}</ul></div>
         <div class="triple" ${r(8)}>
           <div class="eyebrow mono">Lo que genera este desafío</div>
-          <div class="tri"><span class="tri-k">Social</span><p>Conocés a ${Math.max(2, Math.round(c.going / 4))} personas nuevas en promedio ${c.long ? 'y trabajás en equipo con gente de otras carreras.' : 'y cortás ' + c.mins + '′ la cursada.'}</p></div>
+          <div class="tri"><span class="tri-k">Social</span><p>Conocés a ${Math.max(2, Math.round(c.going / 4))} personas nuevas en promedio ${c.long ? 'y trabajás en equipo con gente de otras carreras.' : 'y cortás ' + c.mins + '′ la rutina.'}</p></div>
           <div class="tri"><span class="tri-k">${['soli', 'pares', 'desc'].includes(c.type) ? 'Comunidad' : 'Ambiental'}</span><p><b>${c.yieldN}</b> ${c.yieldT}</p></div>
-          <div class="tri"><span class="tri-k">Económico</span><p>Insumos y logística: ${c.org.includes('Municipio') ? 'Municipio de La Matanza' : 'UNLaM · fondos de extensión'}.</p></div>
+          <div class="tri"><span class="tri-k">Lo hacen posible</span><p>Insumos y logística: ${c.org.includes('Municipio') ? 'Municipio de La Matanza' : 'UNLaM · fondos de extensión'}.</p></div>
         </div>
       </div>
       <div class="cta-bar" ${r(9)}>${cta}</div>`;
@@ -623,101 +639,101 @@ const VIEWS = {
       </div>
 
       <div class="sec pad" ${r(15)}>
-        <button class="care" data-help>${ic('ear')}<span><b>Espacio de escucha</b><small>Si la cursada te está pasando por arriba, no estás solo. Hablá con Bienestar.</small></span>${ic('arrow')}</button>
+        <button class="care" data-help>${ic('ear')}<span><b>Espacio de escucha</b><small>Si necesitás hablar con alguien, Bienestar Estudiantil tiene espacios de escucha.</small></span>${ic('arrow')}</button>
       </div>`;
   },
 
   impact() {
-    const im = impact(), lv = level(), tab = S.impTab;
-    const seg = [['social', 'Social'], ['ambiental', 'Ambiental'], ['economico', 'Económico']]
-      .map(([k, l]) => `<button class="${tab === k ? 'on' : ''}" data-imp="${k}">${l}</button>`).join('');
-    const odsBy = { social: [3, 4], ambiental: [11, 13, 15, 12], economico: [17, 4] };
-    let body = '';
-    if (tab === 'social') {
-      const after = S.after.length ? S.after : [4, 4, 3, 5];
-      const avgA = (after.reduce((a, b) => a + b, 0) / after.length);
-      const depts = [['Ingeniería', 412, true], ['Económicas', 356], ['Humanidades', 228], ['Derecho', 174], ['Salud', 114]];
-      body = `
-        <div class="constel" ${r(5)}>${constellation(im.people)}</div>
-        <div class="sec stats">
-          <div class="stat" style="--c:var(--unlam)" ${r(6)}>${ic('people')}<b data-count="${im.people}">0</b><span>personas nuevas que conociste</span></div>
-          <div class="stat" style="--c:var(--river)" ${r(7)}>${ic('chat')}<b data-count="${im.encounters}">0</b><span>encuentros cara a cara</span></div>
-          <div class="stat" style="--c:var(--tomato)" ${r(8)}>${ic('desc')}<b data-count="${im.offline}">0</b><span>minutos lejos de la pantalla</span></div>
-          <div class="stat" style="--c:var(--clay)" ${r(9)}>${ic('soli')}<b>6<small> h</small></b><span>de voluntariado en el barrio</span></div>
+    const im = impact(), lv = level(), tab = S.impTab === 'inst' ? 'inst' : 'yo';
+    const seg = `<div class="seg pad" ${r(2)}><div><button class="${tab === 'yo' ? 'on' : ''}" data-imp="yo">Mi impacto</button><button class="${tab === 'inst' ? 'on' : ''}" data-imp="inst">Vista institución</button></div></div>`;
+    if (tab === 'inst') {
+      const weeks = [22, 27, 31, 26, 34, 37, 41], max = 50;
+      return `
+      <div class="page-h">
+        <div class="eyebrow mono" ${r(0)}>Lo que ve la universidad</div>
+        <h1 class="h-display" ${r(1)}>Vista institución</h1>
+      </div>
+      ${seg}
+      <p class="inst-sub pad" ${r(3)}>UNLaM · Bienestar Estudiantil · piloto 2C2026</p>
+      <div class="kpis pad">
+        <div class="kpi" ${r(3)}><span class="mono">Instalaciones nuevas</span><b data-count="312">0</b><small>este mes · <em>+18%</em></small></div>
+        <div class="kpi" ${r(4)}><span class="mono">Participación mensual</span><b>41%</b><small>participantes / estudiantes con la app</small></div>
+        <div class="kpi wide" ${r(5)}><span class="mono">Tasa de actividades realizadas</span><div class="kpi-r"><b>87%</b><small>26 realizadas de 30 planificadas</small></div><div class="track paper"><i data-pct=".87"></i></div></div>
+      </div>
+      <div class="sec pad" ${r(6)}>
+        <div class="panel">
+          <span class="mono">Participación semanal (%)</span>
+          <div class="wbars">${weeks.map((v, i) => `<div class="wb${i === weeks.length - 1 ? ' now' : ''}"><i style="--h:${(v / max) * 100}%"></i><span>${v}</span><small>S${8 + i}</small></div>`).join('')}</div>
         </div>
-        <div class="sec pad" ${r(10)}>
-          <div class="beforeafter">
-            <span class="mono">Tu energía · antes y después de cada desafío</span>
-            <div class="ba-row"><span>Llegás</span><div class="ba-t"><i style="--w:${(2.4 / 5) * 100}%"></i></div><b>2,4</b></div>
-            <div class="ba-row after"><span>Te vas</span><div class="ba-t"><i style="--w:${(avgA / 5) * 100}%"></i></div><b>${avgA.toFixed(1).replace('.', ',')}</b></div>
-            <p>Lo registrás con un toque al sellar. Es privado: Bienestar sólo ve promedios anónimos.</p>
-          </div>
+      </div>
+      <div class="sec pad" ${r(7)}>
+        <div class="panel">
+          <span class="mono">Aportes de aliados este cuatrimestre</span>
+          <div class="arow"><b>Municipio de La Matanza</b><span>120 plantines · 3 jornadas con logística</span></div>
+          <div class="arow"><b>UNLaM · Extensión</b><span>Espacios del campus · fondos de extensión</span></div>
+          <div class="arow"><b>Comercios de la zona</b><span>${PERKS.length} beneficios activos · 214 canjes</span></div>
         </div>
-        <div class="sec pad" ${r(11)}>
-          <div class="collective">
-            <span class="mono">Toda la UNLaM · encuentros este cuatri</span>
-            <div class="big" data-count="1284">0</div>
-            <p>estudiantes se encontraron en algún desafío. <b>38%</b> conoció a alguien de otra carrera.</p>
-            <div class="bars">${depts.map(([n, v, me]) => `<div class="bar${me ? ' me' : ''}"><span>${n}</span><span class="t"><i data-pct="${v / 412}"></i></span><span class="v">${v}</span></div>`).join('')}</div>
-          </div>
-        </div>`;
-    } else if (tab === 'ambiental') {
-      body = `
-        <div class="garden" ${r(5)}>${garden()}</div>
-        <div class="sec stats">
-          <div class="stat" style="--c:var(--moss)" ${r(6)}>${ic('fore')}<b data-count="${im.trees}">0</b><span>árboles nativos plantados</span></div>
-          <div class="stat" style="--c:var(--teal)" ${r(7)}>${ic('rec')}<b>${im.kg}<small> kg</small></b><span>de residuos recuperados</span></div>
-          <div class="stat" style="--c:var(--soil)" ${r(8)}>${ic('huerta')}<b data-count="${im.plants}">0</b><span>plantines en la huerta</span></div>
-          <div class="stat" style="--c:var(--river)" ${r(9)}>${ic('cam')}<b>25<small> kg</small></b><span>de CO₂ evitados por los árboles</span></div>
-        </div>
-        <div class="sec pad" ${r(10)}>
-          <div class="collective">
-            <span class="mono">Meta colectiva del cuatrimestre</span>
-            <div class="big">312 <small>/ 400 árboles</small></div>
-            <p>Si la UNLaM llega a 400, el <b>Municipio de La Matanza</b> suma un corredor de nativos en el campus.</p>
-            <div class="track paper"><i data-pct="${312 / 400}"></i></div>
-          </div>
-        </div>`;
-    } else {
-      body = `
-        <div class="sec pad" ${r(5)}>
-          <div class="allies">
-            <div class="ally"><span class="ally-ic">${ic('build')}</span><div><span class="mono">B2B · cliente pagador</span><b>UNLaM · Bienestar Estudiantil y Extensión</b><small>Aporta espacios, fondos de extensión y difunde sus actividades en un solo lugar.</small></div></div>
-            <div class="ally"><span class="ally-ic">${ic('fore')}</span><div><span class="mono">B2G · aliado</span><b>Municipio de La Matanza · Ambiente</b><small>Insumos y logística: plantines, guantes, contenedores, traslado del vivero.</small></div></div>
-            <div class="ally"><span class="ally-ic">${ic('coin')}</span><div><span class="mono">B2B · sponsors</span><b>Empresas de sostenibilidad y bienestar</b><small>Patrocinan desafíos o aportan materiales por convenio.</small></div></div>
-          </div>
-        </div>
-        <div class="sec stats">
-          <div class="stat" style="--c:var(--unlam)" ${r(6)}>${ic('clock')}<b>${im.hours}<small> h</small></b><span>de voluntariado acreditables en Extensión</span></div>
-          <div class="stat" style="--c:var(--soil)" ${r(7)}>${ic('huerta')}<b>120</b><span>plantines aportados por aliados</span></div>
-        </div>
-        <div class="sec pad" ${r(8)}>
-          <div class="collective">
-            <span class="mono">¿Por qué le sirve a quien paga?</span>
-            <ul class="why">
-              <li><b>Retención:</b> estudiantes que se integran abandonan menos la cursada.</li>
-              <li><b>Medición:</b> participación y tasa de realización de cada actividad, en tiempo real.</li>
-              <li><b>Prevención:</b> promoción de la salud antes de que haga falta atención clínica.</li>
-              <li><b>Sustentabilidad:</b> metas ambientales del campus con datos verificables.</li>
-            </ul>
-            <div class="two-btn"><button class="btn ghost sm" data-go="admin">${ic('build')} Panel institución</button><button class="btn sm" data-go="business">${ic('coin')} Modelo de ingresos</button></div>
-          </div>
-        </div>`;
+      </div>
+      <div class="sec pad" ${r(8)}>
+        <div class="privacy">${ic('check')}<p><b>Solo datos agregados de participación.</b> La institución no ve nombres ni cómo se siente cada estudiante, y la app no registra datos de salud (Ley 25.326 de Protección de Datos Personales).</p></div>
+      </div>
+      <div class="sec pad" ${r(9)}>
+        <button class="btn" data-publish>${ic('plus')} Publicar un desafío</button>
+        <p class="mono fine">Se notifica a los estudiantes con día, horario y lugar.</p>
+      </div>`;
     }
+    const completed = HISTORY.length + S.done.length;
+    const pct = Math.round(lv.pct * 100);
     return `
       <div class="page-h">
         <div class="eyebrow mono" ${r(0)}>Segundo cuatrimestre 2026</div>
-        <h1 class="h-display" ${r(1)}>Triple impacto</h1>
-        <p ${r(2)}>Lo que hacés con otros no queda en un rato.</p>
+        <h1 class="h-display" ${r(1)}>Mi impacto</h1>
       </div>
-      <div class="seg pad" ${r(3)}><div>${seg}</div></div>
-      <div class="ods-row pad" ${r(4)}>${odsBy[tab].map(odsChip).join('')}</div>
-      ${body}
-      <div class="sec level" ${r(16)}>
-        <div class="row"><h3>Nivel ${lv.name}</h3><span class="mono">${S.points}${lv.next ? ' / ' + lv.next[1] : ''} pts</span></div>
-        <div class="track"><i data-pct="${lv.pct}"></i></div>
-        <div class="steps">${LEVELS.map(([n], i) => `<span class="${i === lv.i ? 'now' : ''}">${n}</span>`).join('')}</div>
-      </div>`;
+      ${seg}
+      <div class="sec pad" ${r(3)}>
+        <button class="me-card" data-go="passport">
+          <span class="photo">${S.name.slice(0, 2)}</span>
+          <span><b>${S.name}</b><small>${S.carrera === 'Ingeniería' ? 'Ing. en Informática' : S.carrera} · Nivel ${lv.name}</small></span>
+          <span class="mono me-go">Perfil ${ic('arrow')}</span>
+        </button>
+      </div>
+      <div class="sec pad trio" ${r(4)}>
+        <div><b data-count="${S.points}">0</b><span>puntos</span></div>
+        <div><b data-count="${completed}">0</b><span>desafíos completados</span></div>
+        <div><b data-count="${im.people}">0</b><span>personas conectadas</span></div>
+      </div>
+
+      <div class="sec pad" ${r(5)}>
+        <div class="prog-big">
+          <div class="pb-ring"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="33" class="bg"/><circle cx="40" cy="40" r="33" class="fg" style="--g:${lv.pct}"/></svg><span>${pct}<small>%</small></span></div>
+          <div><span class="mono">Tu progreso</span><b>${lv.next ? 'Te faltan ' + (lv.next[1] - S.points) + ' pts para ' + lv.next[0] : '¡Llegaste a Árbol!'}</b>
+            <div class="steps">${LEVELS.map(([n], i) => `<span class="${i === lv.i ? 'now' : i < lv.i ? 'past' : ''}">${n}</span>`).join('')}</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h pad" ${r(6)}><h2>Tus vínculos</h2><span class="mono" style="color:var(--ink-3)">${im.people} personas</span></div>
+        <div class="constel" ${r(7)}>${constellation(im.people)}</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-h pad" ${r(8)}><h2>Impacto ambiental</h2><button class="link" data-calc>¿Cómo lo calculamos?</button></div>
+        <div class="garden" ${r(9)}>${garden()}</div>
+        <div class="sec stats">
+          <div class="stat" style="--c:var(--moss)" ${r(10)}>${ic('fore')}<b data-count="${im.trees}">0</b><span>árboles nativos plantados</span></div>
+          <div class="stat" style="--c:var(--teal)" ${r(11)}>${ic('rec')}<b>${im.kg}<small> kg</small></b><span>de residuos recuperados</span></div>
+          <div class="stat" style="--c:var(--soil)" ${r(12)}>${ic('huerta')}<b data-count="${im.plants}">0</b><span>plantines en la huerta</span></div>
+          <div class="stat" style="--c:var(--tomato)" ${r(13)}>${ic('desc')}<b data-count="${im.offline}">0</b><span>minutos sin pantalla</span></div>
+        </div>
+      </div>
+
+      <div class="sec pad" ${r(14)}>
+        <div class="supporters">
+          <span class="mono">Con el apoyo de comercios locales</span>
+          <div class="sup-row">${PERKS.slice(0, 4).map(p => `<button class="sup" data-go="perks"><span class="perk-ic">${ic(p.ic)}</span><small>${p.n}</small></button>`).join('')}</div>
+        </div>
+      </div>
+      <div class="ods-row pad" ${r(15)}>${[3, 4, 11, 13, 15].map(odsChip).join('')}</div>`;
   },
 
   passport() {
@@ -730,7 +746,7 @@ const VIEWS = {
         <span>${s.t}</span></div>`;
     return `
       <div class="page-h with-back">${backBtn(false)}
-        <div class="eyebrow mono" ${r(0)}>Documento de bienestar</div>
+        <div class="eyebrow mono" ${r(0)}>Tu perfil</div>
         <h1 class="h-display" ${r(1)}>Pasaporte Bienestar</h1>
       </div>
       <div class="passport" ${r(2)}>
@@ -741,139 +757,78 @@ const VIEWS = {
         </div>
         <div class="mrz">DBU&lt;UNLAM&lt;&lt;${S.name.toUpperCase()}&lt;&lt;&lt;&lt;2C2026&lt;&lt;${String(S.points).padStart(5, '0')}&lt;&lt;&lt;</div>
       </div>
+      <div class="sec pad" ${r(3)}>
+        <div class="prof">
+          <div class="pf-h"><h3>Tu perfil</h3><span class="mono">La app se adapta a tu facu</span></div>
+          <div class="pf-field"><span class="mono">Universidad</span>
+            <div class="pf-unis">${Object.entries(UNIS).map(([k, u]) => `<button class="pf-u${(S.uni || 'unlam') === k ? ' on' : ''}" data-setuni="${k}" style="--uc:${u.color}"><i></i><span><b>${u.label}</b><small>${u.sub}</small></span></button>`).join('')}</div>
+          </div>
+          <div class="pf-field"><span class="mono">Carrera</span>
+            <div class="chips">${U().deps.map(c => `<button class="chip sm${S.carrera === c ? ' on' : ''}" data-carrera="${c}">${c}</button>`).join('')}</div>
+          </div>
+        </div>
+      </div>
       <div class="sec"><div class="sec-h pad"><h2>Sellos</h2><span class="mono" style="color:var(--ink-3)">${all.length} de ${all.length + pending.length}</span></div>
         <div class="stamps">${all.map((s, i) => cell(s, i)).join('')}${pending.map((c, i) => cell({ type: c.type, t: c.title }, all.length + i, true)).join('')}</div>
       </div>
-      <div class="sec">
-        <div class="sec-h pad" ${r(19)}><h2>Beneficios</h2><span class="mono" style="color:var(--ink-3)">${S.points} pts</span></div>
-        <div class="perks pad" ${r(19)}>${PERKS.map(p => { const got = S.perks.includes(p.id), can = S.points >= p.cost;
-          return `<div class="perk${got ? ' got' : ''}"><span class="perk-ic">${ic('gift')}</span><div><b>${p.what}</b><small>${p.n} · ${p.where}</small></div>
-          <button class="chip sm${got ? ' on' : ''}" data-perk="${p.id}" ${!can && !got ? 'disabled' : ''}>${got ? 'Canjeado' : p.cost + ' pts'}</button></div>`; }).join('')}</div>
-        <p class="fine">Comercios de San Justo que se suman como aliados de Desafío Bienestar.</p>
-      </div>
       <div class="sec pad menu" ${r(20)}>
+        <button data-go="perks">${ic('gift')} Beneficios · ${S.points} pts</button>
         <button data-help>${ic('ear')} Espacio de escucha</button>
         <button data-copy>${ic('share')} Invitar a alguien · LU-BIEN-26</button>
-        <button data-go="admin">${ic('swap')} Ver como institución (demo)</button>
+        <button data-imp="inst">${ic('swap')} Ver como institución</button>
       </div>`;
   },
 
-  admin() {
-    const weeks = [22, 27, 31, 26, 34, 37, 41];
-    const max = 50;
-    return `
-      <div class="admin">
-        <div class="page-h with-back">${backBtn(false)}
-          <div class="eyebrow mono" ${r(0)}>Vista institución · cliente pagador</div>
-          <h1 class="h-display" ${r(1)}>Panel Bienestar</h1>
-          <p ${r(2)}>UNLaM · Secretaría de Bienestar Estudiantil · piloto 2C2026</p>
-        </div>
-        <div class="kpis pad">
-          <div class="kpi" ${r(3)}><span class="mono">Instalaciones nuevas</span><b data-count="312">0</b><small>este mes · <em>+18%</em></small></div>
-          <div class="kpi" ${r(4)}><span class="mono">Participación mensual</span><b>41%</b><small>participantes / estudiantes con la app</small></div>
-          <div class="kpi wide" ${r(5)}><span class="mono">Tasa de actividades realizadas</span><div class="kpi-r"><b>87%</b><small>26 realizadas de 30 planificadas</small></div><div class="track paper"><i data-pct=".87"></i></div></div>
-        </div>
-        <div class="sec pad" ${r(6)}>
-          <div class="panel">
-            <span class="mono">Participación semanal (%)</span>
-            <div class="wbars">${weeks.map((v, i) => `<div class="wb${i === weeks.length - 1 ? ' now' : ''}"><i style="--h:${(v / max) * 100}%"></i><span>${v}</span><small>S${8 + i}</small></div>`).join('')}</div>
-          </div>
-        </div>
-        <div class="sec pad" ${r(7)}>
-          <div class="panel">
-            <span class="mono">Energía antes → después · promedio anónimo</span>
-            <div class="ba-row"><span>Antes</span><div class="ba-t"><i style="--w:52%"></i></div><b>2,6</b></div>
-            <div class="ba-row after"><span>Después</span><div class="ba-t"><i style="--w:74%"></i></div><b>3,7</b></div>
-            <p class="note">62 estudiantes derivados desde Tutorías participaron en 2 o más desafíos.</p>
-          </div>
-        </div>
-        <div class="sec pad" ${r(8)}>
-          <div class="panel">
-            <span class="mono">Aportes de aliados este cuatrimestre</span>
-            <div class="arow"><b>Municipio de La Matanza</b><span>120 plantines · 3 jornadas con logística</span></div>
-            <div class="arow"><b>UNLaM · Extensión</b><span>Espacios del campus · fondos de extensión</span></div>
-            <div class="arow"><b>Vivero local (sponsor)</b><span>40 kits de guantes y herramientas</span></div>
-          </div>
-        </div>
-        <div class="sec pad" ${r(9)}>
-          <div class="plan">
-            <div class="plan-h"><span class="mono">Tu plan</span><span class="pill">Piloto</span></div>
-            <h3>Licencia Universidad</h3>
-            <p>Sin costo durante el piloto 2C2026. Desde 1C2027: licencia anual por estudiante activo.</p>
-            <ul><li>Desafíos ilimitados y difusión en un solo lugar</li><li>Panel de participación y retención</li><li>Reporte de impacto para Extensión y metas ambientales</li></ul>
-            <button class="link" data-go="business">Ver modelo de negocio</button>
-          </div>
-        </div>
-        <div class="sec pad" ${r(10)}>
-          <button class="btn" data-publish>${ic('plus')} Publicar un desafío</button>
-          <p class="mono fine">Se notifica a los estudiantes con día, horario y lugar.</p>
-        </div>
+  perks() {
+    const card = (p, i) => {
+      const got = S.perks.includes(p.id), can = S.points >= p.cost;
+      return `<div class="perk-t" style="--c:${p.c}" ${r(4 + i)}>
+        <div class="pt-l"><span class="perk-ic">${ic(p.ic)}</span><span class="mono">${p.cat}</span></div>
+        <div class="pt-m"><b>${p.what}</b><small>${p.n} · ${p.where}</small></div>
+        <div class="pt-r"><span class="mono">${p.cost}<small>pts</small></span>
+          <button class="chip sm${got ? ' on' : ''}" data-perk="${p.id}" ${!can && !got ? 'disabled' : ''}>${got ? 'Ver código' : 'Canjear'}</button></div>
       </div>`;
-  },
-
-  business() {
-    const n = S.calcN || 5000;
-    const rev = n * 3, fixed = 120 * 12 + 6000, margin = rev - fixed;
-    const fmt = v => 'US$ ' + Math.round(v).toLocaleString('es-AR');
-    const streams = [
-      ['build', 'B2B · núcleo', 'Universidades y facultades', 'Licencia anual por estudiante activo', 'Bienestar Estudiantil o Extensión. Compran retención, difusión en un solo lugar y métricas de participación.', 'var(--unlam)'],
-      ['fore', 'B2G · en especie', 'Municipios y organismos públicos', 'Insumos, logística y convenios', 'Juventud, Salud y Ambiente financian los desafíos al aire libre como política pública de espacios verdes.', 'var(--moss)'],
-      ['coin', 'B2B · sponsors', 'Empresas de sostenibilidad y bienestar', 'Desafíos patrocinados', 'Pagan por presentar un desafío o aportan materiales. Visibilidad con propósito ante miles de estudiantes.', 'var(--soil)'],
-      ['heart', 'B2B · expansión', 'Obras sociales y prepagas', 'Programa de prevención', 'Financian promoción de la salud mental antes de que derive en atención clínica de mayor costo.', 'var(--river)'],
-    ].map(([i, k, who, how, why, c]) => `<div class="stream" style="--c:${c}">
-        <div class="s-top"><span class="s-ic">${ic(i)}</span><span class="mono">${k}</span></div>
-        <b>${who}</b><span class="s-how">${how}</span><small>${why}</small></div>`).join('');
+    };
     return `
-      <div class="biz">
-        <div class="biz-hero">
-          ${backBtn(true)}
-          <div class="ht halftone"></div>
-          <span class="mono" ${r(0)}>Desafío Bienestar para instituciones</span>
-          <h1 class="h-display" ${r(1)}>Estudiantes que se quedan.<br><em>Campus que crece.</em></h1>
-          <p ${r(2)}>El estudiante usa Desafío Bienestar gratis. Paga la institución que necesita retenerlo, cuidarlo y medir el impacto.</p>
+      <div class="page-h with-back">${backBtn(false)}
+        <div class="eyebrow mono" ${r(0)}>Tus puntos se transforman</div>
+        <h1 class="h-display" ${r(1)}>Beneficios</h1>
+        <p ${r(2)}>Comercios y espacios cerca de la UNLaM que se suman como aliados.</p>
+      </div>
+      <div class="sec pad" ${r(3)}>
+        <div class="balance">
+          <div><span class="mono">Tenés</span><b data-count="${S.points}">0</b><span class="mono">puntos</span></div>
+          <p>Sumás al sellar tu asistencia (de 25 a 120 por desafío) y con cada pausa completa (+10).</p>
         </div>
-        <div class="sec pad" ${r(3)}>
-          <div class="who">
-            <div><span class="mono">Usuario final</span><b>Estudiante</b><small>Gratis. Pausas, gente, impacto.</small></div>
-            <span class="who-arrow">${ic('arrow')}</span>
-            <div class="payer"><span class="mono">Cliente pagador</span><b>Universidad</b><small>Retención, difusión y datos.</small></div>
-          </div>
-        </div>
-        <div class="sec">
-          <div class="sec-h pad" ${r(4)}><h2>Cómo genera ingresos</h2></div>
-          <div class="streams pad" ${r(5)}>${streams}</div>
-        </div>
-        <div class="sec pad" ${r(6)}>
-          <div class="calc">
-            <span class="mono">Calculadora · licencia universidad</span>
-            <div class="calc-n"><b id="calcN">${n.toLocaleString('es-AR')}</b><span>estudiantes activos</span></div>
-            <input type="range" min="1000" max="20000" step="500" value="${n}" id="calcR" aria-label="Estudiantes activos">
-            <div class="calc-rows">
-              <div><span>Ingreso anual</span><b id="cRev">${fmt(rev)}</b></div>
-              <div><span>Costos fijos (hosting + operación)</span><b id="cFix">− ${fmt(fixed)}</b></div>
-              <div class="tot${margin < 0 ? ' neg' : ''}"><span>Margen anual</span><b id="cMar">${fmt(margin)}</b></div>
-            </div>
-            <p class="note">Licencia: US$ 3 por estudiante activo por año. Costos fijos: hosting US$ 120/mes y operación US$ 6.000/año. Los insumos (costo variable) los cubren el Municipio y los sponsors.</p>
-          </div>
-        </div>
-        <div style="height:30px"></div>
+      </div>
+      <div class="sec pad perk-list">${PERKS.map(card).join('')}</div>
+      <p class="fine pad" ${r(12)}>Un canje por comercio cada 15 días · el código vence a los 10 minutos · lo valida el comercio desde su panel.</p>
+      <div class="sec pad" ${r(13)}>
+        <button class="propose" data-joinbiz>${ic('shop')}<span><b>¿Tenés un comercio cerca de la UNLaM?</b><small>Sumate como aliado: más estudiantes en tu local y una acción de responsabilidad social medible.</small></span></button>
       </div>`;
   },
 
   pause() {
+    const m = S.pauseMin || 5;
     const leafs = Array.from({ length: 12 }, (_, i) =>
       `<span style="left:${(i * 83) % 100}%;--dx:${(i % 2 ? 1 : -1) * (20 + i * 4)}px;animation-duration:${9 + (i % 5) * 2}s;animation-delay:-${i * 1.3}s"></span>`).join('');
     return `<div class="pause">
       <div class="leafs">${leafs}</div>
-      <div class="mono" ${r(0)}>Pausa sin pantalla · 10 minutos</div>
-      <div class="orb" ${r(1)}><i></i><i></i><i></i><span class="clock" id="clock">10:00</span></div>
-      <div ${r(2)}>
-        <h2 id="breathTxt">Inhalá despacio…</h2>
-        <p class="hint">Dejá el celu boca abajo. Si estás con alguien, contale cómo venís. Al volver sumás 10 pts.</p>
+      <div class="pz-top">${backBtn(true)}<span class="mono">Pausa sin pantalla</span></div>
+      <div class="pz-len" ${r(0)}>${[3, 5, 10].map(n => `<button class="${n === m ? 'on' : ''}" data-pmin="${n}">${n} min</button>`).join('')}</div>
+      <div class="breath" ${r(1)}>
+        <svg class="pz-ring" viewBox="0 0 220 220"><circle cx="110" cy="110" r="104" class="bg"/><circle cx="110" cy="110" r="104" class="fg" id="pzRing"/></svg>
+        <div class="b-halo"></div><div class="b-core"></div>
+        <span class="clock" id="clock">${String(m).padStart(2, '0')}:00</span>
       </div>
-      <button class="btn" data-endpause ${r(3)}>Terminar pausa</button>
+      <div class="pz-txt" ${r(2)}>
+        <h2 id="breathTxt">Inhalá</h2>
+        <p class="hint">Seguí el círculo: crece cuando tomás aire y se achica cuando lo soltás. Dejá el celu boca abajo y mirá algo verde.</p>
+      </div>
+      <button class="btn pz-end" data-endpause ${r(3)}>Terminar pausa</button>
     </div>`;
   },
+
 };
 
 /* ---------- constelación de vínculos ---------- */
@@ -973,20 +928,26 @@ function showPush() {
 }
 
 function startPause() {
-  let left = 600; const words = ['Inhalá despacio…', 'Sostené un momento…', 'Soltá el aire…', 'Mirá algo verde.'];
-  let w = 0, tick = 0;
+  const total = (S.pauseMin || 5) * 60; let left = total, t = 0;
+  const ring = $('#pzRing'), C = 2 * Math.PI * 104;
+  if (ring) { ring.style.strokeDasharray = C; ring.style.strokeDashoffset = 0; }
+  const phase = k => (k % 12) < 4 ? 'Inhalá' : (k % 12) < 6 ? 'Sostené' : 'Soltá despacio';
+  let last = 'Inhalá';
   pauseTimer = setInterval(() => {
-    left = Math.max(0, left - 1); tick++;
+    left = Math.max(0, left - 1); t++;
     const c = $('#clock'); if (!c) return clearInterval(pauseTimer);
     c.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
-    if (tick % 4 === 0) { const b = $('#breathTxt'); b.style.opacity = 0; setTimeout(() => { w = (w + 1) % words.length; b.textContent = words[w]; b.style.opacity = 1; }, 400); }
+    if (ring) ring.style.strokeDashoffset = C * (1 - left / total);
+    const ph = left ? phase(t) : 'Listo. Volvé despacio.';
+    if (ph !== last) { last = ph; const b = $('#breathTxt'); b.style.opacity = 0; setTimeout(() => { b.textContent = ph; b.style.opacity = 1; }, 300); }
+    if (!left) clearInterval(pauseTimer);
   }, 1000);
 }
 
 /* ---------- toast ---------- */
 let toastT;
 function toast(html) {
-  const t = $('#toast'); t.innerHTML = html; t.classList.add('on');
+  const t = $('#toast'); t.innerHTML = T(html); t.classList.add('on');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600);
 }
 
@@ -1007,7 +968,7 @@ function qr() {
 
 function openSheet(html) {
   const sheet = $('#sheet');
-  sheet.innerHTML = `<div class="grab"></div>${html}`;
+  sheet.innerHTML = `<div class="grab"></div>${T(html)}`;
   $('#scrim').classList.add('on'); sheet.classList.add('on'); sheet.setAttribute('aria-hidden', 'false');
 }
 function closeSheet() { $('#scrim').classList.remove('on'); const s = $('#sheet'); s.classList.remove('on'); s.setAttribute('aria-hidden', 'true'); }
@@ -1042,7 +1003,7 @@ function afterSheet(id) {
   openSheet(`
     <div class="mono" style="color:${TYPES[c.type].c};margin-bottom:8px">Sellado · +${c.pts} pts</div>
     <h2>¿Cómo te vas?</h2>
-    <p class="sub">Un toque. Es privado y nos ayuda a saber si esto te hace bien.</p>
+    <p class="sub">Un toque. Es privado: solo lo ves vos, en tu historial.</p>
     <div style="height:14px"></div>${moodScale('after', afterState.mood)}
     <div class="q"><div class="mono">¿Conociste a alguien nuevo?</div><div class="chips">${met}</div></div>
     <div class="q"><div class="mono">Dejá una postal para la comunidad (opcional)</div>
@@ -1080,6 +1041,37 @@ function proposeSheet(admin) {
     <button class="btn" data-sendprop="${admin ? 1 : 0}">${admin ? 'Publicar y notificar' : 'Enviar propuesta'}</button>`);
 }
 
+function redeemSheet(id) {
+  const p = PERKS.find(x => x.id === id);
+  const code = S.codes[id];
+  if (code) return openSheet(`
+    <div class="mono" style="color:${p.c};margin-bottom:8px">${p.cat} · ${p.n}</div>
+    <h2>${p.what}</h2>
+    <p class="sub">Mostrale este código a quien te atiende. Vence en 10 minutos.</p>
+    <div class="code4">${[...code].map(d => `<span>${d}</span>`).join('')}</div>
+    <p class="mono fine" style="text-align:center">Próximo canje en este comercio: en 15 días</p>
+    <div style="height:14px"></div><button class="btn ghost" data-close>Listo</button>`);
+  openSheet(`
+    <div class="mono" style="color:${p.c};margin-bottom:8px">${p.cat} · ${p.where}</div>
+    <h2>${p.what}</h2>
+    <p class="sub">En <b>${p.n}</b>. Se descuentan <b>${p.cost} pts</b> de tus ${S.points}. Te damos un código de 4 dígitos para mostrar en el local.</p>
+    <div style="height:18px"></div>
+    <button class="btn" data-redeem="${id}">Canjear por ${p.cost} pts</button>`);
+}
+
+function calcSheet() {
+  openSheet(`
+    <h2>¿Cómo lo calculamos?</h2>
+    <p class="sub">Contamos solo lo que se puede verificar en cada actividad.</p>
+    <div class="calc-list">
+      <div><b>Árboles y plantines</b><small>Los registra quien organiza la jornada (por ejemplo, el vivero municipal) y se reparten entre quienes sellaron asistencia.</small></div>
+      <div><b>Kg de residuos</b><small>Pesaje del punto limpio al cierre, dividido por la cantidad de asistentes.</small></div>
+      <div><b>Minutos sin pantalla</b><small>Duración de los desafíos de desconexión y de las pausas que completaste.</small></div>
+      <div><b>Personas conectadas</b><small>Lo que marcás vos al sellar: “¿Conociste a alguien nuevo?”.</small></div>
+    </div>
+    <div style="height:16px"></div><button class="btn ghost" data-close>Entendido</button>`);
+}
+
 function bindHold(el) {
   let raf, t0, p = 0, doneFlag = false; const DUR = 1100;
   const set = v => { p = v; el.style.setProperty('--p', v); };
@@ -1115,13 +1107,14 @@ document.addEventListener('click', e => {
   const d = el.dataset;
 
   if (el.id === 'push') { $('#push').classList.remove('on'); return go('detail', 'huerta'); }
-  if (el.id === 'resetBtn') { try { localStorage.removeItem('brote2'); } catch {} S = structuredClone(DEFAULT); pushShown = false; trail.length = 0; closeSheet(); return go('welcome'); }
+  if (el.id === 'resetBtn') { try { localStorage.removeItem('desafio-bienestar'); } catch {} S = { ...structuredClone(DEFAULT), uni: S.uni }; pushShown = false; trail.length = 0; closeSheet(); return go('welcome'); }
 
   if ('close' in d) closeSheet();
 
   /* onboarding */
-  if (d.time) { S.time = +d.time; save(); return refresh(); }
   if (d.int) { S.interests = S.interests.includes(d.int) ? S.interests.filter(x => x !== d.int) : [...S.interests, d.int]; save(); return refresh(); }
+  if (d.setuni) { S.uni = d.setuni; if (!U().deps.includes(S.carrera)) S.carrera = U().deps[0]; save(); applyUni(); return current.name ? refresh() : null; }
+  if ('adduni' in d) return toast(`${ic('build')} Desafío Bienestar se configura para cada universidad: escribinos`);
   if (d.step !== undefined) { S.step = +d.step; save(); return go('welcome', null, { back: +d.step === 0 }); }
   if (d.carrera) { S.carrera = d.carrera; save(); return refresh(); }
   if (d.turno) { S.turno = d.turno; save(); return refresh(); }
@@ -1171,10 +1164,19 @@ document.addEventListener('click', e => {
 
   /* campanita y beneficios */
   if ('bell' in d) { const p = $('#push'); p.classList.remove('on'); void p.offsetWidth; p.classList.add('on'); setTimeout(() => p.classList.remove('on'), 6000); return; }
-  if (d.perk) { if (!S.perks.includes(d.perk)) { const p = PERKS.find(x => x.id === d.perk); if (S.points < p.cost) return; S.points -= p.cost; S.perks.push(d.perk); save(); toast(`${ic('gift')} Canjeado · mostrá el QR en ${p.n}`); } return refresh(); }
+  if (d.perk) return redeemSheet(d.perk);
+  if (d.redeem) {
+    const p = PERKS.find(x => x.id === d.redeem); if (S.points < p.cost) return;
+    S.points -= p.cost; S.perks.push(p.id); S.codes[p.id] = String(1000 + Math.floor(Math.random() * 9000)); save();
+    if (current.name === 'perks') refresh();
+    return redeemSheet(p.id);
+  }
+  if ('joinbiz' in d) return toast(`${ic('shop')} ¡Gracias! Te contactamos para sumarte`);
+  if ('calc' in d) return calcSheet();
+  if (d.pmin) { S.pauseMin = +d.pmin; save(); return go('pause', null, { still: true }); }
 
   /* impacto */
-  if (d.imp) { S.impTab = d.imp; save(); return go('impact'); }
+  if (d.imp) { S.impTab = d.imp; save(); trail.length = 0; return go('impact', null, { still: current.name === 'impact' }); }
 
   /* propuestas / institución */
   if ('propose' in d) return proposeSheet(false);
@@ -1185,7 +1187,7 @@ document.addEventListener('click', e => {
   if ('endpause' in d) {
     S.pauses++; S.points += 10; save();
     toast(`${ic('check')} Pausa completa <b>+10 pts</b>`);
-    return go('home', null, { back: true });
+    return goBack();
   }
 });
 $('#scrim').addEventListener('click', closeSheet);
@@ -1196,12 +1198,6 @@ document.addEventListener('input', e => {
     const q = document.getElementById('q'); q.focus(); q.setSelectionRange(pos, pos);
     return;
   }
-  if (e.target.id !== 'calcR') return;
-  const n = +e.target.value; S.calcN = n; save();
-  const rev = n * 3, fixed = 120 * 12 + 6000, fmt = v => 'US$ ' + Math.round(v).toLocaleString('es-AR');
-  $('#calcN').textContent = n.toLocaleString('es-AR');
-  $('#cRev').textContent = fmt(rev); $('#cMar').textContent = fmt(rev - fixed);
-  $('#cMar').parentElement.classList.toggle('neg', rev - fixed < 0);
 });
 /* atajos del panel de presentación (desktop) */
 document.querySelectorAll('[data-jump]').forEach(b => b.addEventListener('click', () => {
@@ -1229,6 +1225,7 @@ function fitPhone() {
 addEventListener("resize", fitPhone);
 
 /* ---------- arranque ---------- */
+applyUni();
 go(S.onboarded ? 'home' : 'welcome');
 
 fitPhone();

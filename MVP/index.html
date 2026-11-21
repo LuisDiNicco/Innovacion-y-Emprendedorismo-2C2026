@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="styles-v2.css">
 <link rel="stylesheet" href="styles-v3.css">
 <link rel="stylesheet" href="styles-v4.css">
+<link rel="stylesheet" href="styles-v5.css">
 <link rel="stylesheet" href="styles-report.css">
 </head>
 <body>
@@ -34,32 +35,25 @@
     <div class="mono kicker">La app de bienestar para estudiantes universitarios</div>
     <div class="brand-row"><h1 class="brand">Desafío<br>Bienestar<span>.</span></h1><span class="logo-mark logo3-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#7FBF5E" transform="rotate(-42 32 52)"/><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#005A29" transform="rotate(42 32 52) scale(-1 1) translate(-64 0)"/><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z" fill="#00873E"/><path d="M32 50V18" stroke="#F3F1E6" stroke-width="1.6" stroke-linecap="round" opacity=".55"/></svg></span></div>
     <p class="tagline">Poco tiempo, mucho impacto.</p>
-    <p class="pitch">Actividades cortas y <b>jornadas colectivas</b> con gente de toda la facu para desconectarte, conocer gente y dejar huella en tu universidad. Sumás puntos y los canjeás en <b>comercios de la zona</b>.</p>
-    <div class="pillars4">
-      <span><i>♥</i>Bienestar emocional</span>
-      <span><i>◎</i>Conexión social</span>
-      <span><i>❦</i>Sostenibilidad</span>
-      <span><i>⌂</i>Comunidad universitaria</span>
-    </div>
+    <p class="pitch">Actividades cortas y en grupo para desconectarte, conocer gente y cuidar tu campus.</p>
+    <ol class="how2">
+      <li style="--c:var(--river)"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 3.5c1.6 0 2.6 2 2.6 4.3S9.7 12 8.2 12 5.6 10.1 5.6 7.8s1-4.3 2.6-4.3ZM7 15h2.4M15.8 8.5c1.6 0 2.6 2 2.6 4.3S17.3 17 15.8 17s-2.6-1.9-2.6-4.2 1-4.3 2.6-4.3ZM14.6 20h2.4"/></svg></i><span><b>Elegí</b>una actividad cerca tuyo</span></li>
+      <li style="--c:var(--indigo)"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M16 4.2a3.4 3.4 0 0 1 0 6.6M18 14.8c2 .6 3.2 2.4 3.5 5.2"/></svg></i><span><b>Andá</b>con tu ronda</span></li>
+      <li style="--c:var(--tomato)"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v5l3 3v3H6v-3l3-3zM5 18h14M7 21h10"/></svg></i><span><b>Sellá</b>tu asistencia</span></li>
+      <li style="--c:#B8860B"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10h16v10H4ZM3 7h18v3H3ZM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9.5 7 12 7Zm0 0c1.5-3 5-3.5 5-1.2C17 7 14.5 7 12 7Z"/></svg></i><span><b>Canjeá</b>puntos en el barrio</span></li>
+    </ol>
     <div class="pair">
       <div><span class="mono">La usa</span><b>Estudiante</b><small>Gratis</small></div>
-      <div class="pay"><span class="mono">La paga</span><b>Universidad</b><small>Bienestar · Extensión</small></div>
+      <div class="pay"><span class="mono">La paga</span><b>Universidad</b><small>Licencia por estudiante</small></div>
     </div>
-    <div class="how">
-      <div class="mono card-k">Cómo funciona</div>
-      <ol>
-        <li><b>Elegí</b><span>una caminata, una huerta, una ronda de estudio o una jornada solidaria</span></li>
-        <li><b>Andá con tu ronda</b><span>gente de tus horarios y de otras carreras</span></li>
-        <li><b>Sellá y sumá puntos</b><span>mirá tu impacto y canjealos en comercios aliados</span></li>
-      </ol>
-    </div>
-    <div class="mono starts">Piloto 2C2026 · UNLaM y UBA</div>
+    <div class="mono starts">Piloto 2C2026 · UNLaM, UBA y UTN</div>
   </aside>
 
   <!-- ================= CENTRO: el teléfono ================= -->
   <section class="phone-col" id="demo" aria-label="Demo interactiva" tabindex="-1">
     <div class="demo-toolbar">
-      <span class="mono">Demo interactiva</span>
+      <button id="backBtn" type="button" data-back disabled aria-label="Volver a la pantalla anterior"><span aria-hidden="true">←</span> Atrás</button>
+      <div class="uni-switch" role="group" aria-label="Ver la app como"><span class="mono">Ver como</span><button type="button" data-setuni="unlam" style="--uc:#00873E"><i></i>UNLaM</button><button type="button" data-setuni="fiuba" style="--uc:#1F5FA8"><i></i>UBA</button><button type="button" data-setuni="utn" style="--uc:#C8102E"><i></i>UTN</button></div>
       <button id="resetBtn" type="button"><span aria-hidden="true">↺</span> Reiniciar</button>
     </div>
     <div class="phone-fit"><div class="phone">
@@ -82,8 +76,8 @@
           <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5V20h-5v-5.5H9V20H4z"/></svg><span>Inicio</span></button>
           <button data-tab="list"><svg viewBox="0 0 24 24"><path d="M9 4h10M9 12h10M9 20h10"/><circle cx="4.5" cy="4" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="20" r="1.2"/></svg><span>Desafíos</span></button>
           <button data-tab="stamp" class="tab-stamp" aria-label="Sellar asistencia"><span class="seal"><svg viewBox="0 0 24 24"><path d="M9 3h6v5l3 3v3H6v-3l3-3zM5 18h14M7 21h10"/></svg></span><span>Sellar</span></button>
-          <button data-tab="community"><svg viewBox="0 0 24 24"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M16 4.2a3.4 3.4 0 0 1 0 6.6M18 14.8c2 .6 3.2 2.4 3.5 5.2"/></svg><span>Comunidad</span></button>
-          <button data-tab="impact"><svg viewBox="0 0 24 24"><path d="M3 20h18M8 20v-6m0 0c-3 0-4.5-2-4.5-5 3 0 4.5 2 4.5 5Zm0 0c0-3 2-5 4.5-5 0 3-1.5 5-4.5 5ZM16.5 20V8.5m0 0c-2.2 0-3.5-1.6-3.5-4 2.2 0 3.5 1.6 3.5 4Zm0 2.5c2 0 3.5-1.3 3.5-3.5-2 0-3.5 1.3-3.5 3.5Z"/></svg><span>Mi impacto</span></button>
+          <button data-tab="agenda"><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4ZM4 10h16M8 3.5V7M16 3.5V7M8 14h2M14 14h2M8 17h2"/></svg><span>Agenda</span></button>
+          <button data-tab="impact"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20.5c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg><span>Perfil</span></button>
         </nav>
 
         <div class="scrim" id="scrim"></div>
@@ -100,90 +94,51 @@
   <!-- ================= DERECHA: el proyecto, en diapositivas ================= -->
   <aside class="side side-r">
     <div class="deck" id="deck">
-      <div class="deck-h"><span class="mono">El proyecto</span><span class="mono" id="deckN">01 / 06</span></div>
+      <div class="deck-h"><span class="mono">El proyecto</span><span class="mono" id="deckN">01 / 05</span></div>
 
       <section class="slide on">
-        <div class="mono card-k">Desafío 6</div>
-        <h3>Salud y bienestar mental en estudiantes universitarios</h3>
-        <p>Sobrecarga, aislamiento y abandono: lo vivimos en primera persona. Es el único desafío donde somos a la vez <b>usuarios y equipo</b>, así que lo probamos con pares, en nuestro propio campus.</p>
+        <div class="mono card-k">El problema</div>
+        <h3>Cursar no debería ser en soledad.</h3>
+        <div class="sl-chips"><span>Sobrecarga</span><span>Aislamiento</span><span>Poca difusión</span><span>Hábitos que no duran</span></div>
+        <p>Lo vivimos en primera persona: somos a la vez <b>usuarios y equipo</b>.</p>
       </section>
 
       <section class="slide">
-        <div class="mono card-k">Problema → Solución</div>
-        <div class="ps">
-          <div><span class="mono">Problema</span>Sobrecarga académica, actividades poco difundidas y hábitos saludables que no se sostienen.</div>
-          <div class="sol"><span class="mono">Solución</span>Desafíos cortos y jornadas colectivas, avisos con día, hora y lugar, y puntos canjeables en comercios de la zona.</div>
-        </div>
-        <p class="vp">“Poco tiempo, mucho impacto.”</p>
-      </section>
-
-      <section class="slide">
-        <div class="mono card-k">Análisis estratégico · FODA</div>
-        <div class="foda">
-          <div><b>F</b>De estudiantes para estudiantes</div>
-          <div><b>O</b>Interés creciente por la salud mental</div>
-          <div><b>D</b>Sin experiencia clínica: derivamos</div>
-          <div><b>A</b>Baja adopción: formatos cortos y en grupo</div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="mono card-k">Descubrimiento del cliente · Empatía</div>
-        <blockquote>“No me alcanza el tiempo para nada.”</blockquote>
-        <div class="pg">
-          <div><span class="mono">Dolores</span>Soledad, desmotivación, hábitos que no duran.</div>
-          <div><span class="mono">Alegrías</span>Vínculos, aire libre, sentir que suma.</div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="mono card-k">Usuario final vs. cliente pagador</div>
-        <div class="ps">
-          <div><span class="mono">Lo usa</span>Estudiante de la UNLaM que combina cursada, trabajo y vida personal. Gratis.</div>
-          <div class="sol"><span class="mono">Lo paga</span>Universidad (Bienestar · Extensión), Municipio, obras sociales y empresas con propósito.</div>
-        </div>
-        <p>Early adopters: quienes quieren desconectarse y conocer gente, pero lo postergan por falta de tiempo o de info.</p>
-      </section>
-
-      <section class="slide">
-        <div class="mono card-k">Modelo de negocio · cómo gana</div>
-        <ul class="money">
-          <li><b>Universidad</b><span>Licencia anual por estudiante activo</span></li>
-          <li><b>Municipio</b><span>Insumos y logística</span></li>
-          <li><b>Comercios y empresas</b><span>Desafíos patrocinados y beneficios canjeables</span></li>
-          <li><b>Obras sociales</b><span>Programas de prevención</span></li>
+        <div class="mono card-k">La solución</div>
+        <div class="sl-big"><b>−25%</b><span>riesgo de depresión caminando unas 2,5 h por semana</span><cite>JAMA Psychiatry, 2022</cite></div>
+        <ul class="sl-rows">
+          <li><i style="--c:var(--river)"></i>Actividades cortas y jornadas en grupo</li>
+          <li><i style="--c:var(--indigo)"></i>Con día, hora y lugar, en tu campus</li>
+          <li><i style="--c:var(--sun)"></i>Puntos canjeables en comercios del barrio</li>
         </ul>
-        <a class="mono go-biz" href="#sostiene">Ver cómo se sostiene →</a>
       </section>
 
       <section class="slide">
-        <div class="mono card-k">Métricas · canales · costos</div>
-        <ul class="money">
-          <li><b>Métricas clave</b><span>Instalaciones, participación mensual, actividades realizadas / planificadas</span></li>
-          <li><b>Canales</b><span>Boca en boca, Centro de Estudiantes, canales internos</span></li>
-          <li><b>Costos</b><span>MVP (inicial) · hosting (fijo) · insumos (variable, los cubren aliados)</span></li>
-        </ul>
+        <div class="mono card-k">Quién paga</div>
+        <div class="sl-flow"><div><span class="mono">La usa</span><b>Estudiante</b><small>Gratis</small></div><i>→</i><div class="pay"><span class="mono">La paga</span><b>Universidad</b><small>US$ 3 por estudiante al año</small></div></div>
+        <p>Además suman <b>comercios</b> (beneficios), el <b>Municipio</b> (insumos) y <b>obras sociales</b> (prevención).</p>
+        <a class="mono go-biz" href="#sostiene">Ver números →</a>
       </section>
 
       <section class="slide">
         <div class="mono card-k">Triple impacto</div>
-        <ul class="tri-list">
-          <li><b>Social</b>Vínculos y bienestar · ODS 3 · 4</li>
-          <li><b>Ambiental</b>Campus más verde · ODS 11 · 13 · 15</li>
-          <li><b>Comunidad</b>Apoyo escolar y viandas en el barrio · ODS 1 · 4 · 10</li>
-          <li><b>Económico</b>Comercios de cercanía y alianzas · ODS 8 · 17</li>
-        </ul>
+        <div class="sl-ods">
+          <span style="--oc:#4C9F38"><b>3</b>Salud y bienestar</span>
+          <span style="--oc:#C5192D"><b>4</b>Educación de calidad</span>
+          <span style="--oc:#FD9D24"><b>11</b>Ciudades sostenibles</span>
+          <span style="--oc:#56C02B"><b>15</b>Vida terrestre</span>
+        </div>
+        <p>Vínculos entre estudiantes, un campus más verde y comercios de cercanía que crecen.</p>
       </section>
 
       <section class="slide">
-        <div class="mono card-k">Hoja de ruta · por qué nosotros</div>
-        <ol class="road">
-          <li><b>2C2026</b>Piloto UNLaM sin costo: instalaciones y participación</li>
-          <li><b>1C2027</b>Primera licencia + convenio con el Municipio</li>
+        <div class="mono card-k">Hoja de ruta</div>
+        <ol class="sl-road">
+          <li><b>2C2026</b>Piloto en UNLaM, UBA y UTN</li>
+          <li><b>1C2027</b>Primera licencia + Municipio</li>
           <li><b>2027</b>Universidades del conurbano</li>
           <li><b>2028</b>Obras sociales y sponsors</li>
         </ol>
-        <p>Somos estudiantes de la UNLaM: conocemos el problema desde adentro y las alianzas locales son difíciles de copiar.</p>
       </section>
 
       <div class="deck-nav">

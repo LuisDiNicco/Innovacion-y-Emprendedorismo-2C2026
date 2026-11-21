@@ -22,12 +22,6 @@
       p: 'Arranca en la UNLaM como piloto: actividades cortas y jornadas colectivas para desconectarte, conocer gente y cuidar tu campus.',
       run: async ok => { fresh(); S.onboarded = false; S.step = -1; go('welcome'); } },
 
-    { k: 'Registro', slide: 4, ms: 6000,
-      t: 'Entrás con tu mail y, si querés, contás qué estudiás',
-      p: 'Es opcional: sirve para mostrarte primero lo que te puede gustar. Se puede saltar.',
-      run: async ok => { fresh(); S.onboarded = false; S.step = 1; go('welcome');
-        await sleep(1800); if (!ok()) return; S.carrera = 'Ingeniería'; if (!S.interests.includes('huerta')) S.interests.push('huerta'); refresh(); } },
-
     { k: 'Inicio', slide: 1, ms: 8000,
       t: 'Tu semana de un vistazo',
       p: 'El desafío de la semana, tus puntos, tu progreso y un mapa del campus con lo que pasa cerca tuyo.',
@@ -35,14 +29,14 @@
         await sleep(2600); if (!ok()) return; scrollToSel('.duo', 90);
         await sleep(2200); if (!ok()) return; scrollToSel('.nearby', 90); } },
 
-    { k: 'Desafío', slide: 2, ms: 8000,
+    { k: 'Desafío', slide: 1, ms: 8000,
       t: 'Cada desafío: cuándo, dónde y con quién',
       p: 'Jornadas largas o actividades cortas. Ves quién organiza, cuántos participan y podés ir con tu ronda o invitar a alguien.',
       run: async ok => { fresh(); S.onboarded = true; go('detail', 'fore');
         await sleep(2600); if (!ok()) return; scrollToSel('.going');
         await sleep(2600); if (!ok()) return; scrollToSel('.triple'); } },
 
-    { k: 'Sellar', slide: 6, ms: 11000,
+    { k: 'Sellar', slide: 1, ms: 11000,
       t: 'Sellás tu asistencia en el lugar',
       p: 'Mantenés apretado el sello: suma puntos y registra si conociste a alguien nuevo.',
       run: async ok => {
@@ -60,7 +54,13 @@
         const done = document.querySelector('[data-afterdone]'); if (done) done.click();
       } },
 
-    { k: 'Beneficios', slide: 5, ms: 8000,
+    { k: 'Agenda', slide: 1, ms: 7000,
+      t: 'Tu agenda: a qué te anotaste y qué ya hiciste',
+      p: 'La semana con tus actividades marcadas, un recordatorio para cada una y el historial de lo que fuiste sellando.',
+      run: async ok => { fresh(); S.agDay = null; go('agenda');
+        await sleep(3000); if (!ok()) return; scrollToSel('.ag-done', 110); } },
+
+    { k: 'Beneficios', slide: 2, ms: 8000,
       t: 'Los puntos se canjean en comercios de la zona',
       p: 'Viveros, cafeterías, librerías, gimnasios. Un código de 4 dígitos, un canje por comercio cada 15 días.',
       run: async ok => { fresh(); S.onboarded = true; go('perks');
@@ -75,20 +75,20 @@
         await sleep(2600); if (!ok()) return; scrollToSel('.peers', 110);
         await sleep(2600); if (!ok()) return; scrollToSel('.postales', 110); } },
 
-    { k: 'Mi impacto', slide: 7, ms: 9000,
-      t: 'Tu impacto, contado desde vos',
-      p: 'Desafíos completados, personas que conociste y lo que sumaste al campus. Y cómo se calcula cada número.',
+    { k: 'Perfil', slide: 3, ms: 9500,
+      t: 'Tu nivel, tus puntos y tus sellos, en un solo lugar',
+      p: 'Cada sello suma puntos. Los puntos te suben de nivel (Semilla, Raíz, Plantín, Árbol) y cada nivel desbloquea más beneficios.',
       run: async ok => { fresh(); S.impTab = 'yo'; go('impact');
-        await sleep(3000); if (!ok()) return; scrollToSel('.constel', 90);
-        await sleep(2800); if (!ok()) return; scrollToSel('.garden', 90); } },
+        await sleep(2400); if (!ok()) return; levelsSheet();
+        await sleep(4200); if (!ok()) return; closeSheet(); scrollToSel('.hub', 90); } },
 
-    { k: 'Institución', slide: 4, ms: 7500,
-      t: 'La universidad, que es quien paga, ve la participación',
-      p: 'Instalaciones, participación mensual y actividades realizadas. Solo datos agregados: ni nombres ni datos de salud.',
+    { k: 'Mi facu', slide: 2, ms: 7500,
+      t: 'Cómo viene participando toda la facu',
+      p: 'Participación semanal, meta colectiva y actividades por carrera. Datos agregados y anónimos, los mismos que ve Bienestar Estudiantil.',
       run: async ok => { fresh(); S.impTab = 'inst'; go('impact');
-        await sleep(2800); if (!ok()) return; scrollToSel('.wbars', 120); } },
+        await sleep(2800); if (!ok()) return; scrollToSel('.goal', 120); } },
 
-    { k: 'Pausa', slide: 8, ms: 7000,
+    { k: 'Pausa', slide: 4, ms: 7000,
       t: 'Y cuando querés frenar: una pausa sin pantalla',
       p: 'Un círculo que acompaña tu respiración, de 3 a 10 minutos. No reemplaza a un profesional: si lo necesitás, la app te acerca a Bienestar.',
       run: async ok => { fresh(); go('pause'); } },

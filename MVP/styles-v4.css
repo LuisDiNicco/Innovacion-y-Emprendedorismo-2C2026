@@ -33,7 +33,7 @@
 .duo{display:grid;grid-template-columns:1.15fr 1fr;gap:10px}
 .pts-card,.prog-card{border-radius:20px;padding:14px 15px;text-align:left;display:flex;flex-direction:column;gap:3px;min-height:122px}
 .pts-card{background:var(--sun);color:var(--ink);transition:transform .4s var(--spring)}
-.pts-card:hover{transform:translateY(-3px) rotate(-.6deg)}
+.pts-card:hover{transform:translateY(-3px)}
 .pts-card .mono{font-size:9.5px;opacity:.75}
 .pts-card b{font-family:var(--f-display);font-weight:400;font-size:46px;line-height:1;margin-top:auto}
 .pts-card small{display:flex;align-items:center;gap:4px;font-size:12px;line-height:1.25;font-weight:500}
@@ -122,7 +122,7 @@
 .balance p{font-size:12.5px;line-height:1.4;color:var(--ink-2)}
 .perk-list{display:grid;gap:10px}
 .perk-t{--c:var(--moss);position:relative;display:grid;grid-template-columns:62px 1fr auto;align-items:stretch;border-radius:16px;background:#FBF7EE;border:1px solid var(--line);overflow:hidden;transition:transform .4s var(--spring)}
-.perk-t:hover{transform:translateY(-2px) rotate(-.3deg)}
+.perk-t:hover{transform:translateY(-2px)}
 .pt-l{background:var(--c);color:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px 4px}
 .pt-l .perk-ic{width:34px;height:34px;border-radius:50%;background:#F3F1E626;color:var(--paper)}
 .pt-l .perk-ic .ic{width:18px;height:18px}

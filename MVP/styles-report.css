@@ -152,7 +152,7 @@
 .payer-more{margin-top:auto;align-self:flex-start;min-height:44px;background:none;border:1px solid #F3F1E655;color:var(--sun);border-radius:99px;padding:7px 12px;font-size:10px;cursor:pointer;transition:background .2s}
 .payer-more:hover{background:#F3F1E61a}
 .rp-dlg{margin:auto;max-width:min(760px,92vw);border:0;border-radius:24px;padding:26px 30px 30px;background:var(--unlam-d);color:var(--paper)}
-.rp-dlg::backdrop{background:#0D2B1Bb3;backdrop-filter:blur(3px)}
+.rp-dlg::backdrop{background:#0D2B1Bc4}
 .rp-dlg header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .rp-dlg header .mono{font-size:10px;color:var(--sun)}
 .rp-dlg-x{width:44px;height:44px;border-radius:50%;border:0;background:#F3F1E61f;color:var(--paper);font-size:20px;cursor:pointer}

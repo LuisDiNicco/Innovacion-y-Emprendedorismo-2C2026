@@ -110,16 +110,12 @@
 .detail-hero .mins{font-size:44px;display:flex;align-items:baseline;gap:2px}
 .detail-hero .mins small{font-family:var(--f-body);font-size:14px;font-weight:500;margin-right:4px}
 
-/* ---------- tabbar: etiquetas que no se pisan ---------- */
-.tabbar button span{font-size:10px;white-space:nowrap}
-.tabbar{grid-template-columns:1fr 1fr 74px 1fr 1fr}
-
 .jrow,.peers{scroll-padding-inline:22px}
 .j-dur{font-size:21px}
 .garden.mini .g-sun{display:none}
 .garden.mini{margin-top:4px}
 
-html,body{overflow-x:hidden}
+html,body{overflow-x:clip}
 @media (max-width:560px){.stage::before,.stage::after{display:none}.stage{min-height:0}}
 
 .brand-sprout{width:46px;height:72px;margin:0 0 10px 6px}
@@ -132,8 +128,40 @@ html,body{overflow-x:hidden}
 /* la demo guiada vive en la columna derecha: el celu usa toda la altura */
 .side-r{gap:14px}
 .side-r .tour{width:100%;margin:0}
-@media (min-width:561px){.stage{padding-top:22px;padding-bottom:22px}}
-@media (min-width:561px){.stage{min-height:100vh}}
+@media (min-width:561px){
+  .stage{padding-block:20px;min-height:calc(100svh - var(--site-header-height));gap:clamp(24px,3vw,44px)}
+  .phone-col{position:static;align-self:start}
+  .brand{font-size:clamp(52px,6vw,84px);line-height:.9}
+}
+@media (min-width:561px) and (max-width:860px){
+  .stage{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"p p" "l r";align-items:start;padding-inline:20px}
+  .phone-col{justify-self:center}
+  .tour-dots{flex-wrap:wrap}
+}
+@media (min-width:721px) and (max-width:860px){
+  .stage{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"p l" "p r";align-content:start}
+}
+@media (min-width:861px){
+  .side-l{gap:12px}
+  .side-l .pitch{max-width:38ch}
+  .brand-row{position:relative}
+  .brand-row .logo-mark{position:absolute;top:0;right:0;margin:0}
+  .side-r .deck{min-height:clamp(280px,40svh,365px)}
+  .tour .tour-play{position:static;height:44px;margin-bottom:10px}
+  .tour .tour-cap{padding-right:0;min-height:0}
+  .tour .tour-cap p{margin-right:0}
+}
+@media (min-width:861px) and (max-height:780px){
+  .side-l .brand{font-size:clamp(46px,5.1vw,70px)}
+  .side-l .how{padding:12px 14px}
+  .side-l .how ol{gap:6px}
+}
+@media (min-width:861px) and (max-width:1240px){
+  .stage{grid-template-columns:minmax(230px,1fr) minmax(0,auto) minmax(235px,1fr);grid-template-areas:"l p r";padding-inline:24px}
+  .brand-row .logo-mark{width:38px;height:38px}
+  .brand-row .logo-mark svg{width:25px;height:25px}
+  .tour-dots{gap:2px;flex-wrap:wrap}
+}
 
 /* ==========================================================
    SPLASH · pantalla de inicio

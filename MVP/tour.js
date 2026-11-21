@@ -149,7 +149,7 @@
   $t('tourNext').onclick = () => { stop(); show(i < 0 ? 0 : i + 1); };
   /* si tocás el celu, el recorrido se pausa y la app es tuya */
   document.getElementById('screen').addEventListener('pointerdown', e => { if (playing && e.isTrusted) stop(); });
-  document.addEventListener('keydown', e => { if (e.key === ' ' && !e.target.closest('input,textarea,button')) { e.preventDefault(); playing ? stop() : play(); } });
+  document.getElementById('resetBtn').addEventListener('click', () => { stop(); i = -1; token++; intro(); });
 
   intro();
   if (typeof fitPhone === "function") { fitPhone(); document.fonts && document.fonts.ready.then(fitPhone); }

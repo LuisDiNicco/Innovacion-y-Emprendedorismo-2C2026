@@ -269,6 +269,8 @@ function applyUni() {
 /* ---------- router ---------- */
 const $ = s => document.querySelector(s);
 const view = $('#view');
+const tabbar = $('#tabbar');
+const appTabs = [...tabbar.querySelectorAll('[data-tab]')];
 let current = { name: null, param: null };
 const trail = [];
 const SUB = ['detail', 'passport', 'perks', 'pause'];   // pantallas con "volver"
@@ -276,18 +278,30 @@ const SUB = ['detail', 'passport', 'perks', 'pause'];   // pantallas con "volver
 function go(name, param = null, { back = false, still = false } = {}) {
   if (!back && !still && current.name && SUB.includes(name) && current.name !== name) trail.push([current.name, current.param]);
   const render = () => {
-    view.className = 'view' + (name === 'detail' ? ' detail' : '') + (name === 'welcome' ? ' full' : '') + (still ? ' still' : '');
+    const active = document.activeElement;
+    const hideNav = ['welcome', 'pause', 'detail'].includes(name);
+    const moveFocus = !still && (view.contains(active) || (hideNav && tabbar.contains(active)));
+    view.className = 'view' + (name === 'detail' ? ' detail' : '') + (name === 'welcome' ? ' full' : '') + (hideNav ? ' without-nav' : '') + (still ? ' still' : '');
     view.innerHTML = T(VIEWS[name](param));
     if (!still) view.scrollTop = 0;
     current = { name, param };
-    document.querySelectorAll('.tabbar [data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
+    const isDestination = screen => ['home', 'list', 'community', 'impact'].includes(screen);
+    const parent = isDestination(name) ? name : trail.findLast(([screen]) => isDestination(screen))?.[0];
+    appTabs.forEach(b => {
+      const selected = !hideNav && b.dataset.tab === parent;
+      b.classList.toggle('on', selected);
+      if (selected) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    });
     $('#screen').classList.toggle('dark', name === 'welcome' && S.step !== 1);
-    $('#tabbar').classList.toggle('hide', ['welcome', 'pause', 'detail'].includes(name));
+    tabbar.classList.toggle('hide', hideNav);
+    tabbar.inert = hideNav;
+    if (moveFocus) view.focus({ preventScroll: true });
     document.querySelectorAll('[data-jump]').forEach(b => b.classList.toggle('on', b.dataset.jump === name));
     afterRender(name);
   };
   if (current.name && !still) {
-    view.classList.add('leaving'); if (back) view.classList.add('back');
+    view.classList.add('leaving'); if (back) view.classList.add('from-back');
     setTimeout(render, 200);
   } else render();
 }
@@ -296,7 +310,7 @@ const goBack = () => { const [n, p] = trail.pop() || ['home', null]; go(n, p, { 
 
 /* ---------- componentes ---------- */
 const r = (i) => `data-r style="--i:${i}"`;
-const backBtn = (light) => `<button class="back${light ? '' : ' on-paper'}" data-back>${ic('back')}</button>`;
+const backBtn = (light) => `<button class="back${light ? '' : ' on-paper'}" data-back aria-label="Volver">${ic('back')}</button>`;
 
 function tag(c, i) {
   const t = TYPES[c.type];
@@ -411,7 +425,7 @@ const VIEWS = {
         <span class="top-r"><button class="bell" data-bell aria-label="Avisos">${ic('bell')}<i></i></button><button class="avatar" data-go="passport">${S.name.slice(0, 2)}</button></span></div>
       <div class="greet pad" ${r(1)}>
         <h1 class="h-display">¡Hola, ${S.name}!</h1>
-        <p>Qué bueno verte por acá. Esto es lo que pasa esta semana en tu facu.</p>
+        <p>Mirá qué pasa esta semana en tu facu.</p>
       </div>
 
       <div class="ticket-wrap" ${r(2)}>
@@ -966,12 +980,28 @@ function qr() {
   return out;
 }
 
+let sheetTrigger;
 function openSheet(html) {
   const sheet = $('#sheet');
-  sheet.innerHTML = `<div class="grab"></div>${T(html)}`;
+  if (sheet.inert) sheetTrigger = document.activeElement;
+  sheet.innerHTML = `<div class="grab"></div><button class="sheet-close" type="button" data-close aria-label="Cerrar">×</button>${T(html)}`;
+  sheet.querySelector('h2').id = 'sheetTitle';
+  sheet.scrollTop = 0;
+  sheet.inert = false;
   $('#scrim').classList.add('on'); sheet.classList.add('on'); sheet.setAttribute('aria-hidden', 'false');
+  sheet.querySelector('.sheet-close').focus({ preventScroll: true });
 }
-function closeSheet() { $('#scrim').classList.remove('on'); const s = $('#sheet'); s.classList.remove('on'); s.setAttribute('aria-hidden', 'true'); }
+function closeSheet() {
+  const sheet = $('#sheet');
+  if (sheet.inert) return;
+  if (sheet.contains(document.activeElement)) {
+    const target = sheetTrigger?.isConnected && sheetTrigger !== document.body ? sheetTrigger : view;
+    target.focus({ preventScroll: true });
+  }
+  sheetTrigger = null;
+  $('#scrim').classList.remove('on'); sheet.classList.remove('on'); sheet.setAttribute('aria-hidden', 'true');
+  sheet.inert = true;
+}
 
 function sealSheet(id) {
   const c = id ? byId(id) : null;
@@ -1191,6 +1221,7 @@ document.addEventListener('click', e => {
   }
 });
 $('#scrim').addEventListener('click', closeSheet);
+$('#sheet').addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 document.addEventListener('input', e => {
   if (e.target.id === 'q') {
     S.q = e.target.value; const pos = e.target.selectionStart;
@@ -1214,10 +1245,9 @@ function fitPhone() {
   const ph = document.querySelector(".phone"), fit = document.querySelector(".phone-fit");
   if (!ph || !fit) return;
   if (innerWidth <= 560) { ph.style.transform = ""; fit.style.width = fit.style.height = ""; window.__ps = 1; return; }
-  const tour = document.getElementById("tour");
-  const inCol = tour && tour.closest(".phone-col");
-  const avail = innerHeight - (inCol ? tour.offsetHeight + 14 : 0) - 56;
-  const s = Math.max(.55, Math.min(1, avail / 866));
+  const avail = innerHeight - $('.site-header').offsetHeight - $('.demo-toolbar').offsetHeight - 40;
+  const widthScale = innerWidth > 860 && innerWidth <= 1240 ? (innerWidth - 575) / 412 : 1;
+  const s = Math.max(.55, Math.min(1, avail / 866, widthScale));
   ph.style.transform = "scale(" + s + ")";
   fit.style.width = (412 * s) + "px"; fit.style.height = (866 * s) + "px";
   window.__ps = s;

@@ -17,13 +17,23 @@
 </head>
 <body>
 
-<div class="stage" id="top">
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href="#top">Desafío Bienestar</a>
+    <nav class="site-nav" aria-label="Navegación del sitio">
+      <a class="site-demo" href="#demo">Demo</a>
+      <a href="#entrega">Proyecto</a>
+    </nav>
+  </div>
+</header>
+
+<div class="stage" id="top" tabindex="-1">
 
   <!-- ================= IZQUIERDA: qué es ================= -->
   <aside class="side side-l">
     <div class="mono kicker">La app de bienestar para estudiantes universitarios</div>
     <div class="brand-row"><h1 class="brand">Desafío<br>Bienestar<span>.</span></h1><span class="logo-mark logo3-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#7FBF5E" transform="rotate(-42 32 52)"/><path d="M32 52C21 44 19 28 28 14c9 12 11 27 4 38Z" fill="#005A29" transform="rotate(42 32 52) scale(-1 1) translate(-64 0)"/><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z" fill="#00873E"/><path d="M32 50V18" stroke="#F3F1E6" stroke-width="1.6" stroke-linecap="round" opacity=".55"/></svg></span></div>
-    <p class="tagline slogan" id="slogan" aria-live="polite">Poco tiempo, mucho impacto.</p>
+    <p class="tagline">Poco tiempo, mucho impacto.</p>
     <p class="pitch">Actividades cortas y <b>jornadas colectivas</b> con gente de toda la facu para desconectarte, conocer gente y dejar huella en tu universidad. Sumás puntos y los canjeás en <b>comercios de la zona</b>.</p>
     <div class="pillars4">
       <span><i>♥</i>Bienestar emocional</span>
@@ -43,11 +53,15 @@
         <li><b>Sellá y sumá puntos</b><span>mirá tu impacto y canjealos en comercios aliados</span></li>
       </ol>
     </div>
-    <div class="mono starts">Piloto 2C2026 · UNLaM y UBA <button class="reset mono" id="resetBtn" title="Reiniciar la demo">↺ reiniciar demo</button></div>
+    <div class="mono starts">Piloto 2C2026 · UNLaM y UBA</div>
   </aside>
 
   <!-- ================= CENTRO: el teléfono ================= -->
-  <div class="phone-col">
+  <section class="phone-col" id="demo" aria-label="Demo interactiva" tabindex="-1">
+    <div class="demo-toolbar">
+      <span class="mono">Demo interactiva</span>
+      <button id="resetBtn" type="button"><span aria-hidden="true">↺</span> Reiniciar</button>
+    </div>
     <div class="phone-fit"><div class="phone">
       <div class="screen" id="screen">
         <div class="statusbar mono"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i> 82%</span></div>
@@ -62,18 +76,18 @@
           </span>
         </button>
 
-        <main id="view" class="view"></main>
+        <div id="view" class="view" tabindex="-1"></div>
 
-        <nav class="tabbar" id="tabbar">
+        <nav class="tabbar hide" id="tabbar" aria-label="Navegación de la app" inert>
           <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5V20h-5v-5.5H9V20H4z"/></svg><span>Inicio</span></button>
           <button data-tab="list"><svg viewBox="0 0 24 24"><path d="M9 4h10M9 12h10M9 20h10"/><circle cx="4.5" cy="4" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="20" r="1.2"/></svg><span>Desafíos</span></button>
-          <button data-tab="stamp" class="tab-stamp" aria-label="Sellar asistencia"><span class="seal"><svg viewBox="0 0 24 24"><path d="M9 3h6v5l3 3v3H6v-3l3-3zM5 18h14M7 21h10"/></svg></span></button>
+          <button data-tab="stamp" class="tab-stamp" aria-label="Sellar asistencia"><span class="seal"><svg viewBox="0 0 24 24"><path d="M9 3h6v5l3 3v3H6v-3l3-3zM5 18h14M7 21h10"/></svg></span><span>Sellar</span></button>
           <button data-tab="community"><svg viewBox="0 0 24 24"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M16 4.2a3.4 3.4 0 0 1 0 6.6M18 14.8c2 .6 3.2 2.4 3.5 5.2"/></svg><span>Comunidad</span></button>
           <button data-tab="impact"><svg viewBox="0 0 24 24"><path d="M3 20h18M8 20v-6m0 0c-3 0-4.5-2-4.5-5 3 0 4.5 2 4.5 5Zm0 0c0-3 2-5 4.5-5 0 3-1.5 5-4.5 5ZM16.5 20V8.5m0 0c-2.2 0-3.5-1.6-3.5-4 2.2 0 3.5 1.6 3.5 4Zm0 2.5c2 0 3.5-1.3 3.5-3.5-2 0-3.5 1.3-3.5 3.5Z"/></svg><span>Mi impacto</span></button>
         </nav>
 
         <div class="scrim" id="scrim"></div>
-        <section class="sheet" id="sheet" aria-hidden="true"></section>
+        <section class="sheet" id="sheet" role="dialog" aria-labelledby="sheetTitle" aria-hidden="true" inert></section>
 
         <div class="toast" id="toast"></div>
         <div class="stamp-fx" id="stampFx"></div>
@@ -81,7 +95,7 @@
     </div></div>
 
 
-  </div>
+  </section>
 
   <!-- ================= DERECHA: el proyecto, en diapositivas ================= -->
   <aside class="side side-r">
@@ -192,24 +206,23 @@
       </div>
       <i class="tour-bar"><i id="tourBar"></i></i>
     </div>
-    <a class="scroll-cue" href="#entrega"><i></i><span><b>Conocé el proyecto</b>FODA · Empatía · Lean Canvas · Fundamentos</span></a>
   </aside>
 </div>
 
 
 <!-- ================= LA ENTREGA: FODA · EMPATÍA · LEAN CANVAS ================= -->
-<main class="report" id="entrega">
+<main class="report" id="entrega" tabindex="-1">
 
   <header class="rp-intro reveal">
     <span class="mono rp-kicker">Grupo N°7 · Innovación y Emprendedorismo · UNLaM</span>
     <h2>El proyecto</h2>
     <p>Desafío 6: Salud y bienestar mental en estudiantes universitarios con apoyos de tecnologías digitales.</p>
-    <nav class="rp-nav">
-      <a href="#foda"><b>01</b>Análisis estratégico · FODA</a>
-      <a href="#empatia"><b>02</b>Descubrimiento del cliente · Mapa de empatía</a>
-      <a href="#canvas"><b>03</b>Arquitectura comercial · Modelo de negocio</a>
-      <a href="#fundamentos"><b>04</b>Marco teórico · Fundamentos</a>
-      <a href="#sostiene"><b>05</b>Modelo de ingresos · Cómo se sostiene</a>
+    <nav class="rp-nav" aria-label="Secciones del proyecto">
+      <a href="#foda"><b>01</b>Análisis FODA</a>
+      <a href="#empatia"><b>02</b>Mapa de empatía</a>
+      <a href="#canvas"><b>03</b>Lean Canvas</a>
+      <a href="#fundamentos"><b>04</b>Fundamentos</a>
+      <a href="#sostiene"><b>05</b>Cómo se sostiene</a>
     </nav>
   </header>
 
@@ -381,8 +394,8 @@
     </div>
     </div>
 
-    <dialog class="rp-dlg" id="payerDlg">
-      <header><span class="mono">Mapa de empatía · Cliente pagador</span><button type="button" class="rp-dlg-x" aria-label="Cerrar">×</button></header>
+    <dialog class="rp-dlg" id="payerDlg" aria-labelledby="payerTitle">
+      <header><span class="mono" id="payerTitle">Mapa de empatía · Cliente pagador</span><button type="button" class="rp-dlg-x" aria-label="Cerrar">×</button></header>
       <ul>
           <li><b>Universidades y Facultades (Unidades Académicas):</b> A través de sus Secretarías de Bienestar Estudiantil o de Extensión Universitaria, que contratan la plataforma para reducir la deserción académica, fomentar la retención estudiantil y cumplir con metas institucionales de sustentabilidad en el campus. Pueden contratarla a nivel Rectorado (toda la universidad) o por Facultad específica.</li>
           <li><b>Municipalidades y Organismos del Estado (Local, Provincial o Nacional):</b> A través de áreas de Juventud, Salud Comunitaria o Ambiente, que financian o licitan la solución como herramienta de política pública para promover espacios verdes urbanos, participación ciudadana juvenil y salud mental comunitaria.</li>
@@ -509,22 +522,12 @@
       <b>Desafío Bienestar</b>
       <span>Grupo N°7 · Innovación y Emprendedorismo · UNLaM 2C2026</span>
     </div>
-    <a href="#top" class="mono rp-top">↑ Volver a la app</a>
+    <a href="#demo" class="mono rp-top">↑ Volver a la demo</a>
   </footer>
 </main>
 
 <script src="app.js"></script>
 <script>
-/* slogan rotativo */
-(() => {
-  const el = document.getElementById("slogan");
-  const list = ["Poco tiempo, mucho impacto.", "Tu cabeza también cursa.", "Nadie debería cursar solo.", "Sumá puntos, cuidá tu campus."];
-  let k = 0;
-  setInterval(() => {
-    el.classList.add("out");
-    setTimeout(() => { k = (k + 1) % list.length; el.textContent = list[k]; el.classList.remove("out"); }, 450);
-  }, 3800);
-})();
 /* carrusel del proyecto */
 (() => {
   const slides = [...document.querySelectorAll(".slide")], dots = document.getElementById("deckDots");
@@ -539,7 +542,11 @@
     document.getElementById("deckN").textContent = String(i + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
   }
   document.querySelectorAll("[data-deck]").forEach(b => b.onclick = () => show(i + +b.dataset.deck));
-  document.addEventListener("keydown", e => { if (e.target.closest("input,textarea")) return; if (e.key === "ArrowRight") show(i + 1); if (e.key === "ArrowLeft") show(i - 1); });
+  document.getElementById("deck").addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    show(i + (e.key === "ArrowRight" ? 1 : -1));
+  });
   show(0);
   window.deckShow = show;
 })();
@@ -563,13 +570,10 @@ document.querySelectorAll(".rp-dlg").forEach(d => { d.addEventListener("click", 
 /* aparición de la entrega al scrollear */
 (() => {
   const els = document.querySelectorAll(".reveal");
-  if (!("IntersectionObserver" in window)) { els.forEach(e => e.classList.add("in")); return; }
+  if (!("IntersectionObserver" in window)) return;
+  document.getElementById("entrega").classList.add("reveal-enabled");
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12, rootMargin: "0px 0px -6% 0px" });
   els.forEach(e => io.observe(e));
-  document.querySelectorAll(".report a[href^=\"#\"], .scroll-cue").forEach(a => a.addEventListener("click", ev => {
-    const t = document.querySelector(a.getAttribute("href")); if (!t) return;
-    ev.preventDefault(); t.scrollIntoView({ behavior: "smooth", block: "start" });
-  }));
 })();
 </script>
 </body>

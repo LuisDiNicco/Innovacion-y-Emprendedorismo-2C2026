@@ -316,3 +316,9 @@
   .rp-top{grid-column:2;display:flex;align-items:center;min-height:44px}
   .ss-calc input[type=range]{height:44px}
 }
+
+/* fuentes con link */
+.ev cite a,.sl-big cite a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);transition:color .2s,text-decoration-color .2s}
+.ev cite a:hover,.sl-big cite a:hover{color:var(--unlam);text-decoration-color:currentColor}
+.ev-problem cite a:hover,.sl-big cite a:hover{color:var(--sun)}
+.ev cite a::after,.sl-big cite a::after{content:" ↗";font-size:.9em}

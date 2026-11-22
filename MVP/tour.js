@@ -68,12 +68,6 @@
         if (!S.codes.cafe) { S.points = Math.max(S.points, 200); S.points -= 80; S.perks.push('cafe'); S.codes.cafe = '4827'; save(); refresh(); }
         await sleep(400); if (!ok()) return; redeemSheet('cafe'); } },
 
-    { k: 'Comunidad', slide: 3, ms: 8000,
-      t: 'Nadie debería cursar solo',
-      p: 'Tu ronda, una dupla con horarios en común, postales de otros estudiantes y círculos por interés.',
-      run: async ok => { fresh(); go('community');
-        await sleep(2600); if (!ok()) return; scrollToSel('.peers', 110);
-        await sleep(2600); if (!ok()) return; scrollToSel('.postales', 110); } },
 
     { k: 'Perfil', slide: 3, ms: 9500,
       t: 'Tu nivel, tus puntos y tus sellos, en un solo lugar',

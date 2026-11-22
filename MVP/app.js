@@ -124,8 +124,8 @@ const CH = [
     sponsor: 'Andén Deportes', sponsorTxt: 'Pone remeras, hidratación y cronometraje. Por cada kilómetro corrido dona útiles al apoyo escolar del barrio.',
     title: 'Maratón solidaria 5K UNLaM', place: 'Largada: Puerta 1 · vuelta por el campus y el barrio',
     org: 'Andén Deportes + Bienestar Estudiantil', going: 214, cap: 400,
-    text: 'Corrés, trotás o caminás: lo importante es llegar con tu ronda. 5 km por el campus y el barrio, con postas de hidratación y música en la llegada. Cada kilómetro que suman los estudiantes se convierte en útiles para el apoyo escolar.',
-    bring: ['Zapatillas cómodas', 'Tu ronda', 'Ganas de aguantar hasta el final'],
+    text: 'Corrés, trotás o caminás: lo importante es llegar. 5 km por el campus y el barrio, con postas de hidratación y música en la llegada. Cada kilómetro que suman los estudiantes se convierte en útiles para el apoyo escolar.',
+    bring: ['Zapatillas cómodas', 'Ganas de aguantar hasta el final'],
     yieldN: '1.070', yieldT: 'km corridos entre todos = útiles para 45 chicos del barrio.' },
   { id: 'compost', type: 'comp', day: 20, dow: 'Viernes', time: '13:00', mins: 15, pts: 30, ronda: 0,
     title: 'Compost del comedor: de residuo a abono', place: 'Patio detrás del comedor universitario',
@@ -136,7 +136,7 @@ const CH = [
   { id: 'picnic', type: 'desc', day: 22, dow: 'Domingo', time: '16:00', mins: 180, pts: 90, ronda: 3, long: true,
     title: 'Tarde sin pantallas: picnic de fin de cuatri', place: 'Pulmón verde central del campus',
     org: 'Centro de Estudiantes', going: 132, cap: 250,
-    text: 'Una tarde larga para cerrar el cuatrimestre: juegos de mesa, ronda de guitarras, feria de huerta y una canasta para los celulares. Venís con tu ronda y te vas conociendo gente de otras carreras.',
+    text: 'Una tarde larga para cerrar el cuatrimestre: juegos de mesa, ronda de guitarras, feria de huerta y una canasta para los celulares. Venís con quien quieras y te vas conociendo gente de otras carreras.',
     bring: ['Mantel o lona', 'Juego de mesa, si tenés', 'Algo rico para compartir'],
     yieldN: '3 h', yieldT: 'sin pantalla, con gente de todas las carreras.' },
 ];
@@ -157,39 +157,6 @@ const MOODS = [
   { k: 1, l: 'Agotado' }, { k: 2, l: 'Cargado' }, { k: 3, l: 'Normal' }, { k: 4, l: 'Bien' }, { k: 5, l: 'Con pila' },
 ];
 
-const PEERS = [
-  { id: 'leo',  n: 'Leo M.',  ini: 'LM', bg: '#F3C13A', carrera: 'Ing. en Informática', slot: 'Jue 12 a 13 h', type: 'cam',    also: 'Cursan juntos Análisis II' },
-  { id: 'sofi', n: 'Sofi R.', ini: 'SR', bg: '#B9DCC2', carrera: 'Lic. en Nutrición',   slot: 'Mié 13 a 14 h', type: 'huerta', also: 'Le interesa la huerta, como a vos' },
-  { id: 'tomi', n: 'Tomi A.', ini: 'TA', bg: '#E3EADC', carrera: 'Ing. Industrial',     slot: 'Mar 18 a 19 h', type: 'desc',   also: 'Primer año, todavía no conoce a nadie' },
-  { id: 'cami', n: 'Cami G.', ini: 'CG', bg: '#F1C9B9', carrera: 'Comunicación Social', slot: 'Sáb 14 a 16 h', type: 'soli',   also: 'Va al apoyo escolar y busca compañera' },
-  { id: 'rodri', n: 'Rodri P.', ini: 'RP', bg: '#C9D0E6', carrera: 'Ing. en Informática', slot: 'Mié 18 a 19 h', type: 'pares', also: 'Aprobó Análisis II y da una mano' },
-];
-
-const RONDA = [
-  { ini: 'LU', bg: '#F3C13A' }, { ini: 'LM', bg: '#B9DCC2' }, { ini: 'ME', bg: '#F1C9B9' },
-  { ini: 'NI', bg: '#E3EADC' }, { ini: 'JU', bg: '#C9DDE6' },
-];
-
-const POSTALES = [
-  { id: 'p0', who: 'Sofi', type: 'soli', when: 'hace 1 h', hugs: 34,
-    t: 'Una nena me explicó fracciones mejor que mi profe de secundaria. Volví con más ganas que las que llevé.' },
-  { id: 'p1', who: 'Meli', type: 'huerta', when: 'hace 2 h', hugs: 12,
-    t: 'Primera vez que planto algo. Una chica de Nutrición me explicó todo y ya tengo compañera para el miércoles.' },
-  { id: 'p2', who: 'Nico', type: 'desc', when: 'ayer', hugs: 27,
-    t: 'Veinte minutos sin celu y terminamos hablando de todo menos de parciales. Necesitaba eso más de lo que pensaba.' },
-  { id: 'p3', who: 'Juli', type: 'fore', when: 'sábado', hugs: 41,
-    t: 'Nuestro ceibo ya tiene placa: “Ronda de los jueves”. En marzo volvemos a verlo crecer.' },
-];
-
-const CIRCLES = [
-  { id: 'mate',   n: 'Mate sin pantallas',     m: 77, type: 'desc' },
-  { id: 'huerta', n: 'Huerteros DIIT',         m: 48, type: 'huerta' },
-  { id: 'cam',    n: 'Caminantes de los jueves', m: 31, type: 'cam' },
-  { id: 'fore',   n: 'Brigada nativa',         m: 22, type: 'fore' },
-  { id: 'soli',   n: 'Voluntariado en el barrio', m: 56, type: 'soli' },
-  { id: 'pares',  n: 'Tutores pares DIIT',     m: 39, type: 'pares' },
-];
-
 const PERKS = [
   { id: 'vivero', n: 'Vivero Las Talas',        cat: 'Vivero',      ic: 'fore',  c: 'var(--moss)',   where: 'San Justo · a 4 cuadras',   what: '15% en plantines y macetas', cost: 150 },
   { id: 'cafe',   n: 'Café de la Puerta 1',     cat: 'Cafetería',   ic: 'cup',   c: 'var(--soil)',   where: 'Frente al campus',          what: 'Café con medialuna',          cost: 80 },
@@ -205,22 +172,27 @@ const GROUPS = { nat: ['fore', 'huerta', 'rec', 'comp'], bien: ['desc', 'cam'], 
 
 const FACES = [['MB', '#F3C13A'], ['AG', '#E3EADC'], ['FS', '#F1C9B9'], ['IA', '#B9DCC2'], ['PV', '#C9DDE6']];
 const faces = n => FACES.slice(0, n).map(([t, b]) => `<span style="background:${b}">${t}</span>`).join('');
-const rondaFaces = () => RONDA.map(p => `<span style="background:${p.bg}">${p.ini}</span>`).join('');
 
 /* ---------- estado ---------- */
 const DEFAULT = { uni: 'unlam', earned: 340, agDay: null, onboarded: false, name: 'Lu', pauseMin: 5, interests: ['fore', 'desc'], carrera: 'Ingeniería', turno: 'Tarde', points: 340,
                   joined: ['desc', 'huerta'], done: [], pauses: 0, filter: 'all', mood: null, after: [],
-                  met: 0, buddies: [], circles: ['mate'], perks: [], q: '', hugs: [], posts: [], impTab: 'yo', codes: {}, withRonda: [] };
+                  met: 0, perks: [], q: '', impTab: 'yo', codes: {},
+                  role: 'student', adminName: 'Caro Benítez', adminOrg: 'Bienestar Estudiantil UNLaM', created: [] };
 let S = load();
 function load() { try { return { ...DEFAULT, ...JSON.parse(localStorage.getItem('desafio-bienestar') || '{}') }; } catch { return structuredClone(DEFAULT); } }
 function save() { try { localStorage.setItem('desafio-bienestar', JSON.stringify(S)); } catch {} }
 const isJoined = id => S.joined.includes(id);
 const isDone = id => S.done.includes(id);
+const esc = t => String(t ?? '').replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+const isAdmin = () => S.role === 'admin';
+const initials = n => String(n || '').trim().split(/\s+/).map(w => w[0] || '').join('').slice(0, 2).toUpperCase() || '··';
+/* actividades creadas por el administrador: se suman al listado de todos */
+(S.created || []).forEach(c => { if (!byId(c.id)) CH.push(c); });
 
 const LEVELS = [['Semilla', 0], ['Raíz', 250], ['Plantín', 500], ['Árbol', 1000]];
 /* el nivel se calcula con los puntos GANADOS: canjear no te baja de nivel */
 const LV_IC = ['seed', 'root', 'huerta', 'fore'];
-const LV_TXT = ['Arrancás acá. Ya podés canjear café, vivero y fotocopias.', 'Se suma la librería del barrio.', 'Se suman gimnasio y bicicletería.', 'Tu nombre en la placa del árbol de tu ronda y prioridad en las jornadas grandes.'];
+const LV_TXT = ['Arrancás acá. Ya podés canjear café, vivero y fotocopias.', 'Se suma la librería del barrio.', 'Se suman gimnasio y bicicletería.', 'Tu nombre en la placa de un árbol del campus y prioridad en las jornadas grandes.'];
 function level() {
   const e = S.earned ?? S.points;
   let i = LEVELS.findLastIndex(([, p]) => e >= p);
@@ -373,7 +345,7 @@ function tag(c, i) {
   const fits = !c.long && S.interests.includes(c.type);
   const st = isDone(c.id) ? ' done' : isJoined(c.id) ? ' joined' : '';
   const badge = isDone(c.id) ? '<span class="state done">Sellado</span>' : isJoined(c.id) ? '<span class="state">Anotado</span>' : '';
-  const ronda = c.ronda ? `<span class="t-ronda"><span class="faces sm">${RONDA.slice(1, 1 + Math.min(c.ronda, 3)).map(p => `<span style="background:${p.bg}">${p.ini}</span>`).join('')}</span>${c.ronda} de tu ronda</span>` : '';
+  const ronda = '';
   return `<button class="tag${st}" style="--c:${t.c}" data-go="detail" data-p="${c.id}" ${r(i)}>
     <div class="spine">${ic(c.type)}</div>
     <div class="body">
@@ -480,7 +452,7 @@ const VIEWS = {
     const pins = CH.filter(c => PINS[c.id]).map(c => `<button class="pin${c.featured ? ' hot' : ''}" style="--c:${TYPES[c.type].c};left:${PINS[c.id][0]}%;top:${PINS[c.id][1]}%" data-go="detail" data-p="${c.id}" title="${c.title}">${ic(c.type)}</button>`).join('');
     return `
       <div class="top" ${r(0)}><span class="mono" style="color:var(--ink-3)">Mar 17 nov · Semana 14</span>
-        <span class="top-r"><button class="bell" data-bell aria-label="Avisos">${ic('bell')}<i></i></button><button class="avatar" data-go="passport">${S.name.slice(0, 2)}</button></span></div>
+        <span class="top-r"><button class="bell" data-bell aria-label="Avisos">${ic('bell')}<i></i></button>${isAdmin() ? `<button class="adm-pill mono" data-tab="impact">${ic('build')}Admin</button>` : ''}<button class="avatar" data-go="passport">${S.name.slice(0, 2)}</button></span></div>
       <div class="greet pad" ${r(1)}>
         <h1 class="h-display">¡Hola, ${S.name}!</h1>
         <p>Mirá qué pasa esta semana en tu facu.</p>
@@ -537,13 +509,6 @@ const VIEWS = {
       </div>
 
       <div class="sec pad" ${r(5)}>
-        <button class="ronda-mini2" data-tab="community">
-          <span class="faces">${rondaFaces()}</span>
-          <span><span class="mono">Tu ronda · Comunidad</span><b>Ronda de los jueves</b><small>Meli: “¿Nos vemos en Puerta 2?”</small></span>
-          ${ic('arrow')}
-        </button>
-      </div>
-      <div class="sec pad" ${r(5)}>
         <button class="ally-card" data-go="perks">
           <span class="perk-ic">${ic(ally.ic)}</span>
           <span><span class="mono">Comercio aliado</span><b>${ally.n}</b><small>${ally.what} · ${ally.where}</small></span>
@@ -592,18 +557,21 @@ const VIEWS = {
       <label class="search pad" ${r(3)}>${ic('search')}<input id="q" type="search" placeholder="Buscar: estudio, huerta, maratón…" value="${S.q || ''}" autocomplete="off"></label>
       <div class="filters" ${r(3)}>${chips}</div>
       <div class="tags">${items.length ? items.map((c, i) => tag(c, 4 + i)).join('') : '<div class="empty">Nada por acá esta semana.</div>'}</div>
-      <div class="sec pad" ${r(10)}><button class="propose" data-propose>${ic('plus')}<span><b>Proponé un desafío</b><small>Tu idea pasa por Bienestar y, si suma, se publica para todos.</small></span></button></div>`;
+      <div class="sec pad" ${r(10)}>${isAdmin()
+        ? `<button class="propose" data-newact>${ic('plus')}<span><b>Crear actividad</b><small>Modo administrador: se publica al instante para todos.</small></span></button>`
+        : `<button class="propose" data-propose>${ic('plus')}<span><b>Proponé un desafío</b><small>Tu idea pasa por Bienestar y, si suma, se publica para todos.</small></span></button>`}</div>`;
   },
 
   detail(id) {
     const c = byId(id), t = TYPES[c.type];
-    const joined = isJoined(id), done = isDone(id), withR = S.withRonda.includes(id);
-    const cta = done
+    const joined = isJoined(id), done = isDone(id);
+    const cta = isAdmin() && c.created
+      ? `<button class="btn" data-editact="${id}">Editar actividad <span class="arrow">${ic('arrow')}</span></button>`
+      : done
       ? `<button class="btn ghost" disabled>${ic('check')} Sellado · +${c.pts} pts</button>`
       : joined
         ? `<button class="btn tomato" data-seal="${id}">${ic('seal')} Sellar asistencia</button>`
         : `<button class="btn" data-join="${id}">Sumarme <span class="arrow">${ic('arrow')}</span></button>`;
-    const peer = PEERS.find(p => p.type === c.type);
     return `
       <div class="detail-hero" style="--c:${t.c}">
         ${backBtn(true)}
@@ -637,15 +605,7 @@ const VIEWS = {
       <div class="detail-body">
         ${c.sponsor ? `<div class="sponsor" ${r(4)}><span class="mono">${c.long ? 'Impulsado por una empresa' : 'Desafío patrocinado'}</span><b>Con el apoyo de ${c.sponsor}</b><small>${c.sponsorTxt || 'Aporta contenedores y bolsas: el insumo no lo pagás vos ni la facultad.'}</small></div>` : ''}
         <div class="going" ${r(4)}><span class="faces">${faces(4)}<span class="more">+${c.going + (joined ? 1 : 0) - 4}</span></span>
-          <p><b>Participantes (${c.going + (joined ? 1 : 0)})</b> de ${c.cap} lugares.<br>${c.ronda ? `${c.ronda} son de tu ronda.` : '3 cursan con vos Análisis II.'}</p></div>
-
-        <div class="buddy" ${r(5)}>
-          <div class="eyebrow mono">No vayas solo</div>
-          <div class="buddy-row">
-            <button class="buddy-opt${withR ? ' on' : ''}" data-withronda="${id}">${ic('people')}<span><b>${withR ? 'Avisado a tu ronda' : 'Ir con mi ronda'}</b><small>${withR ? 'Meli y Leo dijeron que sí' : 'Les avisamos y se encuentran antes'}</small></span></button>
-            ${peer ? `<button class="buddy-opt${S.buddies.includes(peer.id) ? ' on' : ''}" data-buddy="${peer.id}"><span class="av" style="background:${peer.bg}">${peer.ini}</span><span><b>${S.buddies.includes(peer.id) ? 'Invitación enviada' : 'Invitar a ' + peer.n}</b><small>${peer.carrera}</small></span></button>` : ''}
-          </div>
-        </div>
+          <p><b>Participantes (${c.going + (joined ? 1 : 0)})</b> de ${c.cap} lugares.<br>3 cursan con vos Análisis II.</p></div>
 
         ${joined && !done ? `<div class="joined-row" ${r(5)}><button class="cal-btn" data-cal="${id}">${ic('bell')}Agregar a mi calendario</button><button class="link" data-unjoin="${id}">Ya no puedo ir</button></div>` : ''}
         <div class="sec" ${r(6)}><p>${c.text}</p></div>
@@ -660,78 +620,8 @@ const VIEWS = {
       <div class="cta-bar" ${r(9)}>${cta}</div>`;
   },
 
-  community() {
-    const im = impact();
-    const peers = PEERS.map(p => {
-      const inv = S.buddies.includes(p.id);
-      return `<div class="peer">
-        <span class="av lg" style="background:${p.bg}">${p.ini}</span>
-        <b>${p.n}</b><small>${p.carrera}</small>
-        <span class="peer-slot mono">${ic('clock')} libre ${p.slot}</span>
-        <span class="peer-also">${p.also}</span>
-        <button class="chip sm${inv ? ' on' : ''}" data-buddy="${p.id}">${inv ? ic('check') + 'Invitado' : 'Invitar a ' + TYPES[p.type].label.toLowerCase()}</button>
-      </div>`;
-    }).join('');
-    const posts = [...S.posts, ...POSTALES].map((p, i) => {
-      const hugged = S.hugs.includes(p.id);
-      return `<article class="postal" style="--c:${TYPES[p.type].c};--rot:${i % 2 ? .8 : -.8}deg" ${r(8 + i)}>
-        <header><span class="pill">${ic(p.type)} ${TYPES[p.type].label}</span><span class="mono">${p.who} · ${p.when}</span></header>
-        <p>“${p.t}”</p>
-        <button class="hug${hugged ? ' on' : ''}" data-hug="${p.id}">${ic('hug')}<span>${p.hugs + (hugged ? 1 : 0)}</span> abrazos</button>
-      </article>`;
-    }).join('');
-    const circles = CIRCLES.map(c => {
-      const on = S.circles.includes(c.id);
-      return `<button class="circle${on ? ' on' : ''}" style="--c:${TYPES[c.type].c}" data-circle="${c.id}">${ic(c.type)}<span><b>${c.n}</b><small>${c.m + (on ? 1 : 0)} estudiantes</small></span><i>${on ? 'Adentro' : 'Sumarme'}</i></button>`;
-    }).join('');
-    return `
-      <div class="page-h">
-        <div class="eyebrow mono" ${r(0)}>De estudiantes para estudiantes</div>
-        <h1 class="h-display" ${r(1)}>Comunidad</h1>
-        <p ${r(2)}>Ya conociste a <b>${im.people} personas</b> este cuatri. Nadie debería cursar solo.</p>
-      </div>
-
-      <div class="sec pad" ${r(3)}>
-        <div class="ronda-big">
-          <div class="rb-h"><div><span class="mono">Tu ronda · 5 personas · 4 carreras</span><h3>Ronda de los jueves</h3></div><span class="faces">${rondaFaces()}</span></div>
-          <div class="bubbles">
-            <div class="bub"><b>Meli</b>¿Nos vemos en Puerta 2 a las 12:25 para la caminata?</div>
-            <div class="bub"><b>Leo</b>Dale. Llevo agua para todos.</div>
-            <div class="bub me">Voy, salgo de Análisis II y voy derecho.</div>
-          </div>
-          <div class="rb-next">${ic('cam')}<span>Próximo: <b>Jue 19 · 12:30 · Vuelta al campus</b></span></div>
-          <p class="rb-note mono">Las rondas se arman por horarios libres en común y se renuevan cada cuatrimestre.</p>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-h pad" ${r(4)}><h2>Buscá dupla</h2><span class="mono" style="color:var(--ink-3)">mismo hueco libre</span></div>
-        <div class="peers" ${r(5)}>${peers}</div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-h pad" ${r(6)}><h2>Postales</h2><span class="mono" style="color:var(--ink-3)">después de cada desafío</span></div>
-        <div class="postales pad" ${r(7)}>${posts}</div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-h pad" ${r(12)}><h2>Círculos</h2></div>
-        <div class="circles pad" ${r(13)}>${circles}</div>
-      </div>
-
-      <div class="sec pad" ${r(14)}>
-        <div class="invite">
-          <div><span class="mono">Boca en boca</span><h3>Traé a alguien de tu cursada</h3><p>Cuando haga su primer desafío, suman <b>+20 pts</b> los dos.</p></div>
-          <button class="code mono" data-copy>LU-BIEN-26 ${ic('share')}</button>
-        </div>
-      </div>
-
-      <div class="sec pad" ${r(15)}>
-        <button class="care" data-help>${ic('ear')}<span><b>Espacio de escucha</b><small>Si necesitás hablar con alguien, Bienestar Estudiantil tiene espacios de escucha.</small></span>${ic('arrow')}</button>
-      </div>`;
-  },
-
   impact() {
+    if (isAdmin()) return adminView();
     const im = impact(), lv = level(), tab = S.impTab === 'inst' ? 'inst' : 'yo';
     const seg = `<div class="seg pad" ${r(2)}><div><button class="${tab === 'yo' ? 'on' : ''}" data-imp="yo">Yo</button><button class="${tab === 'inst' ? 'on' : ''}" data-imp="inst">Mi facu</button></div></div>`;
     if (tab === 'inst') {
@@ -787,11 +677,12 @@ const VIEWS = {
         <div class="eyebrow mono" ${r(0)}>Segundo cuatrimestre 2026</div>
         <h1 class="h-display" ${r(1)}>Tu perfil</h1>
       </div>
+      ${roleSwitch(2)}
       ${seg}
       <div class="sec pad" ${r(3)}>
         <div class="me-card">
-          <span class="photo">${S.name.slice(0, 2)}</span>
-          <span><b>${S.name}</b><small>${U().short} · ${S.carrera}</small></span>
+          <span class="photo">${esc(initials(S.name))}</span>
+          <span><b>${esc(S.name)}</b><small>${U().short} · ${S.carrera} · Turno ${S.turno.toLowerCase()}</small></span>
           <button class="mono me-go" data-editprof>Editar ${ic('arrow')}</button>
         </div>
       </div>
@@ -819,7 +710,7 @@ const VIEWS = {
       </div>
 
       <div class="sec">
-        <div class="sec-h pad" ${r(7)}><h2>Tus vínculos</h2><button class="link" data-tab="community">Comunidad</button></div>
+        <div class="sec-h pad" ${r(7)}><h2>Tus vínculos</h2></div>
         <div class="constel" ${r(8)}>${constellation(im.people)}</div>
       </div>
 
@@ -890,7 +781,7 @@ const VIEWS = {
         <div class="ht halftone"></div>
         <div class="r">
           <div class="photo">${S.name.slice(0, 2)}</div>
-          <dl><dt>Titular</dt><dd>${S.name}</dd><dt>Carrera</dt><dd>${S.carrera === 'Ingeniería' ? 'Ing. en Informática' : S.carrera}</dd><dt>Nivel</dt><dd>${level().name} · ${S.points} pts</dd><dt>Ronda</dt><dd>De los jueves</dd></dl>
+          <dl><dt>Titular</dt><dd>${S.name}</dd><dt>Carrera</dt><dd>${S.carrera === 'Ingeniería' ? 'Ing. en Informática' : S.carrera}</dd><dt>Nivel</dt><dd>${level().name} · ${S.points} pts</dd></dl>
         </div>
         <div class="mrz">DBU&lt;UNLAM&lt;&lt;${S.name.toUpperCase()}&lt;&lt;&lt;&lt;2C2026&lt;&lt;${String(S.points).padStart(5, '0')}&lt;&lt;&lt;</div>
       </div>
@@ -1164,8 +1055,6 @@ function afterSheet(id) {
     <p class="sub">Un toque. Es privado: solo lo ves vos, en tu historial.</p>
     <div style="height:14px"></div>${moodScale('after', afterState.mood)}
     <div class="q"><div class="mono">¿Conociste a alguien nuevo?</div><div class="chips">${met}</div></div>
-    <div class="q"><div class="mono">Dejá una postal para la comunidad (opcional)</div>
-      <textarea id="postal" rows="3" placeholder="Algo que te llevás de hoy…"></textarea></div>
     <div style="height:18px"></div>
     <button class="btn" data-afterdone>Listo</button>`);
 }
@@ -1217,19 +1106,147 @@ function redeemSheet(id) {
     <button class="btn" data-redeem="${id}">Canjear por ${p.cost} pts</button>`);
 }
 
+const clean = t => String(t || '').replace(/[<>"&]/g, '').trim();
+
+/* ---------- admin: perfil, alta y edición de actividades ---------- */
+function roleSwitch(i) {
+  return `<div class="role-sw pad" ${r(i)}><span class="mono">Usar como</span>
+    <div><button class="${isAdmin() ? '' : 'on'}" data-role="student">${ic('user')}Estudiante</button><button class="${isAdmin() ? 'on' : ''}" data-role="admin">${ic('build')}Administrador</button></div></div>`;
+}
+
+function adminView() {
+  const mine = CH.filter(c => c.created);
+  const total = CH.reduce((a, c) => a + c.going, 0), cap = CH.reduce((a, c) => a + c.cap, 0);
+  const row = (c, i) => `<div class="ag-item" style="--c:${TYPES[c.type].c}" ${r(8 + Math.min(i, 8))}>
+      <div class="ag-when"><b>${c.time}</b><span>${c.dow} ${c.day}</span></div>
+      <button class="ag-body" data-go="detail" data-p="${c.id}"><span class="mono">${TYPES[c.type].label} · ${durTxt(c.mins)}</span><b>${c.title}</b><small>${ic('people')}${c.going} de ${c.cap} inscriptos · +${c.pts} pts</small></button>
+      ${c.created ? `<button class="ag-act" data-editact="${c.id}" aria-label="Editar actividad">${ic('arrow')}</button>` : '<span></span>'}
+    </div>`;
+  const all = [...CH].sort((a, b) => a.day - b.day || a.time.localeCompare(b.time));
+  return `
+    <div class="page-h">
+      <div class="eyebrow mono" ${r(0)}>Panel de administración</div>
+      <h1 class="h-display" ${r(1)}>Tu perfil</h1>
+    </div>
+    ${roleSwitch(2)}
+    <div class="sec pad" ${r(3)}>
+      <div class="me-card admin">
+        <span class="photo">${esc(initials(S.adminName))}</span>
+        <span><b>${esc(S.adminName)}</b><small>Administrador · ${esc(S.adminOrg)}</small></span>
+        <button class="mono me-go" data-editadmin>Editar ${ic('arrow')}</button>
+      </div>
+    </div>
+    <div class="sec pad trio" ${r(4)}>
+      <div><b data-count="${CH.length}">0</b><span>actividades publicadas</span></div>
+      <div><b data-count="${total}">0</b><span>estudiantes inscriptos</span></div>
+      <div><b>${Math.round(total / cap * 100)}<small>%</small></b><span>de cupo ocupado</span></div>
+    </div>
+    <div class="sec pad" ${r(5)}>
+      <button class="propose" data-newact>${ic('plus')}<span><b>Crear actividad</b><small>Se publica en Desafíos para todos los estudiantes, con día, hora, lugar y cupo.</small></span></button>
+    </div>
+    <div class="sec">
+      <div class="sec-h pad" ${r(6)}><h2>Creadas por vos</h2><span class="mono" style="color:var(--ink-3)">${mine.length}</span></div>
+      <div class="ag-list pad">${mine.length ? mine.map(row).join('') : `<div class="ag-empty" ${r(7)}><p>Todavía no creaste ninguna actividad.</p><button class="btn sm" data-newact>Crear la primera ${ic('arrow')}</button></div>`}</div>
+    </div>
+    <div class="sec">
+      <div class="sec-h pad" ${r(12)}><h2>Todas las actividades</h2><span class="mono" style="color:var(--ink-3)">semana 16–22 nov</span></div>
+      <div class="ag-list pad">${all.map((c, i) => row(c, i + 4)).join('')}</div>
+    </div>
+    <div class="sec pad" ${r(16)}>
+      <div class="privacy">${ic('check')}<p><b>Ves datos agregados.</b> Cantidad de inscriptos y asistencia, nunca cómo se siente cada estudiante.</p></div>
+    </div>`;
+}
+
+const DOWS = { LUN: 'Lunes', MAR: 'Martes', 'MIÉ': 'Miércoles', JUE: 'Jueves', VIE: 'Viernes', 'SÁB': 'Sábado', DOM: 'Domingo' };
+const dowFor = n => n === TODAY ? 'Hoy' : n === TODAY + 1 ? 'Mañana' : DOWS[WEEK.find(w => w.n === n).d];
+let actType = 'fore';
+function activitySheet(id) {
+  const c = id ? byId(id) : null;
+  const un = t => String(t ?? '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+  const val = t => esc(un(t));
+  actType = c ? c.type : 'fore';
+  const types = Object.entries(TYPES).map(([k, v]) => `<button type="button" class="chip${k === actType ? ' on' : ''}" data-ptype="${k}">${ic(k)}${v.label}</button>`).join('');
+  const days = WEEK.filter(w => w.n >= TODAY).map(w => `<option value="${w.n}"${(c ? c.day : TODAY + 1) === w.n ? ' selected' : ''}>${dowFor(w.n)} ${w.n}/11</option>`).join('');
+  openSheet(`
+    <h2>${c ? 'Editar actividad' : 'Crear actividad'}</h2>
+    <p class="sub">${c ? 'Los cambios se ven al instante en Desafíos.' : 'Se publica para todos los estudiantes y se notifica con día, horario y lugar.'}</p>
+    <div class="form">
+      <label><span class="mono">Título *</span><input id="af-title" maxlength="80" placeholder="Ej: Compost en el comedor" value="${c ? val(c.title) : ''}"></label>
+      <div class="q"><div class="mono">Tipo</div><div class="chips">${types}</div></div>
+      <div class="two"><label><span class="mono">Día</span><select id="af-day">${days}</select></label><label><span class="mono">Hora</span><input id="af-time" type="time" value="${c ? c.time : '13:00'}"></label></div>
+      <label><span class="mono">Lugar *</span><input id="af-place" maxlength="90" placeholder="Ej: Patio del Dto. de Humanidades" value="${c ? val(c.place) : ''}"></label>
+      <div class="three"><label><span class="mono">Duración (min)</span><input id="af-mins" type="number" min="5" step="5" value="${c ? c.mins : 30}"></label><label><span class="mono">Cupo</span><input id="af-cap" type="number" min="1" value="${c ? c.cap : 20}"></label><label><span class="mono">Puntos</span><input id="af-pts" type="number" min="5" step="5" value="${c ? c.pts : 30}"></label></div>
+      <label><span class="mono">Descripción</span><textarea id="af-text" rows="3" placeholder="Qué se hace, para quién, qué se logra…">${c ? val(c.text) : ''}</textarea></label>
+      <label><span class="mono">Qué llevar · separado por comas</span><input id="af-bring" placeholder="Guantes, botella de agua" value="${c ? val(c.bring.join(', ')) : ''}"></label>
+    </div>
+    <div style="height:18px"></div>
+    <button class="btn" data-saveact="${c ? c.id : ''}">${c ? 'Guardar cambios' : 'Publicar y notificar'}</button>
+    ${c ? `<div style="height:10px"></div><button class="btn ghost danger" data-delact="${c.id}">Eliminar actividad</button>` : ''}`);
+}
+
+function saveActivity(id) {
+  const v = k => (document.getElementById(k)?.value || '').trim();
+  const title = v('af-title'), place = v('af-place');
+  const missing = [['af-title', title], ['af-place', place]].filter(([, x]) => !x);
+  document.querySelectorAll('#af-title,#af-place').forEach(el => el.classList.remove('err'));
+  if (missing.length) { missing.forEach(([k]) => document.getElementById(k).classList.add('err')); document.getElementById(missing[0][0]).focus(); return toast(`${ic('pin')} Completá título y lugar`); }
+  const prev = id ? byId(id) : null;
+  const day = +v('af-day') || TODAY + 1, mins = Math.max(5, +v('af-mins') || 30), cap = Math.max(1, +v('af-cap') || 20);
+  const a = {
+    id: prev ? prev.id : 'a' + Date.now().toString(36), created: true, type: actType,
+    day, dow: dowFor(day), time: v('af-time') || '13:00', mins, pts: Math.max(5, +v('af-pts') || 30), long: mins >= 90,
+    title: esc(title), place: esc(place), org: esc(S.adminOrg), going: prev ? Math.min(prev.going, cap) : 0, cap,
+    text: esc(v('af-text')) || `Actividad organizada por ${esc(S.adminOrg)}. Llegás, te sumás y te vas con algo hecho.`,
+    bring: v('af-bring') ? v('af-bring').split(',').map(x => esc(x.trim())).filter(Boolean) : ['Ganas de participar'],
+    yieldN: String(cap), yieldT: 'lugares para estudiantes de toda la facu.',
+  };
+  if (prev) { CH[CH.indexOf(prev)] = a; S.created = S.created.map(x => x.id === a.id ? a : x); }
+  else { CH.push(a); S.created.push(a); }
+  save(); closeSheet(); refresh();
+  toast(prev ? `${ic('check')} Cambios guardados` : `${ic('bell')} Publicada · notificamos a los estudiantes`);
+}
+
+function deleteActivity(id) {
+  const c = byId(id); if (!c?.created) return;
+  CH.splice(CH.indexOf(c), 1);
+  S.created = S.created.filter(x => x.id !== id);
+  S.joined = S.joined.filter(x => x !== id); S.done = S.done.filter(x => x !== id);
+  save(); closeSheet();
+  if (current.name === 'detail' && current.param === id) { trail.length = 0; return go('impact'); }
+  refresh(); toast(`${ic('check')} Actividad eliminada`);
+}
+
+function adminSheet() {
+  openSheet(`
+    <h2>Editar perfil de administrador</h2>
+    <p class="sub">Así te ven los estudiantes en las actividades que publicás.</p>
+    <div class="form">
+      <label><span class="mono">Nombre y apellido</span><input id="ad-name" maxlength="40" value="${esc(S.adminName)}"></label>
+      <label><span class="mono">Área u organización</span><input id="ad-org" maxlength="60" value="${esc(S.adminOrg)}"></label>
+    </div>
+    <div style="height:18px"></div><button class="btn" data-saveadmin>Guardar</button>`);
+}
+
 function profileSheet() {
   openSheet(`
-    <h2>Tu perfil</h2>
+    <h2>Editar perfil</h2>
     <p class="sub">La app se adapta a tu universidad: colores, lugares y actividades.</p>
     <div class="prof flat">
+      <div class="form" style="margin-top:0"><label><span class="mono">Nombre</span><input id="pf-name" maxlength="24" value="${esc(S.name)}" autocomplete="given-name"></label></div>
+      <div class="pf-field"><span class="mono">Turno</span>
+        <div class="chips">${['Mañana', 'Tarde', 'Noche'].map(t => `<button class="chip sm${S.turno === t ? ' on' : ''}" data-pturno="${t}">${t}</button>`).join('')}</div>
+      </div>
       <div class="pf-field"><span class="mono">Universidad</span>
         <div class="pf-unis">${Object.entries(UNIS).map(([k, u]) => `<button class="pf-u${(S.uni || 'unlam') === k ? ' on' : ''}" data-puni="${k}" style="--uc:${u.color}"><i></i><span><b>${u.label}</b><small>${u.sub}</small></span></button>`).join('')}</div>
       </div>
       <div class="pf-field"><span class="mono">Carrera</span>
         <div class="chips">${U().deps.map(c => `<button class="chip sm${S.carrera === c ? ' on' : ''}" data-pcar="${c}">${c}</button>`).join('')}</div>
       </div>
+      <div class="pf-field"><span class="mono">Intereses</span>
+        <div class="chips">${Object.entries(TYPES).map(([k, v]) => `<button class="chip sm${S.interests.includes(k) ? ' on' : ''}" data-pint="${k}">${ic(k)}${v.label}</button>`).join('')}</div>
+      </div>
     </div>
-    <div style="height:16px"></div><button class="btn" data-close>Listo</button>`);
+    <div style="height:16px"></div><button class="btn" data-saveprof>Guardar</button>`);
 }
 
 function levelsSheet() {
@@ -1294,7 +1311,7 @@ document.addEventListener('click', e => {
   const d = el.dataset;
 
   if (el.id === 'push') { $('#push').classList.remove('on'); return go('detail', 'huerta'); }
-  if (el.id === 'resetBtn') { try { localStorage.removeItem('desafio-bienestar'); } catch {} S = { ...structuredClone(DEFAULT), uni: S.uni }; pushShown = false; trail.length = 0; closeSheet(); return go('welcome'); }
+  if (el.id === 'resetBtn') { try { localStorage.removeItem('desafio-bienestar'); } catch {} S = { ...structuredClone(DEFAULT), uni: S.uni }; for (let i = CH.length - 1; i >= 0; i--) if (CH[i].created) CH.splice(i, 1); pushShown = false; trail.length = 0; closeSheet(); return go('welcome'); }
 
   if ('close' in d) closeSheet();
 
@@ -1330,8 +1347,7 @@ document.addEventListener('click', e => {
   if (d.join) { S.joined.push(d.join); save(); toast(`${ic('bell')} Anotado · te avisamos 1 h antes`); return refresh(); }
   if (d.seal) return sealSheet(d.seal);
   if (d.cal) return toast(`${ic('bell')} Agregado a tu calendario · te avisamos 1 h antes`);
-  if (d.unjoin) { S.joined = S.joined.filter(x => x !== d.unjoin); S.withRonda = S.withRonda.filter(x => x !== d.unjoin); save(); toast(`${ic('check')} Liberaste tu lugar para otra persona`); return refresh(); }
-  if (d.withronda) { if (!S.withRonda.includes(d.withronda)) { S.withRonda.push(d.withronda); save(); toast(`${ic('people')} Le avisamos a tu ronda`); } return refresh(); }
+  if (d.unjoin) { S.joined = S.joined.filter(x => x !== d.unjoin); save(); toast(`${ic('check')} Liberaste tu lugar para otra persona`); return refresh(); }
 
   /* salud mental */
   if (d.mood !== undefined) { S.mood = +d.mood || null; save(); return refresh(); }
@@ -1342,20 +1358,14 @@ document.addEventListener('click', e => {
   if (d.after) { afterState.mood = +d.after; return afterSheet(afterState.id); }
   if (d.met) { afterState.met = d.met; return afterSheet(afterState.id); }
   if ('afterdone' in d) {
-    const txt = ($('#postal')?.value || '').trim();
     const c = byId(afterState.id);
     if (afterState.mood) S.after.push(afterState.mood);
     S.met += +(afterState.met || 0);
-    if (txt) S.posts.unshift({ id: 'm' + Date.now(), who: S.name, type: c.type, when: 'recién', hugs: 0, t: txt.replace(/</g, '&lt;') });
     save(); closeSheet(); afterState = { id: null, mood: null, met: null };
     toast(`${ic('check')} Sellado <b>+${c.pts} pts</b> · mirá tus beneficios`);
     return refresh();
   }
 
-  /* comunidad */
-  if (d.buddy) { if (!S.buddies.includes(d.buddy)) { S.buddies.push(d.buddy); save(); toast(`${ic('chat')} Invitación enviada a ${PEERS.find(p => p.id === d.buddy).n}`); } return refresh(); }
-  if (d.hug) { S.hugs = S.hugs.includes(d.hug) ? S.hugs.filter(x => x !== d.hug) : [...S.hugs, d.hug]; save(); return refresh(); }
-  if (d.circle) { S.circles = S.circles.includes(d.circle) ? S.circles.filter(x => x !== d.circle) : [...S.circles, d.circle]; save(); return refresh(); }
   if ('copy' in d) { try { navigator.clipboard?.writeText('LU-BIEN-26'); } catch {} return toast(`${ic('share')} Código copiado · compartilo`); }
 
   /* campanita y beneficios */
@@ -1373,6 +1383,26 @@ document.addEventListener('click', e => {
   if ('howlv' in d) return levelsSheet();
   if (d.puni) { S.uni = d.puni; if (!U().deps.includes(S.carrera)) S.carrera = U().deps[0]; save(); applyUni(); refresh(); return profileSheet(); }
   if (d.pcar) { S.carrera = d.pcar; save(); refresh(); return profileSheet(); }
+  if (d.pturno) { S.turno = d.pturno; save(); refresh(); return profileSheet(); }
+  if (d.pint) { S.interests = S.interests.includes(d.pint) ? S.interests.filter(x => x !== d.pint) : [...S.interests, d.pint]; save(); refresh(); return profileSheet(); }
+  if ('saveprof' in d) { if (!S.name) S.name = 'Lu'; save(); closeSheet(); refresh(); return toast(`${ic('check')} Perfil actualizado`); }
+
+  /* admin */
+  if (d.role) {
+    if (S.role === d.role) return;
+    S.role = d.role; save(); trail.length = 0;
+    toast(d.role === 'admin' ? `${ic('build')} Modo administrador` : `${ic('user')} Modo estudiante`);
+    return go('impact', null, { still: current.name === 'impact' });
+  }
+  if ('editadmin' in d) return adminSheet();
+  if ('saveadmin' in d) {
+    S.adminName = clean($('#ad-name')?.value) || S.adminName; S.adminOrg = clean($('#ad-org')?.value) || S.adminOrg;
+    save(); closeSheet(); refresh(); return toast(`${ic('check')} Perfil de administrador actualizado`);
+  }
+  if ('newact' in d) return activitySheet();
+  if (d.editact) return activitySheet(d.editact);
+  if (d.saveact !== undefined) return saveActivity(d.saveact || null);
+  if (d.delact) return deleteActivity(d.delact);
   if (d.agday) { S.agDay = +d.agday && S.agDay !== +d.agday ? +d.agday : null; save(); return refresh(); }
   if (d.pmin) { S.pauseMin = +d.pmin; save(); return go('pause', null, { still: true }); }
 
@@ -1381,8 +1411,8 @@ document.addEventListener('click', e => {
 
   /* propuestas / institución */
   if ('propose' in d) return proposeSheet(false);
-  if ('publish' in d) return proposeSheet(true);
-  if (d.ptype) { el.parentElement.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === el)); return; }
+  if ('publish' in d) return activitySheet();
+  if (d.ptype) { actType = d.ptype; el.parentElement.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === el)); return; }
   if (d.sendprop !== undefined) { closeSheet(); return toast(d.sendprop === '1' ? `${ic('bell')} Publicado · notificado a 1.284 estudiantes` : `${ic('check')} Propuesta enviada a Bienestar`); }
 
   if ('endpause' in d) {
@@ -1406,6 +1436,7 @@ view.addEventListener('scroll', () => $('#screen').classList.toggle('scrolled', 
 })();
 $('#sheet').addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 document.addEventListener('input', e => {
+  if (e.target.id === 'pf-name') { S.name = clean(e.target.value); save(); return; }
   if (e.target.id === 'q') {
     S.q = e.target.value; const pos = e.target.selectionStart;
     go('list', null, { still: true });

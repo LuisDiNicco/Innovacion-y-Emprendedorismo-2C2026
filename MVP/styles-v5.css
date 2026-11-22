@@ -407,3 +407,21 @@
 .demo-toolbar .uni-switch button.on{background:var(--uc);color:#fff}
 .uni-switch button.on i{background:#fff}
 @media (max-width:560px){.uni-switch .mono{display:none}}
+
+/* ---------- perfil: estudiante / administrador ---------- */
+.role-sw{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}
+.role-sw>.mono{font-size:10px;color:var(--ink-3)}
+.role-sw>div{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--paper-2)}
+.role-sw button{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:10px;font-weight:600;font-size:13px;color:var(--ink-2);transition:background .25s,color .25s}
+.role-sw button .ic{width:16px;height:16px}
+.role-sw button.on{background:var(--ink);color:var(--paper)}
+.me-card.admin{background:var(--ink)}
+.me-card.admin .photo{background:var(--sun)}
+.adm-pill{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:10px;margin-right:6px}
+.adm-pill .ic{width:14px;height:14px}
+.form .three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.form select,.form textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#FBF7EE;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s}
+.form select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px;background-repeat:no-repeat;padding-right:32px}
+.form select:focus,.form textarea:focus{border-color:var(--unlam)}
+.form input.err{border-color:var(--tomato);background:#FDF0EC}
+.btn.ghost.danger{color:var(--tomato);border-color:currentColor}

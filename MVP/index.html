@@ -16,21 +16,98 @@
 <link rel="stylesheet" href="styles-v5.css">
 <link rel="stylesheet" href="styles-report.css">
 <link rel="stylesheet" href="roles.css">
+<link rel="stylesheet" href="shell.css">
 </head>
 <body>
 
 <header class="site-header">
   <div class="site-header-inner">
-    <a class="site-brand" href="#top">Desafío Bienestar</a>
-    <nav class="site-nav" aria-label="Navegación del sitio">
-      <a class="site-demo" href="#demo">Demo</a>
-      <a href="#entrega">Proyecto</a>
+    <a class="site-brand" href="#demo">Desafío Bienestar</a>
+    <nav class="site-nav" id="siteNav" aria-label="Secciones del sitio">
+      <a href="#demo" data-tab="demo">Demo</a>
+      <a href="#proyecto" data-tab="proyecto">Proyecto</a>
     </nav>
   </div>
 </header>
 
-<div class="stage" id="top" tabindex="-1">
+<!-- ======================================================================
+     TAB 1 · DEMO: la PC (administrador y comercio) y el celu (estudiante),
+     conectados entre sí. Nada más en pantalla.
+     ====================================================================== -->
+<section class="demo" id="panel-demo" aria-label="Demo de la app">
+  <h1 class="sr-only">Desafío Bienestar · demo interactiva</h1>
 
+  <div class="amb" aria-hidden="true">
+    <i class="amb-blob b1"></i><i class="amb-blob b2"></i>
+    <i class="amb-sun"></i>
+    <svg class="lf l1" viewBox="0 0 64 64"><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z"/></svg>
+    <svg class="lf l3" viewBox="0 0 64 64"><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z"/></svg>
+    <svg class="lf l5" viewBox="0 0 64 64"><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z"/></svg>
+    <svg class="lf l7" viewBox="0 0 64 64"><path d="M32 52C22 42 22 22 32 6c10 16 10 36 0 46Z"/></svg>
+    <!-- jardín del fondo: lo arma el script (mismo dibujo que el de la app) -->
+    <div class="amb-garden" id="ambGarden"></div>
+  </div>
+
+  <div class="scene" id="scene">
+
+    <!-- controles de la demo -->
+    <div class="dm-bar">
+      <div class="dm-seg" role="group" aria-label="Ver la app como universidad">
+        <button type="button" data-uni="unlam" class="on" style="--uc:#00873E"><i></i>UNLaM</button>
+        <button type="button" data-uni="fiuba" style="--uc:#1F5FA8"><i></i>UBA</button>
+        <button type="button" data-uni="utn" style="--uc:#C8102E"><i></i>UTN</button>
+      </div>
+      <button type="button" class="dm-reset" id="dmReset"><span aria-hidden="true">↺</span> Reiniciar demo</button>
+      <button type="button" class="dm-reset dm-pc" id="pcToggle" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3zM9 20h6M12 16v4"/></svg><span>Ocultar PC</span></button>
+    </div>
+
+    <!-- al costado del celu: qué pantalla es -->
+    <div class="ph-side">
+      <span class="mono">En el celular</span>
+      <b>Estudiante</b>
+      <button type="button" class="dm-back" data-backfor="ph" disabled aria-label="Volver a la pantalla anterior"><span aria-hidden="true">←</span> Atrás</button>
+    </div>
+
+    <!-- PC -->
+    <div class="dev dev-pc" id="devPc">
+      <div class="dev-cap">
+        <button type="button" class="dm-back" data-backfor="pc" disabled aria-label="Volver a la pantalla anterior"><span aria-hidden="true">←</span> Atrás</button>
+        <span class="mono">En la PC</span>
+        <div class="dm-seg" id="pcRole" role="group" aria-label="Rol en la PC">
+          <button type="button" data-prole="admin" class="on" style="--uc:#0D2B1B"><i></i>Administrador</button>
+          <button type="button" data-prole="shop" style="--uc:#B8860B"><i></i>Comercio</button>
+        </div>
+      </div>
+      <div class="dev-in">
+        <div class="monitor">
+          <div class="mon-bezel"><span class="mon-cam"></span>
+            <div class="mon-screen"><iframe id="pcFrame" title="Panel de administración y comercio" src="app.html?role=admin" allow="clipboard-write"></iframe></div>
+          </div>
+          <div class="mon-neck"></div>
+          <div class="mon-base"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Celular -->
+    <div class="dev dev-ph" id="devPh">
+      <div class="dev-cap"><span class="mono">En el celular</span><b>Estudiante</b><button type="button" class="dm-back" data-backfor="ph" disabled aria-label="Volver a la pantalla anterior"><span aria-hidden="true">←</span> Atrás</button></div>
+      <div class="dev-in">
+        <div class="phone-d">
+          <div class="ph-screen"><iframe id="phFrame" title="App del estudiante" src="app.html?role=student" allow="clipboard-write"></iframe></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================================================================
+     TAB 2 · PROYECTO: todo el trabajo (qué es, FODA, empatía, canvas…)
+     ====================================================================== -->
+<div class="proyecto" id="panel-proyecto" hidden>
+
+<div class="stage pj-stage" id="top" tabindex="-1">
   <!-- ================= IZQUIERDA: qué es ================= -->
   <aside class="side side-l">
     <div class="mono kicker">La app de bienestar para estudiantes universitarios</div>
@@ -49,48 +126,6 @@
     </div>
     <div class="mono starts">Piloto 2C2026 · UNLaM, UBA y UTN</div>
   </aside>
-
-  <!-- ================= CENTRO: el teléfono ================= -->
-  <section class="phone-col" id="demo" aria-label="Demo interactiva" tabindex="-1">
-    <div class="demo-toolbar">
-      <button id="backBtn" type="button" data-back disabled aria-label="Volver a la pantalla anterior"><span aria-hidden="true">←</span> Atrás</button>
-      <div class="sw-group"><div class="uni-switch" role="group" aria-label="Ver la app como" title="Ver como"><button type="button" data-setuni="unlam" style="--uc:#00873E"><i></i>UNLaM</button><button type="button" data-setuni="fiuba" style="--uc:#1F5FA8"><i></i>UBA</button><button type="button" data-setuni="utn" style="--uc:#C8102E"><i></i>UTN</button></div><div class="uni-switch role-switch" role="group" aria-label="Usar la app como" title="Modo"><button type="button" data-role="student" class="on" style="--uc:#0D2B1B"><i></i>Estudiante</button><button type="button" data-role="admin" style="--uc:#0D2B1B"><i></i>Admin</button><button type="button" data-role="shop" style="--uc:#B8860B"><i></i>Comercio</button></div></div>
-      <button id="resetBtn" type="button"><span aria-hidden="true">↺</span> Reiniciar</button>
-    </div>
-    <div class="phone-fit"><div class="phone">
-      <div class="screen" id="screen">
-        <div class="statusbar mono"><span>9:41</span><span class="sb-r"><i></i><i></i><i></i> 82%</span></div>
-
-        <!-- Notificación push simulada -->
-        <button class="push" id="push" aria-live="polite">
-          <span class="push-ic"></span>
-          <span class="push-b">
-            <span class="push-h mono">DESAFÍO BIENESTAR · ahora</span>
-            <strong>Mañana 13:00 · Huerta del Dto. Ingeniería</strong>
-            <span>Quedan 4 lugares y va Sofi, de Nutrición. Son 15 minutos.</span>
-          </span>
-        </button>
-
-        <div id="view" class="view" tabindex="-1"></div>
-
-        <nav class="tabbar hide" id="tabbar" aria-label="Navegación de la app" inert>
-          <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5V20h-5v-5.5H9V20H4z"/></svg><span>Inicio</span></button>
-          <button data-tab="list"><svg viewBox="0 0 24 24"><path d="M9 4h10M9 12h10M9 20h10"/><circle cx="4.5" cy="4" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="20" r="1.2"/></svg><span>Desafíos</span></button>
-          <button data-tab="stamp" class="tab-stamp" aria-label="Sellar asistencia"><span class="seal"><svg viewBox="0 0 24 24"><path d="M9 3h6v5l3 3v3H6v-3l3-3zM5 18h14M7 21h10"/></svg></span><span>Sellar</span></button>
-          <button data-tab="agenda"><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4ZM4 10h16M8 3.5V7M16 3.5V7M8 14h2M14 14h2M8 17h2"/></svg><span>Agenda</span></button>
-          <button data-tab="impact"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20.5c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg><span>Perfil</span></button>
-        </nav>
-
-        <div class="scrim" id="scrim"></div>
-        <section class="sheet" id="sheet" role="dialog" aria-labelledby="sheetTitle" aria-hidden="true" inert></section>
-
-        <div class="toast" id="toast"></div>
-        <div class="stamp-fx" id="stampFx"></div>
-      </div>
-    </div></div>
-
-
-  </section>
 
   <!-- ================= DERECHA: el proyecto, en diapositivas ================= -->
   <aside class="side side-r">
@@ -148,23 +183,8 @@
         <button class="dn" data-deck="1" aria-label="Siguiente">→</button>
       </div>
     </div>
-    <div class="tour" id="tour">
-      <button class="tour-play" id="tourPlay">▶ Ver recorrido</button>
-      <div class="tour-cap">
-        <span class="mono" id="tourN">Recorrido guiado</span>
-        <b id="tourT"></b>
-        <p id="tourP"></p>
-      </div>
-      <div class="tour-ctl">
-        <button class="tour-arrow" id="tourPrev" aria-label="Paso anterior">←</button>
-        <div class="tour-dots" id="tourDots"></div>
-        <button class="tour-arrow" id="tourNext" aria-label="Paso siguiente">→</button>
-      </div>
-      <i class="tour-bar"><i id="tourBar"></i></i>
-    </div>
   </aside>
 </div>
-
 
 <!-- ================= LA ENTREGA: FODA · EMPATÍA · LEAN CANVAS ================= -->
 <main class="report" id="entrega" tabindex="-1">
@@ -707,8 +727,8 @@
   </footer>
 </main>
 
-<script src="app.js"></script>
-<script src="roles.js"></script>
+</div>
+
 <script>
 /* carrusel del proyecto */
 (() => {
@@ -733,7 +753,6 @@
   window.deckShow = show;
 })();
 </script>
-<script src="tour.js"></script>
 <script>
 /* calculadora de la sección 05 */
 (() => {
@@ -756,6 +775,188 @@ document.querySelectorAll(".rp-dlg").forEach(d => { d.addEventListener("click", 
   document.getElementById("entrega").classList.add("reveal-enabled");
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12, rootMargin: "0px 0px -6% 0px" });
   els.forEach(e => io.observe(e));
+})();
+</script>
+<script>
+/* ---------- tabs: Demo / Proyecto ---------- */
+(() => {
+  const $ = s => document.querySelector(s);
+  const panels = { demo: $('#panel-demo'), proyecto: $('#panel-proyecto') };
+  const links = [...document.querySelectorAll('#siteNav [data-tab]')];
+  let cur = null;
+
+  function show(tab, target) {
+    const switching = cur !== tab;
+    if (switching) {
+      cur = tab;
+      Object.entries(panels).forEach(([k, el]) => { el.hidden = k !== tab; });
+      links.forEach(a => { const on = a.dataset.tab === tab; a.classList.toggle('on', on); on ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'); });
+      document.title = tab === 'demo' ? 'Demo · Desafío Bienestar' : 'El proyecto · Desafío Bienestar';
+      document.documentElement.classList.toggle('is-demo', tab === 'demo');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      if (tab === 'demo') window.dispatchEvent(new Event('resize'));
+    }
+    if (tab === 'proyecto') {
+      const el = target && document.getElementById(target);
+      if (!el) return window.scrollTo({ top: 0, behavior: 'instant' });
+      /* viniendo de la otra tab, la página recién se arma: salto directo (y se corrige una vez que todo se acomodó) */
+      if (switching) {
+        const jump = () => el.scrollIntoView({ behavior: 'instant', block: 'start' });
+        requestAnimationFrame(() => requestAnimationFrame(jump)); setTimeout(jump, 350);
+      }   /* dentro de la misma tab, el navegador ya hace el scroll suave al ancla */
+    }
+  }
+  function route() {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (!h || h === 'demo') return show('demo');
+    if (h === 'proyecto') return show('proyecto');
+    if (panels.proyecto.querySelector('#' + CSS.escape(h))) return show('proyecto', h);
+    show('demo');
+  }
+  addEventListener('hashchange', route);
+  route();
+})();
+
+/* ---------- demo: la PC y el celu se escalan para entrar enteros en pantalla ---------- */
+(() => {
+  const $ = s => document.querySelector(s);
+  const demo = $('#panel-demo'), scene = $('#scene'), pcF = $('#pcFrame'), phF = $('#phFrame');
+  /* tamaños de diseño de cada dispositivo (en px "reales"); en pantalla se escalan con --kp / --kc */
+  const PC = { w: 1000, h: 696 }, PH = { w: 412, h: 866 };
+  const RATIO = .85;         /* la PC acompaña: un poco más chica que el celu, que es el protagonista */
+  let showPc = true;
+  try { showPc = localStorage.getItem('demo-show-pc') !== '0'; } catch {}
+
+  function fit() {
+    if (demo.hidden) return;
+    const W = demo.clientWidth;
+    const H = innerHeight - $('.site-header').offsetHeight;
+    const set = (cls, kp, kc) => {
+      scene.classList.toggle('wide', cls === 'wide'); scene.classList.toggle('stack', cls === 'stack');
+      scene.style.setProperty('--kp', kp); scene.style.setProperty('--kc', kc);
+    };
+
+    /* lado a lado: se calcula con lo que de verdad hay (ancho, alto, controles y textos) */
+    if (W >= 860 && W / H >= 1.15) {
+      set('wide', 1, 1);   /* primero se mide sin escalar los textos y la barra */
+      const px = Math.max(12, W * .018), pt = Math.max(8, H * .012), pb = Math.max(10, H * .018), gap = Math.max(16, W * .02);
+      const side = $('.ph-side').offsetWidth, capC = $('.dev-pc .dev-cap').offsetHeight, barH = $('.dm-bar').offsetHeight;
+      scene.style.setProperty('--px', px + 'px'); scene.style.setProperty('--pt', pt + 'px'); scene.style.setProperty('--pb', pb + 'px');
+      scene.style.setProperty('--sidew', side + 'px');
+      if (!showPc) {     /* solo el celu, centrado y lo más grande posible */
+        const kp = Math.min(1.35, (H - pt - pb) / PH.h, (W - 2 * px - 2 * side - 2 * gap) / PH.w);
+        return set('wide', kp, kp);
+      }
+      const Wa = W - 2 * px - 4 * gap - side;
+      const kp = Math.min(1.35, (H - pt - pb) / PH.h, Wa / (PH.w + PC.w * RATIO));
+      const kc = Math.min(kp * RATIO, (Wa - PH.w * kp) / PC.w, (H - pt - pb - capC - barH - 12) / PC.h);
+      if (kp * PH.h >= 460) return set('wide', kp, kc);
+    }
+    /* pantallas angostas o verticales: uno abajo del otro, cada uno al ancho disponible */
+    const avail = Math.min(W, document.documentElement.clientWidth) - 32;
+    set('stack', Math.min(1, avail / PH.w), Math.min(1, avail / PC.w));
+  }
+
+  /* Mostrar / ocultar la PC: con la PC oculta, foco total en el celu */
+  const pcBtn = $('#pcToggle');
+  function applyPc() {
+    scene.classList.toggle('solo', !showPc);
+    pcBtn.setAttribute('aria-pressed', String(showPc));
+    pcBtn.querySelector('span').textContent = showPc ? 'Ocultar PC' : 'Mostrar PC';
+    fit();
+  }
+  pcBtn.addEventListener('click', () => {
+    showPc = !showPc;
+    try { localStorage.setItem('demo-show-pc', showPc ? '1' : '0'); } catch {}
+    applyPc();
+  });
+
+  new ResizeObserver(fit).observe(demo);
+  addEventListener('resize', fit);
+  applyPc();
+
+  /* ---------- jardín del fondo (mismo dibujo que el jardín de la app) ---------- */
+  (() => {
+    const G = 232, W = 1600;
+    const tree = (x, h, sd) => `<g class="sw" style="--sd:${sd}s">
+      <path d="M${x} ${G} L${x} ${G - h}" stroke="#4A3424" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="${x}" cy="${G - h - 8}" r="34" fill="#00873E"/><circle cx="${x - 23}" cy="${G - h + 9}" r="22" fill="#2FA65A"/>
+      <circle cx="${x + 21}" cy="${G - h + 5}" r="18" fill="#005A29"/><circle cx="${x}" cy="${G - h - 8}" r="34" fill="url(#gdots)"/></g>`;
+    const flower = (x, h, col, sd) => { const cy = G - h;
+      const petals = [0, 72, 144, 216, 288].map(a => `<ellipse cx="${x}" cy="${cy - 8}" rx="5.5" ry="9" fill="${col}" transform="rotate(${a} ${x} ${cy})"/>`).join('');
+      return `<g class="sw" style="--sd:${sd}s"><path d="M${x} ${G} C${x - 4} ${G - h / 2} ${x + 4} ${G - h / 2} ${x} ${cy}" stroke="#0D2B1B" stroke-width="2" fill="none"/>
+        <path d="M${x} ${G - 16} c-10 0 -15 -6 -16 -14 c9 0 15 5 16 14z" fill="#2FA65A"/>
+        <g class="bob" style="--sd:${sd}s">${petals}<circle cx="${x}" cy="${cy}" r="4.5" fill="#F3C13A"/></g></g>`; };
+    const sprout = (x, sd) => `<g class="sw" style="--sd:${sd}s">
+      <ellipse cx="${x - 9}" cy="${G - 12}" rx="8" ry="16" transform="rotate(-28 ${x - 9} ${G - 12})" fill="#4E9A3A"/>
+      <ellipse cx="${x + 9}" cy="${G - 12}" rx="8" ry="16" transform="rotate(28 ${x + 9} ${G - 12})" fill="#3C7F2E"/>
+      <ellipse cx="${x}" cy="${G - 16}" rx="7" ry="18" fill="#7FBF5E"/><circle cx="${x}" cy="${G - 3}" r="8" fill="#C98A2B"/></g>`;
+    const grass = (x, sd) => `<g class="sw" style="--sd:${sd}s" fill="none" stroke="#2FA65A" stroke-width="3" stroke-linecap="round">
+      <path d="M${x} ${G} C${x - 2} ${G - 30} ${x - 14} ${G - 46} ${x - 22} ${G - 52}"/>
+      <path d="M${x} ${G} C${x} ${G - 34} ${x + 4} ${G - 50} ${x + 2} ${G - 64}"/>
+      <path d="M${x} ${G} C${x + 4} ${G - 26} ${x + 16} ${G - 38} ${x + 24} ${G - 42}"/></g>`;
+    const P = [
+      tree(70, 92, -1), flower(150, 52, '#DF4F36', -2), grass(205, -3), tree(290, 118, -2.5), sprout(360, -1.2),
+      flower(430, 46, '#0F7A6A', -.4), grass(520, -1.8), tree(610, 86, -3.4), flower(690, 58, '#3E4C8A', -2.2),
+      sprout(760, -.8), grass(845, -2.7), flower(910, 50, '#DF4F36', -1.5), tree(1000, 104, -.6), grass(1080, -3.1),
+      flower(1150, 56, '#0F7A6A', -2.9), sprout(1225, -1.9), tree(1310, 96, -1.4), flower(1390, 48, '#B5562F', -3.6),
+      grass(1450, -.3), tree(1530, 112, -2.1)
+    ].join('');
+    $('#ambGarden').innerHTML = `<svg viewBox="0 0 ${W} 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs><pattern id="gdots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.1" fill="#F3F1E640"/></pattern></defs>
+      <path d="M0 200 C220 150 420 178 640 186 S1060 150 1300 170 S1520 168 1600 160 V260 H0Z" fill="#C9D8C4"/>
+      ${P}
+      <path d="M0 ${G} C300 224 620 238 900 230 S1360 226 1600 232 V260 H0Z" fill="#A9C2A0"/>
+    </svg>`;
+  })();
+
+  /* La página habla con cada pantalla por mensajes: funciona igual con un servidor o abriendo el archivo directo.
+     Cada pantalla avisa su estado (rol, universidad, si puede volver atrás) y la barra se pone al día. */
+  const KEY = 'desafio-bienestar';
+  const post = (f, msg) => { try { f.contentWindow.postMessage(msg, '*'); } catch {} };
+  const send = msg => [pcF, phF].forEach(f => post(f, msg));
+
+  /* PC: Administrador / Comercio (el rol elegido se recuerda al recargar o reiniciar) */
+  let pcRole = 'admin';
+  try { if (localStorage.getItem('demo-pc-role') === 'shop') pcRole = 'shop'; } catch {}
+  const markRole = () => document.querySelectorAll('[data-prole]').forEach(x => x.classList.toggle('on', x.dataset.prole === pcRole));
+  if (pcRole !== 'admin') pcF.src = 'app.html?role=' + pcRole;
+  markRole();
+  document.querySelectorAll('[data-prole]').forEach(b => b.addEventListener('click', () => {
+    pcRole = b.dataset.prole; markRole();
+    try { localStorage.setItem('demo-pc-role', pcRole); } catch {}
+    post(pcF, { type: 'setrole', role: pcRole });
+  }));
+
+  /* universidad */
+  const markUni = uni => document.querySelectorAll('[data-uni]').forEach(x => x.classList.toggle('on', x.dataset.uni === uni));
+  try { markUni(JSON.parse(localStorage.getItem(KEY) || '{}').uni || 'unlam'); } catch {}
+  document.querySelectorAll('[data-uni]').forEach(b => b.addEventListener('click', () => {
+    markUni(b.dataset.uni);
+    send({ type: 'setuni', uni: b.dataset.uni });
+  }));
+
+  /* Atrás: uno por pantalla */
+  document.querySelectorAll('[data-backfor]').forEach(b => b.addEventListener('click', () => post(b.dataset.backfor === 'pc' ? pcF : phF, { type: 'back' })));
+
+  /* lo que cuenta cada pantalla */
+  addEventListener('message', e => {
+    const m = e.data || {};
+    if (m.type !== 'state') return;
+    const isPc = e.source === pcF.contentWindow, isPh = e.source === phF.contentWindow;
+    if (!isPc && !isPh) return;
+    document.querySelectorAll(`[data-backfor="${isPc ? 'pc' : 'ph'}"]`).forEach(b => { b.disabled = !m.canBack; });
+    if (m.uni) markUni(m.uni);                                              /* si se cambia desde la app, la barra la sigue */
+    if (isPc && m.role !== pcRole) post(pcF, { type: 'setrole', role: pcRole });   /* la PC cargó con otro rol */
+  });
+
+  /* reiniciar: borra el progreso y recarga las dos pantallas */
+  $('#dmReset').addEventListener('click', () => {
+    const uni = document.querySelector('[data-uni].on')?.dataset.uni || 'unlam';
+    try { localStorage.setItem(KEY, JSON.stringify({ uni })); } catch {}
+    send({ type: 'reset', uni });
+    pcF.src = 'app.html?role=' + pcRole; phF.src = 'app.html?role=student';
+  });
 })();
 </script>
 </body>

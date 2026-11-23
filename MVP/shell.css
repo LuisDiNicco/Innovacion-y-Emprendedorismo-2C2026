@@ -1,0 +1,152 @@
+/* =========================================================
+   Cáscara del sitio: dos tabs.
+   · Demo: el celu (estudiante) como protagonista y una PC (administrador / comercio) que acompaña.
+   · Proyecto: toda la entrega.
+   Los tamaños de los dispositivos los calcula index.html según el espacio disponible (--kp / --kc).
+   ========================================================= */
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+[hidden]{display:none !important}
+
+/* ---------- tabs del encabezado ---------- */
+.site-nav{gap:6px}
+.site-nav a{display:inline-flex;align-items:center;min-height:38px;padding:0 16px;border-radius:99px;font-size:14px;font-weight:700;color:var(--ink-2);transition:background .25s,color .25s}
+.site-nav a:hover{background:var(--paper-2);color:var(--ink)}
+.site-nav a.on{background:var(--unlam-d);color:var(--paper)}
+.is-demo{scroll-snap-type:none !important}
+
+/* =========================================================
+   TAB DEMO
+   ========================================================= */
+.demo{position:relative;isolation:isolate;display:flex;flex-direction:column;overflow:hidden;
+  height:calc(100svh - var(--site-header-height))}
+
+/* ---------- fondo: papel, luz suave y el jardín de la app ---------- */
+.amb{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(circle at 1px 1px,#0D2B1B10 1px,transparent 1.4px) 0 0/16px 16px,
+    linear-gradient(180deg,#F3F1E6 0%,#ECEFE2 60%,#E3EADA 100%)}
+.amb-blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55}
+.amb-blob.b1{width:40vw;height:40vw;max-width:620px;max-height:620px;left:-8%;top:-18%;background:radial-gradient(circle,#9FD7AE 0,#9FD7AE00 70%);animation:ambBlob 18s ease-in-out infinite}
+.amb-blob.b2{width:30vw;height:30vw;max-width:480px;max-height:480px;right:-6%;top:20%;background:radial-gradient(circle,#F3C13A55 0,#F3C13A00 70%);animation:ambBlob 22s ease-in-out infinite reverse}
+@keyframes ambBlob{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3vw,-2vh) scale(1.1)}}
+
+/* sol */
+.amb-sun{position:absolute;right:7%;top:9%;width:clamp(70px,9vw,150px);aspect-ratio:1;border-radius:50%;background:#F3C13A;opacity:.5;
+  box-shadow:0 0 0 clamp(10px,1.4vw,22px) #F3C13A22,0 0 0 clamp(22px,3vw,46px) #F3C13A12;animation:sunPulse 7s ease-in-out infinite}
+@keyframes sunPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* jardín al pie: lomas, árboles, flores y pasto que se mecen */
+.amb-garden{position:absolute;left:0;right:0;bottom:0;height:clamp(130px,26vh,300px);opacity:.26}
+.amb-garden svg{display:block;width:100%;height:100%}
+.amb-garden .sw{transform-box:fill-box;transform-origin:50% 100%;animation:sway 6s ease-in-out infinite;animation-delay:var(--sd,0s)}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.amb-garden .bob{transform-box:fill-box;transform-origin:50% 50%;animation:bob 4.5s ease-in-out infinite;animation-delay:var(--sd,0s)}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(8deg)}}
+
+/* hojitas que suben flotando */
+.lf{position:absolute;bottom:-60px;width:clamp(22px,2.4vw,40px);aspect-ratio:1;fill:#00873E;opacity:0;animation:leafUp 26s linear infinite}
+.lf.l1{left:8%;animation-duration:27s;animation-delay:-3s}
+.lf.l3{left:34%;fill:#005A29;animation-duration:31s;animation-delay:-18s}
+.lf.l5{left:63%;fill:#F3C13A;animation-duration:29s;animation-delay:-14s}
+.lf.l7{left:90%;fill:#7FBF5E;animation-duration:33s;animation-delay:-5s}
+@keyframes leafUp{
+  0%{transform:translate(0,0) rotate(-20deg);opacity:0}
+  8%{opacity:.3}
+  50%{transform:translate(3vw,-52vh) rotate(25deg)}
+  92%{opacity:.3}
+  100%{transform:translate(-2vw,-108vh) rotate(-30deg);opacity:0}
+}
+@media (prefers-reduced-motion:reduce){.lf,.amb-blob,.amb-sun,.amb-garden .sw,.amb-garden .bob{animation:none}.lf{display:none}}
+
+/* ---------- controles ---------- */
+.dm-bar{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.dm-seg{display:inline-flex;align-items:center;gap:3px;padding:3px;border-radius:99px;background:#FBFAF4;border:1px solid var(--line)}
+.dm-seg button{min-height:30px;display:inline-flex;align-items:center;gap:6px;padding:0 12px;border-radius:99px;font-size:12px;font-weight:700;color:var(--ink-2);white-space:nowrap;transition:background .25s,color .25s}
+.dm-seg button i{width:10px;height:10px;border-radius:50%;background:var(--uc)}
+.dm-seg button:hover{background:var(--paper-2);color:var(--ink)}
+.dm-seg button.on{background:var(--uc);color:#fff}
+.dm-seg button.on i{background:#fff}
+.dm-reset{min-height:36px;padding:0 14px;border-radius:99px;font-size:12.5px;font-weight:700;color:var(--ink-2);background:#FBFAF4;border:1px solid var(--line)}
+.dm-reset:hover{color:var(--unlam-d);background:var(--paper-2)}
+
+/* ---------- escena ---------- */
+.scene{--kc:1;--kp:1;position:relative;z-index:1;flex:1;min-height:0;width:100%}
+.dev{display:flex;flex-direction:column;align-items:center}
+.dev-pc{--w:1000px;--h:696px;--k:var(--kc)}
+.dev-ph{--w:412px;--h:866px;--k:var(--kp)}
+.dev-cap{min-height:32px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;color:var(--ink-2);padding-bottom:4px}
+.dev-cap .mono{font-size:10px;color:var(--ink-3)}
+.dev-cap b{font-family:var(--f-display);font-weight:400;font-size:19px;line-height:1;color:var(--ink)}
+.dev-in{position:relative;flex:none;width:calc(var(--w) * var(--k));height:calc(var(--h) * var(--k))}
+.dev-in>.monitor,.dev-in>.phone-d{position:absolute;left:0;top:0;width:var(--w);height:var(--h);transform:scale(var(--k));transform-origin:top left}
+.dev-in::after{content:"";position:absolute;left:8%;right:8%;bottom:-8px;height:22px;border-radius:50%;background:radial-gradient(ellipse,#0D2B1B55 0,#0D2B1B00 70%);filter:blur(6px);z-index:-1}
+
+/* Pantalla ancha: PC (con los controles arriba) · celu a todo el alto · texto al costado del celu.
+   El texto ocupa el lado derecho, así el celu queda más cerca del centro. */
+.scene.wide{display:grid;grid-template-columns:auto auto auto;grid-template-rows:1fr auto;grid-template-areas:"bar ph side" "pc ph side";
+  justify-content:space-evenly;align-items:end;padding:var(--pt,12px) var(--px,24px) var(--pb,14px)}
+.scene.wide .dm-bar{grid-area:bar;align-self:center;justify-self:center}
+.scene.wide .dev-pc{grid-area:pc}
+.scene.wide .dev-ph{grid-area:ph}
+.scene.wide .dev-ph .dev-cap{display:none}
+
+/* Solo el celu: centrado, con el texto a un lado y el mismo espacio vacío del otro */
+.scene.solo .dev-pc{display:none}
+.scene.wide.solo{grid-template-columns:var(--sidew,220px) auto var(--sidew,220px);grid-template-rows:1fr;grid-template-areas:". ph side";justify-content:center;column-gap:clamp(16px,3vw,56px)}
+.scene.wide.solo .dm-bar{position:absolute;top:var(--pt,12px);left:var(--px,24px);flex-direction:column;align-items:flex-start}
+
+/* texto al costado del celu */
+.ph-side{display:none}
+.scene.wide .ph-side{grid-area:side;align-self:center;display:flex;flex-direction:column;gap:8px;width:clamp(150px,15vw,220px)}
+.ph-side .mono{font-size:10px;color:var(--ink-3)}
+.ph-side b{font-family:var(--f-display);font-weight:400;font-size:clamp(28px,2.6vw,40px);line-height:1;color:var(--unlam-d)}
+
+.dm-pc{display:inline-flex;align-items:center;gap:7px}
+.dm-pc svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.dm-pc[aria-pressed="false"]{background:var(--unlam-d);color:var(--paper);border-color:var(--unlam-d)}
+
+/* Pantalla angosta o vertical: controles, celu y PC uno abajo del otro */
+.scene.stack{display:flex;flex-direction:column;align-items:center;gap:22px;flex:none;padding:12px 12px 40px}
+.scene.stack .dev-pc{order:2}
+.demo:has(.scene.stack){height:auto;min-height:calc(100svh - var(--site-header-height));overflow:visible}
+
+/* ---------- la PC ---------- */
+.monitor{filter:drop-shadow(0 28px 36px #0D2B1B40)}
+.mon-bezel{position:absolute;z-index:2;left:0;top:0;width:1000px;height:620px;padding:14px 14px 30px;border-radius:26px;
+  background:linear-gradient(160deg,#2d362f,#141915);box-shadow:inset 0 0 0 2px #3b463d,inset 0 2px 0 #4a574c}
+.mon-bezel::after{content:"";position:absolute;left:50%;bottom:9px;width:44px;height:6px;margin-left:-22px;border-radius:6px;background:#0c100d;box-shadow:inset 0 0 0 1px #3b463d}
+.mon-cam{position:absolute;left:50%;top:5px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#050806;box-shadow:0 0 0 1.5px #2a332b}
+.mon-screen{position:relative;width:972px;height:576px;border-radius:8px;overflow:hidden;background:#0A0D0B}
+.mon-screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,#ffffff1c 0%,#ffffff00 32%)}
+/* --pcz: zoom del contenido de la PC. La app se dibuja en un escritorio un poco más chico y se agranda
+   para llenar la pantalla del monitor, así la letra se lee mejor sin cambiar el tamaño del monitor. */
+.mon-screen{--pcz:1.2}
+.mon-screen iframe{display:block;width:calc(972px / var(--pcz));height:calc(576px / var(--pcz));border:0;background:#0A0D0B;
+  transform:scale(var(--pcz));transform-origin:0 0}
+.mon-neck{position:absolute;z-index:1;left:50%;top:610px;width:150px;height:70px;margin-left:-75px;clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);background:linear-gradient(90deg,#9aa59c,#d6ddd4 45%,#8b968d)}
+.mon-base{position:absolute;z-index:3;left:50%;top:676px;width:360px;height:18px;margin-left:-180px;border-radius:12px 12px 8px 8px;background:linear-gradient(180deg,#d9dfd7,#98a39a);box-shadow:0 2px 0 #7a857c}
+
+/* ---------- el celu ---------- */
+.phone-d{border-radius:54px;padding:11px;background:#141A15;box-shadow:0 0 0 2px #2a322b inset,0 40px 70px -24px #0D2B1BAA,0 18px 30px -16px #0D2B1B99}
+.phone-d::before,.phone-d::after{content:"";position:absolute;width:4px;border-radius:3px;background:#0c100d}
+.phone-d::before{left:-3px;top:150px;height:56px;box-shadow:0 74px 0 #0c100d}
+.phone-d::after{right:-3px;top:190px;height:86px}
+.ph-screen{width:390px;height:844px;border-radius:44px;overflow:hidden;background:#0A0D0B;isolation:isolate}
+.ph-screen iframe{display:block;width:390px;height:844px;border:0;background:#0A0D0B}
+
+/* =========================================================
+   TAB PROYECTO
+   ========================================================= */
+.stage.pj-stage{grid-template-columns:minmax(260px,480px) minmax(260px,440px);grid-template-areas:"l r";justify-content:center;align-items:center;
+  min-height:calc(100svh - var(--site-header-height))}
+@media (max-width:900px){
+  .stage.pj-stage{grid-template-columns:minmax(0,1fr);grid-template-areas:"l" "r";max-width:620px;align-items:start;min-height:0}
+}
+
+/* ---------- Atrás (uno por pantalla) ---------- */
+.dm-back{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 13px;border-radius:99px;font-size:12.5px;font-weight:700;
+  color:var(--ink-2);background:#FBFAF4;border:1px solid var(--line);transition:background .2s,color .2s,opacity .2s}
+.dm-back span{font-size:15px;line-height:1}
+.dm-back:hover:not(:disabled){color:var(--unlam-d);background:var(--paper-2)}
+.dm-back:disabled{opacity:.4;cursor:default}
+.ph-side .dm-back{align-self:flex-start;margin-top:10px}

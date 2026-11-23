@@ -65,11 +65,29 @@ const TYPES = {
   pares:  { label: 'Entre pares',  c: 'var(--indigo)' },
 };
 
-const WEEK = [
-  { d: 'LUN', n: 16 }, { d: 'MAR', n: 17 }, { d: 'MIÉ', n: 18 }, { d: 'JUE', n: 19 },
-  { d: 'VIE', n: 20 }, { d: 'SÁB', n: 21 }, { d: 'DOM', n: 22 },
-];
+/* ---------- fechas: la demo siempre transcurre hoy ----------
+   Cada día se guarda como un número relativo (17 = hoy, 18 = mañana, 16 = ayer…)
+   y se muestra con la fecha real del día en que se abre la demo. */
 const TODAY = 17;
+/* ?hoy=AAAA-MM-DD en la URL simula otra fecha (solo para probar) */
+const NOW = (() => { const q = new URLSearchParams(location.search).get('hoy'); const d = q && !isNaN(new Date(q + 'T12:00')) ? new Date(q + 'T12:00') : new Date(); d.setHours(12, 0, 0, 0); return d; })();
+const dateOf = n => new Date(NOW.getTime() + (n - TODAY) * 864e5);
+const DOW3 = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
+const DOWL = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const MESL = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const dnum = n => dateOf(n).getDate();                                                              /* 21 */
+const dm = n => { const d = dateOf(n); return d.getDate() + '/' + (d.getMonth() + 1); };           /* 21/11 */
+const dmon = n => { const d = dateOf(n); return String(d.getDate()).padStart(2, '0') + ' ' + MES[d.getMonth()].toUpperCase(); };   /* 06 NOV */
+const dowOf = n => n === TODAY ? 'Hoy' : n === TODAY + 1 ? 'Mañana' : DOWL[dateOf(n).getDay()];
+/* semana del cuatrimestre (el 2C2026 arranca el lunes 17 de agosto) */
+const SEMANA = Math.min(18, Math.max(1, Math.floor((NOW - new Date(2026, 7, 17)) / (7 * 864e5)) + 1));
+const todayLbl = () => { const d = dateOf(TODAY); return `${DOWL[d.getDay()].slice(0, 3)} ${d.getDate()} ${MES[d.getMonth()]} · Semana ${SEMANA}`; };
+/* la tira de la agenda: de ayer a 5 días adelante */
+const WEEK = [16, 17, 18, 19, 20, 21, 22].map(n => ({ d: DOW3[dateOf(n).getDay()], n }));
+const rangeLbl = (a, b, short) => { const A = dateOf(a), B = dateOf(b), M = short ? MES : MESL;
+  return A.getMonth() === B.getMonth() ? `${A.getDate()}${short ? '–' : ' al '}${B.getDate()} ${short ? '' : 'de '}${M[B.getMonth()]}`
+    : `${A.getDate()} ${short ? '' : 'de '}${M[A.getMonth()]}${short ? ' – ' : ' al '}${B.getDate()} ${short ? '' : 'de '}${M[B.getMonth()]}`; };
 
 const CH = [
   { id: 'desc', type: 'desc', day: 17, dow: 'Hoy', time: '18:00', mins: 20, pts: 35, ronda: 1, featured: true,
@@ -151,10 +169,10 @@ const dur = m => m < 60 ? `${m}<small>min</small>` : `${Math.floor(m / 60)}<smal
 const durTxt = m => m < 60 ? m + ' min' : Math.floor(m / 60) + ' h' + (m % 60 ? ' ' + (m % 60) + ' min' : '');
 
 const HISTORY = [
-  { type: 'desc',   t: 'Almuerzo sin celulares',    date: '16 NOV' },
-  { type: 'rec',    t: 'Separación de residuos',    date: '13 NOV' },
-  { type: 'cam',    t: 'Caminata al lago',          date: '06 NOV' },
-  { type: 'fore',   t: 'Jornada de forestación',    date: '01 NOV' },
+  { type: 'desc',   t: 'Almuerzo sin celulares',    date: dmon(TODAY - 1) },
+  { type: 'rec',    t: 'Separación de residuos',    date: dmon(TODAY - 4) },
+  { type: 'cam',    t: 'Caminata al lago',          date: dmon(TODAY - 11) },
+  { type: 'fore',   t: 'Jornada de forestación',    date: dmon(TODAY - 16) },
   { type: 'huerta', t: 'Armado de bancales',        date: '29 OCT' },
   { type: 'fore',   t: 'Plantación de ceibos',      date: '18 OCT' },
 ];
@@ -217,8 +235,10 @@ const DEFAULT = { uni: 'unlam', earned: 340, agDay: null, onboarded: false, name
                     { id: 'p2', from: 'shop', by: 'Café de la Puerta 1', title: 'Desayuno saludable antes del parcial', type: 'desc', day: 20, time: '08:30', place: 'Frente a la Puerta 1', text: 'Un desayuno corto y sin pantallas antes de rendir. Cada estudiante trae su taza.', sponsorTxt: 'Pone el café y las frutas.', status: 'pending' },
                     { id: 'p3', uid: 'u2', from: 'student', by: 'Tomás R. · Informática', title: 'Caminata de laboratorio a laboratorio', type: 'cam', day: 19, time: '17:30', place: 'Salida Puerta 2', text: 'Quince minutos caminando entre clases de la tarde. Ideal para despejarse.', status: 'pending' },
                   ], adminName: 'Caro Benítez', adminOrg: 'Bienestar Estudiantil UNLaM', created: [] };
+/* la demo corre en dos pantallas (celu = estudiante, PC = admin / comercio): el rol llega por ?role= */
+const EMBED_ROLE = new URLSearchParams(location.search).get('role');
 let S = load();
-function load() { try { return { ...DEFAULT, ...JSON.parse(localStorage.getItem('desafio-bienestar') || '{}') }; } catch { return structuredClone(DEFAULT); } }
+function load() { let s; try { s = { ...DEFAULT, ...JSON.parse(localStorage.getItem('desafio-bienestar') || '{}') }; } catch { s = structuredClone(DEFAULT); } if (EMBED_ROLE) s.role = EMBED_ROLE; return s; }
 function save() { try { localStorage.setItem('desafio-bienestar', JSON.stringify(S)); } catch {} }
 const isJoined = id => S.joined.includes(id);
 const isDone = id => S.done.includes(id);
@@ -226,8 +246,14 @@ const esc = t => String(t ?? '').replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': 
 const isAdmin = () => S.role === 'admin';
 const initials = n => String(n || '').trim().split(/\s+/).map(w => w[0] || '').join('').slice(0, 2).toUpperCase() || '··';
 /* actividades creadas por el administrador: se suman al listado de todos */
-(S.created || []).forEach(c => { const i = CH.findIndex(x => x.id === c.id); if (i >= 0) CH[i] = c; else CH.push(c); });
-(S.deleted || []).forEach(id => { const i = CH.findIndex(x => x.id === id); if (i >= 0) CH.splice(i, 1); });
+const CH0 = CH.map(c => ({ ...c }));
+function applyCreated() {
+  CH.length = 0; CH0.forEach(c => CH.push({ ...c }));
+  (S.created || []).forEach(c => { const i = CH.findIndex(x => x.id === c.id); if (i >= 0) CH[i] = c; else CH.push(c); });
+  (S.deleted || []).forEach(id => { const i = CH.findIndex(x => x.id === id); if (i >= 0) CH.splice(i, 1); });
+  CH.forEach(c => { c.dow = dowOf(c.day); });   /* «Hoy», «Mañana», «Jueves»… según la fecha real */
+}
+applyCreated();
 
 const LEVELS = [['Semilla', 0], ['Raíz', 250], ['Plantín', 500], ['Árbol', 1000]];
 /* el nivel se calcula con los puntos GANADOS: canjear no te baja de nivel */
@@ -494,7 +520,7 @@ const VIEWS = {
     const ally = PERKS[0];
     const pins = CH.filter(c => PINS[c.id]).map(c => `<button class="pin${c.featured ? ' hot' : ''}" style="--c:${TYPES[c.type].c};left:${PINS[c.id][0]}%;top:${PINS[c.id][1]}%" data-go="detail" data-p="${c.id}" title="${c.title}">${ic(c.type)}</button>`).join('');
     return `
-      <div class="top" ${r(0)}><span class="mono" style="color:var(--ink-3)">Mar 17 nov · Semana 14</span>
+      <div class="top" ${r(0)}><span class="mono" style="color:var(--ink-3)">${todayLbl()}</span>
         <span class="top-r"><button class="bell" data-bell aria-label="Avisos">${ic('bell')}<i></i></button>${isAdmin() ? `<button class="adm-pill mono" data-tab="impact">${ic('build')}Admin</button>` : S.role === 'shop' ? `<button class="adm-pill mono" data-tab="impact">${ic('shop')}Comercio</button>` : ''}<button class="avatar" data-go="passport">${S.name.slice(0, 2)}</button></span></div>
       <div class="greet pad" ${r(1)}>
         <h1 class="h-display">¡Hola, ${S.name}!</h1>
@@ -593,7 +619,7 @@ const VIEWS = {
       .filter(c => !q || norm(c.title + ' ' + c.place + ' ' + TYPES[c.type].label + ' ' + c.org).includes(q));
     return `
       <div class="page-h">
-        <div class="eyebrow mono" ${r(0)}>Semana del 16 al 22 de noviembre</div>
+        <div class="eyebrow mono" ${r(0)}>Semana del ${rangeLbl(16, 22)}</div>
         <h1 class="h-display" ${r(1)}>Desafíos</h1>
         <p ${r(2)}>Todos en un solo lugar, con día, hora y lugar. Actividades cortas y jornadas largas para hacer con gente de toda la facu.</p>
       </div>
@@ -628,7 +654,7 @@ const VIEWS = {
         ${c.long ? `<span class="pill long" ${r(2)}>${ic('people')} Jornada colectiva</span>` : ''}
       </div>
       <div class="facts" ${r(3)}>
-        <div class="fact"><span class="mono">Cuándo</span><b>${c.dow} ${c.day}/11<br>${c.time} hs</b></div>
+        <div class="fact"><span class="mono">Cuándo</span><b>${c.dow} ${dm(c.day)}<br>${c.time} hs</b></div>
         <div class="fact"><span class="mono">Dónde</span><b>${c.place}</b></div>
         <div class="fact"><span class="mono">Suma</span><b>+${c.pts} puntos</b></div>
         <div class="fact"><span class="mono">Organiza</span><b>${c.org}</b></div>
@@ -780,7 +806,7 @@ const VIEWS = {
     const list = day ? up.filter(c => c.day === day) : up;
     const strip = WEEK.map(w => {
       const has = up.filter(c => c.day === w.n);
-      return `<button class="ag-day${w.n === TODAY ? ' today' : ''}${day === w.n ? ' on' : ''}${w.n < TODAY ? ' past' : ''}" data-agday="${w.n}"><span>${w.d}</span><b>${w.n}</b><i>${has.map(c => `<em style="background:${TYPES[c.type].c}"></em>`).join('')}</i></button>`;
+      return `<button class="ag-day${w.n === TODAY ? ' today' : ''}${day === w.n ? ' on' : ''}${w.n < TODAY ? ' past' : ''}" data-agday="${w.n}"><span>${w.d}</span><b>${dnum(w.n)}</b><i>${has.map(c => `<em style="background:${TYPES[c.type].c}"></em>`).join('')}</i></button>`;
     }).join('');
     const row = (c, i) => {
       const today = c.dow === 'Hoy';
@@ -790,10 +816,10 @@ const VIEWS = {
         ${today ? `<button class="ag-act seal" data-seal="${c.id}" aria-label="Sellar">${ic('seal')}</button>` : `<button class="ag-act" data-cal="${c.id}" aria-label="Recordar">${ic('bell')}</button>`}
       </div>`;
     };
-    const doneList = [...S.done.map(id => ({ type: byId(id).type, t: byId(id).title, date: byId(id).day + ' NOV', pts: byId(id).pts })), ...HISTORY];
+    const doneList = [...S.done.map(id => ({ type: byId(id).type, t: byId(id).title, date: dmon(byId(id).day), pts: byId(id).pts })), ...HISTORY];
     return `
       <div class="page-h">
-        <div class="eyebrow mono" ${r(0)}>Semana del 16 al 22 de noviembre</div>
+        <div class="eyebrow mono" ${r(0)}>Semana del ${rangeLbl(16, 22)}</div>
         <h1 class="h-display" ${r(1)}>Mi agenda</h1>
       </div>
       <div class="ag-strip pad" ${r(2)}>${strip}</div>
@@ -808,7 +834,7 @@ const VIEWS = {
   },
 
   passport() {
-    const done = S.done.map(id => ({ type: byId(id).type, t: byId(id).title, date: byId(id).day + ' NOV', isNew: true }));
+    const done = S.done.map(id => ({ type: byId(id).type, t: byId(id).title, date: dmon(byId(id).day), isNew: true }));
     const all = [...done, ...HISTORY];
     const pending = CH.filter(c => !isDone(c.id) && c.day >= TODAY).slice(0, 3);
     const rot = i => ((i * 37) % 17) - 8;
@@ -1153,7 +1179,7 @@ function syncRole() {
 
 
 const DOWS = { LUN: 'Lunes', MAR: 'Martes', 'MIÉ': 'Miércoles', JUE: 'Jueves', VIE: 'Viernes', 'SÁB': 'Sábado', DOM: 'Domingo' };
-const dowFor = n => n === TODAY ? 'Hoy' : n === TODAY + 1 ? 'Mañana' : DOWS[WEEK.find(w => w.n === n).d];
+const dowFor = dowOf;
 let actType = 'fore';
 function activitySheet(id) {
   const c = id ? byId(id) : null;
@@ -1161,7 +1187,7 @@ function activitySheet(id) {
   const val = t => esc(un(t));
   actType = c ? c.type : 'fore';
   const types = Object.entries(TYPES).map(([k, v]) => `<button type="button" class="chip${k === actType ? ' on' : ''}" data-ptype="${k}">${ic(k)}${v.label}</button>`).join('');
-  const days = WEEK.filter(w => w.n >= TODAY).map(w => `<option value="${w.n}"${(c ? c.day : TODAY + 1) === w.n ? ' selected' : ''}>${dowFor(w.n)} ${w.n}/11</option>`).join('');
+  const days = WEEK.filter(w => w.n >= TODAY).map(w => `<option value="${w.n}"${(c ? c.day : TODAY + 1) === w.n ? ' selected' : ''}>${dowFor(w.n)} ${dm(w.n)}</option>`).join('');
   openSheet(`
     <h2>${c ? 'Editar actividad' : 'Crear actividad'}</h2>
     <p class="sub">${c ? 'Los cambios se ven al instante en Desafíos.' : 'Se publica para todos los estudiantes y se notifica con día, horario y lugar.'}</p>
@@ -1369,7 +1395,7 @@ document.addEventListener('click', e => {
     return refresh();
   }
 
-  if ('copy' in d) { try { navigator.clipboard?.writeText('LU-BIEN-26'); } catch {} return toast(`${ic('share')} Código copiado · compartilo`); }
+  if ('copy' in d) { try { navigator.clipboard?.writeText('LU-BIEN-26')?.catch(() => {}); } catch {} return toast(`${ic('share')} Código copiado · compartilo`); }
 
   /* campanita y beneficios */
   if ('bell' in d) { const p = $('#push'); p.classList.remove('on'); void p.offsetWidth; p.classList.add('on'); setTimeout(() => p.classList.remove('on'), 6000); return; }

@@ -1,0 +1,112 @@
+/* La app dentro de un marco (iframe): el celu del estudiante y la PC de admin / comercio.
+   El marco (bisel, monitor, base) lo dibuja index.html; acá solo se adapta el interior. */
+html,body{height:100%;margin:0;overflow:hidden;background:var(--paper)}
+body.embed{background:var(--paper)}
+body.embed .screen{width:100%;height:100%;border-radius:0}
+body.embed:not([data-role="student"]) .push{display:none}
+
+/* ---------- PC: administrador y comercio ----------
+   Escritorio: barra lateral + barra superior + una columna de contenido centrada.
+   Medidas: --side (barra lateral), --top (barra superior), --col (ancho del contenido). */
+body:is([data-role="admin"],[data-role="shop"]){--side:204px;--top:50px;--col:600px}
+body:is([data-role="admin"],[data-role="shop"]) .statusbar{display:none}
+body:is([data-role="admin"],[data-role="shop"]) .screen{background:var(--paper)}
+body:is([data-role="admin"],[data-role="shop"]) .screen::after{opacity:.14}
+
+/* barra lateral en lugar de la barra inferior (sin la animación de entrada del celu) */
+body:is([data-role="admin"],[data-role="shop"]) .tabbar{
+  left:0;right:auto;top:0;bottom:0;width:var(--side);min-height:0;border-radius:0;padding:100px 12px 84px;
+  display:flex;flex-direction:column;gap:4px;align-items:stretch;
+  box-shadow:inset -1px 0 0 #FFFFFF10;background:var(--unlam-d);
+  transition:none;transform:none;opacity:1;pointer-events:auto;
+}
+body:is([data-role="admin"],[data-role="shop"]) .tabbar.hide{transform:none;opacity:1;pointer-events:auto}
+body:is([data-role="admin"],[data-role="shop"]) .tabbar::before{
+  content:"Desafío\A Bienestar";white-space:pre;position:absolute;left:22px;top:22px;
+  font-family:var(--f-display);font-size:23px;line-height:.95;color:#FFFCEF;
+}
+body:is([data-role="admin"],[data-role="shop"]) .tabbar::after{
+  position:absolute;left:22px;top:72px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sun);
+}
+body[data-role="admin"] .tabbar::after{content:"Administración"}
+body[data-role="shop"] .tabbar::after{content:"Comercio aliado"}
+body:is([data-role="admin"],[data-role="shop"]) .tabbar button{
+  flex-direction:row;justify-content:flex-start;gap:12px;min-height:42px;padding:0 14px;font-size:14px;font-weight:600;border-radius:12px;color:#E3EADCcc;
+  transition:background .2s,color .2s;
+}
+body:is([data-role="admin"],[data-role="shop"]) .tabbar button svg{width:19px;height:19px}
+body:is([data-role="admin"],[data-role="shop"]) .tabbar button:hover{background:#FFFFFF12;color:#FFFCEF}
+body:is([data-role="admin"],[data-role="shop"]) .tabbar button.on{background:#FFFFFF1F;color:#FFFCEF;box-shadow:inset 3px 0 0 var(--sun)}
+
+/* pie de la barra lateral: la cuenta en uso */
+.pc-user,.pc-top{display:none}
+body:is([data-role="admin"],[data-role="shop"]) .pc-user{
+  display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:center;text-align:left;
+  position:absolute;left:12px;bottom:14px;width:calc(var(--side) - 24px);z-index:31;padding:9px 10px;border-radius:14px;
+  background:#FFFFFF10;color:#FFFCEF;transition:background .2s
+}
+body:is([data-role="admin"],[data-role="shop"]) .pc-user:hover{background:#FFFFFF1C}
+.pc-user .av{width:36px;height:36px;font-size:12.5px}
+.pc-user b{display:block;font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-user small{display:block;font-size:11px;color:#E3EADCaa;margin-top:2px}
+
+/* barra superior */
+body:is([data-role="admin"],[data-role="shop"]) .pc-top{
+  display:flex;align-items:center;gap:16px;position:absolute;left:var(--side);right:0;top:0;height:var(--top);z-index:20;
+  padding:0 22px;background:#FBFAF4E6;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)
+}
+.pc-org{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-org i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--unlam)}
+.pc-date{margin-left:auto;font-size:10px;color:var(--ink-3);white-space:nowrap}
+.pc-me b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--sun);color:#0D2B1B;font-size:11px;font-weight:700}
+
+/* contenido en una columna centrada, debajo de la barra superior */
+body:is([data-role="admin"],[data-role="shop"]) .view{
+  left:var(--side);top:var(--top);container-type:inline-size;background:transparent;
+  padding:30px max(24px, calc((100vw - var(--side) - var(--col)) / 2)) 56px;
+}
+body:is([data-role="admin"],[data-role="shop"]) .view.without-nav{padding-bottom:56px}
+body:is([data-role="admin"],[data-role="shop"]) .page-h{padding:0 22px}
+/* detalle de una actividad: la cabecera de color como tarjeta, no pegada al borde */
+body:is([data-role="admin"],[data-role="shop"]) .view.detail{padding-top:22px;padding-bottom:0}
+body:is([data-role="admin"],[data-role="shop"]) .detail-hero{margin:0 0 0;border-radius:24px;height:280px}
+body:is([data-role="admin"],[data-role="shop"]) .detail-hero .back{top:18px}
+
+/* hojas y avisos centrados sobre el contenido, no sobre toda la pantalla */
+body:is([data-role="admin"],[data-role="shop"]) .scrim{left:var(--side)}
+body:is([data-role="admin"],[data-role="shop"]) .sheet{left:calc(var(--side) + (100vw - var(--side) - 540px) / 2);right:auto;width:540px;max-height:86%;box-shadow:0 -20px 50px -20px #0D2B1B55}
+body:is([data-role="admin"],[data-role="shop"]) .toast{left:calc(50% + var(--side) / 2);top:64px}
+/* ---------- celu: se ve como un teléfono real (barra 9:41, isla, señal y batería) ----------
+   El iframe mide 390 px, así que el navegador aplica las reglas de "celular de verdad" (max-width:560px),
+   que esconden la barra de estado. Acá se vuelven a los valores del teléfono dibujado de escritorio. */
+body.embed[data-role="student"] .statusbar{display:flex}
+body.embed[data-role="student"] .screen .view{padding-top:54px}
+body.embed[data-role="student"] .detail-hero{margin-top:-54px;padding-top:64px}
+body.embed[data-role="student"] .back:not(.on-paper){top:58px}
+body.embed[data-role="student"] .toast{top:60px}
+body.embed[data-role="student"] .push{top:50px}
+body.embed[data-role="student"] .biz{margin-top:-54px}
+body.embed[data-role="student"] .biz-hero{padding-top:112px}
+body.embed[data-role="student"] .splash3{margin-top:-54px;min-height:calc(100% + 54px)}
+body.embed[data-role="student"] .s3-sheet{padding:28px 24px 22px}
+body.embed[data-role="student"] .back{min-width:0;min-height:0}
+body.embed[data-role="student"] .cta-bar{padding-bottom:22px}
+
+/* Pausa: en UBA y UTN el degradé va del color de la universidad a su tono oscuro (en UNLaM queda el original) */
+#screen:not([data-uni="unlam"]) .pause{background:radial-gradient(120% 80% at 50% 38%,var(--unlam) 0,var(--unlam-d) 55%,color-mix(in srgb,var(--unlam-d) 75%,#000) 100%)}
+
+/* tooltip de los gráficos */
+.chart-tip{position:absolute;left:0;top:0;z-index:70;pointer-events:none;padding:7px 10px;border-radius:10px;background:#0D2B1B;color:#FBFAF4;
+  font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 8px 20px -8px #0D2B1B99;opacity:0;transition:opacity .12s}
+.chart-tip.on{opacity:1}
+
+/* ---------- barra de estado estilo iPhone (hora real, señal, wifi y batería) ---------- */
+body.embed[data-role="student"] .statusbar.ios{height:54px;padding:0;align-items:center;justify-content:space-between;
+  font-family:var(--f-mono);font-size:13.5px;font-weight:500;letter-spacing:0}
+.statusbar.ios::before{top:11px;width:124px;height:36px;border-radius:20px;background:#000}
+.statusbar.ios .sb-time{width:132px;text-align:center;padding-top:1px;font-variant-numeric:tabular-nums}
+.statusbar.ios .sb-r{width:132px;display:flex;align-items:center;justify-content:center;gap:6px}
+.statusbar.ios svg{fill:currentColor;display:block}
+.statusbar.ios .sb-sig{width:18px;height:12px}
+.statusbar.ios .sb-wifi{width:16px;height:12px}
+.statusbar.ios .sb-bat{width:27px;height:13px}

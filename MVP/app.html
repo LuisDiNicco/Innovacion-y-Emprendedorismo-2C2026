@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Desafío Bienestar · app</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles-v2.css">
+<link rel="stylesheet" href="styles-v3.css">
+<link rel="stylesheet" href="styles-v4.css">
+<link rel="stylesheet" href="styles-v5.css">
+<link rel="stylesheet" href="styles-report.css">
+<link rel="stylesheet" href="roles.css">
+<link rel="stylesheet" href="embed.css">
+</head>
+<body class="embed">
+<!-- La app sola, sin marco: la demo la muestra dentro del celu (estudiante) y de la PC (admin / comercio). -->
+      <div class="screen" id="screen">
+        <div class="statusbar ios"><span class="sb-time">9:41</span><span class="sb-r" aria-hidden="true"><svg class="sb-sig" viewBox="0 0 18 12"><rect x="0" y="7.5" width="3" height="4.5" rx="1"/><rect x="5" y="5.2" width="3" height="6.8" rx="1"/><rect x="10" y="2.8" width="3" height="9.2" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg class="sb-wifi" viewBox="0 0 16 12"><path d="M8 2.2c2.5 0 4.8.95 6.5 2.5l1.2-1.3A11.3 11.3 0 0 0 8 .4 11.3 11.3 0 0 0 .3 3.4l1.2 1.3A9.6 9.6 0 0 1 8 2.2Z"/><path d="M8 5.6c1.6 0 3.1.6 4.2 1.6l1.2-1.3A8 8 0 0 0 8 3.8a8 8 0 0 0-5.4 2.1l1.2 1.3A6.3 6.3 0 0 1 8 5.6Z"/><path d="M8 9a3 3 0 0 1 1.9.7L8 11.7 6.1 9.7A3 3 0 0 1 8 9Z"/></svg><svg class="sb-bat" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="16.4" height="9" rx="2.3"/><path d="M25 4.4v4.2c.85-.3 1.5-1.15 1.5-2.1s-.65-1.8-1.5-2.1Z" opacity=".45"/></svg></span></div>
+
+        <!-- Notificación push simulada -->
+        <button class="push" id="push" aria-live="polite">
+          <span class="push-ic"></span>
+          <span class="push-b">
+            <span class="push-h mono">DESAFÍO BIENESTAR · ahora</span>
+            <strong>Mañana 13:00 · Huerta del Dto. Ingeniería</strong>
+            <span>Quedan 4 lugares y va Sofi, de Nutrición. Son 15 minutos.</span>
+          </span>
+        </button>
+
+        <div id="view" class="view" tabindex="-1"></div>
+
+        <nav class="tabbar hide" id="tabbar" aria-label="Navegación de la app" inert>
+          <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5V20h-5v-5.5H9V20H4z"/></svg><span>Inicio</span></button>
+          <button data-tab="list"><svg viewBox="0 0 24 24"><path d="M9 4h10M9 12h10M9 20h10"/><circle cx="4.5" cy="4" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="20" r="1.2"/></svg><span>Desafíos</span></button>
+          <button data-tab="stamp" class="tab-stamp" aria-label="Sellar asistencia"><span class="seal"><svg viewBox="0 0 24 24"><path d="M9 3h6v5l3 3v3H6v-3l3-3zM5 18h14M7 21h10"/></svg></span><span>Sellar</span></button>
+          <button data-tab="agenda"><svg viewBox="0 0 24 24"><path d="M4 6h16v14H4ZM4 10h16M8 3.5V7M16 3.5V7M8 14h2M14 14h2M8 17h2"/></svg><span>Agenda</span></button>
+          <button data-tab="impact"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20.5c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg><span>Perfil</span></button>
+        </nav>
+
+        <div class="scrim" id="scrim"></div>
+        <section class="sheet" id="sheet" role="dialog" aria-labelledby="sheetTitle" aria-hidden="true" inert></section>
+
+        <div class="toast" id="toast"></div>
+        <div class="stamp-fx" id="stampFx"></div>
+      </div>
+<script src="app.js"></script>
+<script src="roles.js"></script>
+<script src="embed.js"></script>
+</body>
+</html>

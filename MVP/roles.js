@@ -9,7 +9,7 @@
 const SHOP = 'Vivero Las Talas';                 /* el comercio de ejemplo del modo Comercio */
 const shopPerk = () => PERKS.find(p => p.n === SHOP);
 const shopLive = p => (S.shopStatus[p.n] || 'active') === 'active';
-const dayLbl = n => dowFor(n) + ' ' + n;
+const dayLbl = n => dowFor(n) + ' ' + dnum(n);
 const fmt = n => Number(n).toLocaleString('es-AR');
 const sponsorLive = c => !c.sponsor || (S.shopStatus[c.sponsor] || 'active') === 'active';   /* un comercio pausado deja de aparecer */
 const suspended = () => S.userState.me === 'suspended';
@@ -67,11 +67,79 @@ const DAYS7 = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 const stPill = st => ({ active: ['Activo', 'ok'], pending: ['Pendiente', 'wait'], paused: ['Pausado', 'off'], suspended: ['Suspendido', 'off'], approved: ['Publicada', 'ok'], rejected: ['Rechazada', 'off'] }[st] || ['', '']);
 const pill = st => { const [l, c] = stPill(st); return `<span class="stp ${c}">${l}</span>`; };
 const actRow = (c, i, edit) => `<div class="ag-item" style="--c:${TYPES[c.type].c}" ${r(8 + Math.min(i, 8))}>
-    <div class="ag-when"><b>${c.time}</b><span>${c.dow} ${c.day}</span></div>
+    <div class="ag-when"><b>${c.time}</b><span>${c.dow} ${dnum(c.day)}</span></div>
     <button class="ag-body" data-go="detail" data-p="${c.id}"><span class="mono">${TYPES[c.type].label} · ${durTxt(c.mins)}</span><b>${c.title}</b><small>${ic('people')}${goingOf(c)} de ${c.cap} inscriptos${c.sponsor ? ' · ' + c.sponsor : ''}</small></button>
     ${edit ? `<button class="ag-act" data-editact="${c.id}" aria-label="Editar actividad">${ic('arrow')}</button>` : '<span></span>'}
   </div>`;
 const sortedCH = () => [...CH].sort((a, b) => a.day - b.day || a.time.localeCompare(b.time));
+
+/* ---------- panel del comercio: métricas y gráficos ----------
+   Todo sale del mismo estado que usa la app: los toques que hace el estudiante en «Cómo llegar» o Instagram
+   suman ese día, y los canjes son los mismos que ve el administrador. */
+const GOLD = '#B8860B';
+const WEEK7 = [6, 5, 4, 3, 2, 1, 0].map(k => DOWL[dateOf(TODAY - k).getDay()].slice(0, 3) + ' ' + dnum(TODAY - k));   /* los 7 días hasta hoy */
+const SLOTS = ['8 a 10', '10 a 12', '12 a 14', '14 a 16', '16 a 18', '18 a 20'];
+const SLOT_W = [.55, .95, 1.4, .8, 1.05, .6];                                               /* el mediodía es el pico de uso */
+const spread = (total, w) => { const s = w.reduce((a, b) => a + b, 0); const out = w.map(x => Math.floor(total * x / s)); out[out.length - 1] += total - out.reduce((a, b) => a + b, 0); return out; };
+function shopMetrics() {
+  const tk = k => S.track[SHOP + '|' + k] || 0;
+  const vd = [118, 142, 171, 156, 189, 204, 262]; vd[6] += 5 * (tk('maps') + tk('ig'));
+  const md = [3, 4, 6, 5, 6, 6, 8]; md[6] += tk('maps');
+  const gd = [2, 3, 3, 4, 3, 4, 5]; gd[6] += tk('ig');
+  const sum = a => a.reduce((x, y) => x + y, 0);
+  const canjes = canjesOf(SHOP), cd = spread(canjes, vd);
+  const views = sum(vd), maps = sum(md), ig = sum(gd);
+  const grid = vd.map(v => spread(v, SLOT_W));
+  const tot = SLOTS.map((_, j) => sum(grid.map(row => row[j])));
+  return { days: WEEK7, views, maps, ig, canjes, fichas: Math.round(views * .23),
+    d: { views: vd, maps: md, ig: gd, canjes: cd },
+    prev: { views: 1051, maps: 31, ig: 22, canjes: Math.max(1, Math.round(canjes * .82)) },
+    grid, bestSlot: SLOTS[tot.indexOf(Math.max(...tot))] + ' h' };
+}
+/* tarjeta de indicador: número, variación contra la semana anterior y tendencia de los 7 días */
+function kpiX(label, val, prev, series, sub) {
+  const d = Math.round((val - prev) / prev * 100), up = d >= 0;
+  const W = 96, H = 30, mx = Math.max(...series), mn = Math.min(...series);
+  const pts = series.map((v, i) => [i * W / (series.length - 1), H - 4 - (v - mn) / (mx - mn || 1) * (H - 8)]);
+  const path = pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join('');
+  const [lx, ly] = pts[pts.length - 1];
+  return `<div class="kx" data-tip="${label}: ${fmt(val)} · semana anterior ${fmt(prev)}">
+    <span class="kx-l">${label}</span><b>${fmt(val)}</b>
+    <div class="kx-f"><span class="dlt ${up ? 'up' : 'down'}">${up ? '▲' : '▼'} ${Math.abs(d)}%</span>
+      <svg class="spark" viewBox="-4 -4 ${W + 8} ${H + 8}" aria-hidden="true"><path d="${path}L${W} ${H}L0 ${H}Z" fill="${GOLD}" fill-opacity=".1"/><path d="${path}" fill="none" stroke="${GOLD}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lx}" cy="${ly}" r="4" fill="${GOLD}" stroke="#FBFAF4" stroke-width="2"/></svg></div>
+    ${sub ? `<small>${sub}</small>` : ''}</div>`;
+}
+/* área: una sola serie, grilla fina, el pico rotulado y el detalle de cada día al pasar el mouse */
+function areaChart(vals, labels, unit) {
+  const W = 520, H = 200, pl = 36, pr = 14, pt = 22, pb = 28;
+  const top = Math.ceil(Math.max(...vals) * 1.12 / 50) * 50;
+  const x = i => pl + i * (W - pl - pr) / (vals.length - 1), y = v => pt + (1 - v / top) * (H - pt - pb);
+  const line = vals.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join('');
+  const grid = [0, .5, 1].map(f => { const v = Math.round(top * f); return `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" class="gl"/><text x="${pl - 8}" y="${y(v) + 3.5}" text-anchor="end" class="ax">${fmt(v)}</text>`; }).join('');
+  const cw = (W - pl - pr) / (vals.length - 1), pk = vals.indexOf(Math.max(...vals));
+  const hits = vals.map((v, i) => `<g class="hit" data-tip="${labels[i]} · ${fmt(v)} ${unit}"><rect x="${x(i) - cw / 2}" y="${pt - 10}" width="${cw}" height="${H - pt - pb + 10}" fill="transparent"/><line x1="${x(i)}" x2="${x(i)}" y1="${pt}" y2="${H - pb}" class="cross"/><circle cx="${x(i)}" cy="${y(v)}" r="4.5" class="hdot"/></g>`).join('');
+  return `<svg class="area" viewBox="0 0 ${W} ${H}" role="img" aria-label="${unit} por día: ${vals.map((v, i) => labels[i] + ' ' + v).join(', ')}">
+    ${grid}<line x1="${pl}" x2="${W - pr}" y1="${H - pb}" y2="${H - pb}" class="base"/>
+    <path d="${line}L${x(vals.length - 1)} ${H - pb}L${x(0)} ${H - pb}Z" fill="${GOLD}" fill-opacity=".1"/>
+    <path d="${line}" fill="none" stroke="${GOLD}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${x(pk)}" cy="${y(vals[pk])}" r="4.5" fill="${GOLD}" stroke="#FBFAF4" stroke-width="2"/>
+    <text x="${x(pk) - (pk === vals.length - 1 ? 8 : 0)}" y="${y(vals[pk]) - 11}" text-anchor="${pk === vals.length - 1 ? 'end' : 'middle'}" class="pk">${fmt(vals[pk])}</text>
+    ${labels.map((l, i) => `<text x="${x(i)}" y="${H - 9}" text-anchor="middle" class="ax">${l}</text>`).join('')}${hits}</svg>`;
+}
+/* embudo: cada paso con su barra y la conversión desde el paso anterior */
+function funnel(steps) {
+  const mx = steps[0][1];
+  return `<div class="fn">${steps.map(([l, v], i) => `<div class="fn-row" data-tip="${l} · ${fmt(v)}${i ? ' · ' + Math.round(v / steps[i - 1][1] * 100) + '% del paso anterior' : ''}">
+    <span class="fn-l">${l}</span><div class="fn-bar"><i style="width:${Math.max(1.5, v / mx * 100)}%"></i></div><b>${fmt(v)}</b><em>${i ? Math.round(v / steps[i - 1][1] * 100) + '%' : ''}</em></div>`).join('')}</div>`;
+}
+/* mapa de calor: días × franjas, un solo tono de claro a oscuro */
+function heatmap(m) {
+  const all = m.grid.flat(), mx = Math.max(...all), mn = Math.min(...all);
+  const cell = (v, d, s) => `<i style="--a:${Math.round(12 + (v - mn) / (mx - mn) * 88)}%" data-tip="${d} · ${s} h · ${fmt(v)} vistas"></i>`;
+  return `<div class="hm"><span></span>${SLOTS.map(s => `<span class="hm-x">${s.split(' a ')[0]}</span>`).join('')}
+    ${m.grid.map((row, i) => `<span class="hm-y">${m.days[i].split(' ')[0]}</span>${row.map((v, j) => cell(v, m.days[i], SLOTS[j])).join('')}`).join('')}</div>
+    <div class="hm-legend"><span>Menos</span><i></i><span>Más</span></div>`;
+}
 
 /* ========================= ADMINISTRADOR ========================= */
 const USERS = [
@@ -116,7 +184,7 @@ Object.assign(VIEWS, {
       ? `<div class="sec pad prop-list">${todo.length ? todo.map(prop).join('') : `<div class="ag-empty" ${r(4)}><p>No hay propuestas por revisar.</p></div>`}</div>
          ${done.length ? `<div class="sec"><div class="sec-h pad"><h2>Resueltas</h2></div><div class="sec pad prop-list">${done.map(prop).join('')}</div></div>` : ''}`
       : `<div class="sec pad" ${r(4)}><button class="propose" data-newact>${ic('plus')}<span><b>Crear actividad</b><small>Se publica en Desafíos para todos los estudiantes, con día, hora, lugar y cupo.</small></span></button></div>
-         <div class="sec"><div class="sec-h pad" ${r(5)}><h2>Todas las actividades</h2><span class="mono" style="color:var(--ink-3)">semana 16–22 nov</span></div><div class="ag-list pad">${sortedCH().map((c, i) => actRow(c, i, true)).join('')}</div></div>`;
+         <div class="sec"><div class="sec-h pad" ${r(5)}><h2>Todas las actividades</h2><span class="mono" style="color:var(--ink-3)">${rangeLbl(16, 22, true)}</span></div><div class="ag-list pad">${sortedCH().map((c, i) => actRow(c, i, true)).join('')}</div></div>`;
     return `${head('Administración', 'Actividades')}${segs([['pend', `Propuestas${pend ? ' · ' + pend : ''}`], ['pub', 'Publicadas']], tab, 'admtab')}${body}`;
   },
 
@@ -159,18 +227,26 @@ Object.assign(VIEWS, {
 /* ========================= COMERCIO ========================= */
   s_home() {
     const sp = SPONSORS[SHOP], mine = CH.filter(c => c.sponsor === SHOP), reached = mine.reduce((a, c) => a + goingOf(c), 0);
-    const tk = k => S.track[SHOP + '|' + k] || 0;
-    const views = 1240 + 5 * (tk('maps') + tk('ig')), maps = 38 + tk('maps'), ig = 24 + tk('ig'), canjes = canjesOf(SHOP), sinVal = pendingCode() ? 1 : 0;
-    const places = [...mine.map(c => [c.title, goingOf(c) * 6 + 40]), ['Sección Beneficios', 420 + canjes * 3]].sort((a, b) => b[1] - a[1]);
+    const m = shopMetrics(), sinVal = pendingCode() ? 1 : 0;
+    const places = [...mine.map(c => [c.title, goingOf(c) * 6 + 40]), ['Sección Beneficios', 420 + m.canjes * 3]].sort((a, b) => b[1] - a[1]);
     const mx = places[0][1];
     return `${head('Panel del comercio', 'Tu publicidad')}
       <div class="sec pad" ${r(3)}><div class="me-card admin"><span class="photo">${ic(sp.ic)}</span><span><b>${SHOP}</b><small>Comercio aliado · @${sp.ig}</small></span>${pill(S.shopStatus[SHOP] || 'active')}</div></div>
       ${(S.shopStatus[SHOP] || 'active') !== 'active' ? `<div class="sec pad"><div class="prop-sp">${ic('bell')}<span><b>Tu comercio está pausado.</b> No aparece en Beneficios ni como sponsor hasta que Bienestar lo reactive.</span></div></div>` : ''}
-      <div class="sec pad kpis" ${r(4)}>${kpi(fmt(views), 'vistas de tu local', 'esta semana')}${kpi(fmt(canjes), 'canjes de tu beneficio', sinVal ? '1 sin validar' : S.validated.length + ' validados hoy')}${kpi(fmt(maps), 'toques en «Cómo llegar»')}${kpi(fmt(ig), 'visitas a tu Instagram')}</div>
-      <div class="sec pad" ${r(5)}><div class="card2"><div class="mono">Vistas por día</div>${bars([118, 142, 171, 156, 189, 204, 262], DAYS7, '#B8860B')}<small class="c2s">Estudiantes que vieron tu comercio en la app</small></div></div>
-      <div class="sec"><div class="sec-h pad" ${r(6)}><h2>Dónde aparece tu local</h2></div>
-        <div class="sec pad hb">${places.map(([n, v]) => `<div class="hb-row"><span>${n}</span><i><em style="width:${Math.round(v / mx * 100)}%"></em></i><b>${fmt(v)}</b></div>`).join('')}</div></div>
-      <div class="sec pad" ${r(7)}><div class="kpis"><div class="kpi2 wide"><b>${fmt(reached)}</b><span>estudiantes alcanzados con tus ${mine.length} actividades</span><small>Cada actividad que apoyás muestra tu comercio con dirección, horario y redes.</small></div></div></div>
+      <div class="sec pad dash-range" ${r(4)}><span class="mono">Últimos 7 días</span><span class="mono">vs. semana anterior</span></div>
+      <div class="sec pad kx-grid" ${r(4)}>
+        ${kpiX('Vistas de tu local', m.views, m.prev.views, m.d.views)}
+        ${kpiX('Canjes de tu beneficio', m.canjes, m.prev.canjes, m.d.canjes, sinVal ? '1 sin validar' : S.validated.length + ' validados hoy')}
+        ${kpiX('Toques en «Cómo llegar»', m.maps, m.prev.maps, m.d.maps)}
+        ${kpiX('Visitas a tu Instagram', m.ig, m.prev.ig, m.d.ig)}
+      </div>
+      <div class="sec pad" ${r(5)}><div class="dcard"><div class="dcard-h"><div><span class="mono">Vistas por día</span><b>${fmt(m.views)}</b></div><small>Estudiantes que vieron tu comercio en la app</small></div>${areaChart(m.d.views, m.days, 'vistas')}</div></div>
+      <div class="sec pad" ${r(6)}><div class="dcard"><div class="dcard-h"><div><span class="mono">De la vista al canje</span><b>${(m.canjes / m.views * 100).toLocaleString('es-AR', { maximumFractionDigits: 1 })}%</b></div><small>de quienes te vieron canjearon tu beneficio</small></div>
+        ${funnel([['Vieron tu comercio', m.views], ['Abrieron tu ficha', m.fichas], ['Cómo llegar o Instagram', m.maps + m.ig], ['Canjearon', m.canjes]])}</div></div>
+      <div class="sec pad" ${r(7)}><div class="dcard"><div class="dcard-h"><div><span class="mono">Cuándo te ven</span><b>${m.bestSlot}</b></div><small>Franja con más vistas. Ideal para tus promos.</small></div>${heatmap(m)}</div></div>
+      <div class="sec pad" ${r(8)}><div class="dcard"><div class="dcard-h"><div><span class="mono">Dónde aparece tu local</span><b>${places.length} lugares</b></div><small>Vistas en cada parte de la app</small></div>
+        <div class="hb">${places.map(([n, v]) => `<div class="hb-row" data-tip="${esc(n)} · ${fmt(v)} vistas"><span>${n}</span><i><em style="width:${Math.round(v / mx * 100)}%"></em></i><b>${fmt(v)}</b></div>`).join('')}</div></div></div>
+      <div class="sec pad" ${r(9)}><div class="kpis"><div class="kpi2 wide"><b>${fmt(reached)}</b><span>estudiantes alcanzados con tus ${mine.length} actividades</span><small>Cada actividad que apoyás muestra tu comercio con dirección, horario y redes.</small></div></div></div>
       <div class="sec pad" ${r(12)}><div class="privacy">${ic('check')}<p><b>Datos agregados.</b> Ves cuántos estudiantes te ven y te visitan, nunca quiénes son.</p></div></div>`;
   },
 
@@ -224,7 +300,7 @@ function proposalSheet(kind) {
   const shop = kind === 'shop';
   actType = 'desc';
   const types = Object.entries(TYPES).map(([k, v]) => `<button type="button" class="chip${k === actType ? ' on' : ''}" data-ptype="${k}">${ic(k)}${v.label}</button>`).join('');
-  const days = WEEK.filter(w => w.n >= TODAY + 1).map(w => `<option value="${w.n}">${dowFor(w.n)} ${w.n}/11</option>`).join('');
+  const days = WEEK.filter(w => w.n >= TODAY + 1).map(w => `<option value="${w.n}">${dowFor(w.n)} ${dm(w.n)}</option>`).join('');
   openSheet(`
     <h2>${shop ? 'Proponer una actividad' : 'Proponé un desafío'}</h2>
     <p class="sub">${shop ? 'Bienestar la revisa y, si suma, se publica con tu comercio como sponsor.' : 'Bienestar lo revisa y, si suma, se publica para todos.'}</p>
@@ -342,3 +418,34 @@ document.addEventListener('click', e => {
 /* ---------- arranque según el rol guardado ---------- */
 renderTabbar();
 go(!S.role || S.role === 'student' ? (S.onboarded ? 'home' : 'welcome') : ROLE_HOME[S.role]);
+
+/* ---------- las dos pantallas de la demo se hablan entre sí ---------- */
+/* lo que hace uno (inscribirse, aprobar una propuesta, canjear) lo ve el otro al instante */
+let syncT;
+addEventListener('storage', e => {
+  if (e.key !== 'desafio-bienestar') return;
+  if (e.newValue === null) return location.reload();
+  /* los datos se toman al instante (así ninguna pantalla guarda una copia vieja encima de un cambio de la otra);
+     lo que es de cada pantalla (rol, pestaña, búsqueda, paso del registro) no se pisa */
+  const mine = { role: S.role, step: S.step, q: S.q, filter: S.filter, agDay: S.agDay, admTab: S.admTab, shTab: S.shTab, impTab: S.impTab };
+  try { S = { ...DEFAULT, ...JSON.parse(e.newValue), ...mine }; } catch { return; }
+  applyCreated(); applyPerkOver(); applyUni();
+  /* se vuelve a dibujar la pantalla de abajo (las hojas abiertas quedan como están);
+     la pausa no, porque tiene un temporizador corriendo */
+  cancelAnimationFrame(syncT);
+  syncT = requestAnimationFrame(() => { if (current.name && current.name !== 'pause') refresh(); });
+});
+/* el marco de la PC cambia entre Administrador y Comercio sin recargar */
+addEventListener('message', e => {
+  if (e.source !== window.parent) return;   /* solo la página de la demo (sirve también abriendo el archivo directo) */
+  const m = e.data || {};
+  if (m.type === 'setrole' && ROLE_HOME[m.role]) { document.body.dataset.role = m.role; setRole(m.role, true); go(ROLE_HOME[m.role]); }
+});
+/* la barra de la demo elige la universidad */
+addEventListener('message', e => {
+  if (e.source !== window.parent) return;   /* solo la página de la demo (sirve también abriendo el archivo directo) */
+  const m = e.data || {};
+  if (m.type !== 'setuni' || !UNIS[m.uni]) return;
+  S.uni = m.uni; if (!U().deps.includes(S.carrera)) S.carrera = U().deps[0];
+  save(); applyUni(); if (current.name && current.name !== 'pause') refresh();
+});

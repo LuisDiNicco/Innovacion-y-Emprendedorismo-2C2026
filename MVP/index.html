@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="styles-v4.css">
 <link rel="stylesheet" href="styles-v5.css">
 <link rel="stylesheet" href="styles-report.css">
+<link rel="stylesheet" href="roles.css">
 </head>
 <body>
 
@@ -53,7 +54,7 @@
   <section class="phone-col" id="demo" aria-label="Demo interactiva" tabindex="-1">
     <div class="demo-toolbar">
       <button id="backBtn" type="button" data-back disabled aria-label="Volver a la pantalla anterior"><span aria-hidden="true">←</span> Atrás</button>
-      <div class="uni-switch" role="group" aria-label="Ver la app como"><span class="mono">Ver como</span><button type="button" data-setuni="unlam" style="--uc:#00873E"><i></i>UNLaM</button><button type="button" data-setuni="fiuba" style="--uc:#1F5FA8"><i></i>UBA</button><button type="button" data-setuni="utn" style="--uc:#C8102E"><i></i>UTN</button></div>
+      <div class="sw-group"><div class="uni-switch" role="group" aria-label="Ver la app como" title="Ver como"><button type="button" data-setuni="unlam" style="--uc:#00873E"><i></i>UNLaM</button><button type="button" data-setuni="fiuba" style="--uc:#1F5FA8"><i></i>UBA</button><button type="button" data-setuni="utn" style="--uc:#C8102E"><i></i>UTN</button></div><div class="uni-switch role-switch" role="group" aria-label="Usar la app como" title="Modo"><button type="button" data-role="student" class="on" style="--uc:#0D2B1B"><i></i>Estudiante</button><button type="button" data-role="admin" style="--uc:#0D2B1B"><i></i>Admin</button><button type="button" data-role="shop" style="--uc:#B8860B"><i></i>Comercio</button></div></div>
       <button id="resetBtn" type="button"><span aria-hidden="true">↺</span> Reiniciar</button>
     </div>
     <div class="phone-fit"><div class="phone">
@@ -482,6 +483,7 @@
 </main>
 
 <script src="app.js"></script>
+<script src="roles.js"></script>
 <script>
 /* carrusel del proyecto */
 (() => {

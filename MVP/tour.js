@@ -14,7 +14,7 @@
     const top = v.scrollTop + (el.getBoundingClientRect().top - v.getBoundingClientRect().top) / s - offset;
     v.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   };
-  const fresh = () => { closeSheet(); trail.length = 0; };
+  const fresh = () => { closeSheet(); trail.length = 0; if (S.role !== 'student') setRole('student', true); };
 
   const STEPS = [
     { k: 'Bienvenida', slide: 0, ms: 7000,

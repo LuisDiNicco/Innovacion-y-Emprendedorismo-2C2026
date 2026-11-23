@@ -179,6 +179,7 @@
       <a href="#canvas"><b>03</b>Lean Canvas</a>
       <a href="#fundamentos"><b>04</b>Fundamentos</a>
       <a href="#sostiene"><b>05</b>Cómo se sostiene</a>
+      <a href="#factibilidad"><b>06</b>Factibilidad e impacto</a>
     </nav>
   </header>
 
@@ -470,6 +471,230 @@
         </article>
       </div>
     </div>
+  </section>
+
+  <!-- ================= 06 · FACTIBILIDAD Y TRIPLE IMPACTO ================= -->
+  <section class="rp-sec" id="factibilidad">
+    <div class="rp-h reveal">
+      <span class="rp-n">06</span>
+      <div><span class="mono">Reporte de factibilidad</span><h2>Factibilidad y triple impacto · Metas ODS</h2></div>
+    </div>
+    <div class="fx-wrap">
+      <article class="fx-res reveal">
+        <span class="mono">Resultado general</span>
+        <p>Desafío Bienestar es <b>técnicamente factible con una inversión inicial baja</b>. Se desarrolla con tecnología móvil multiplataforma y servicios gestionados de uso extendido. El principal desafío está en la operación y en la adopción por parte de los estudiantes.</p>
+        <p class="fx-crit"><b>Factibilidad:</b> se puede construir con los recursos disponibles. <b>Sostenibilidad:</b> mantiene su valor y a sus usuarios. <b>Rentabilidad:</b> los ingresos superan los costos. Impacto según el enfoque de triple impacto (Elkington, 1997; Sistema B).</p>
+      </article>
+
+      <div class="fx-cols">
+        <article class="fx-card reveal" style="--c:var(--river)">
+          <span class="mono">4.1 · Relevamiento tecnológico</span>
+          <h3>App móvil multiplataforma</h3>
+          <ul>
+            <li><b>Cliente:</b> React Native con Expo o Flutter, un único código para Android e iOS.</li>
+            <li><b>Backend:</b> Supabase o Firebase (o Node.js + PostgreSQL); los planes gratuitos cubren el piloto.</li>
+            <li><b>Validación:</b> QR dinámico con vencimiento y confirmación del organizador; ubicación opcional.</li>
+            <li><b>Avisos y mapas:</b> notificaciones push (FCM) con día, hora y lugar; OpenStreetMap sin costo.</li>
+            <li><b>Canje:</b> código de 4 dígitos confirmado por el comercio, sin integración técnica.</li>
+            <li><b>Panel institucional:</b> métricas agregadas y anónimas; nunca datos individuales.</li>
+          </ul>
+          <button class="mono payer-more fx-more" type="button" data-dlg="fxTecDlg">Alternativas, diferenciación y normativa →</button>
+        </article>
+
+        <article class="fx-card reveal" style="--c:var(--soil)">
+          <span class="mono">4.2 · Análisis de factibilidad</span>
+          <h3>Viable como piloto sin inversión externa</h3>
+          <div class="fx-dims">
+            <div><span>Técnica</span><i class="hi">Alta</i></div>
+            <div><span>Temporal</span><i class="hi">Alta</i></div>
+            <div><span>Económica</span><i>Media</i></div>
+            <div><span>Operativa</span><i>Media</i></div>
+            <div><span>Legal y ética</span><i>Media</i></div>
+            <div><span>Mercado y adopción</span><i>Media</i></div>
+          </div>
+          <p>Los costos fijos tecnológicos son reducidos: el equilibrio del piloto depende del valor que la universidad reconoce en la herramienta y del aporte de los comercios. Un piloto acotado se completa en un cuatrimestre.</p>
+          <button class="mono payer-more fx-more" type="button" data-dlg="fxFactDlg">Dimensiones, costos, riesgos y hoja de ruta →</button>
+        </article>
+
+        <article class="fx-card reveal" style="--c:var(--unlam)">
+          <span class="mono">4.3 · Triple impacto</span>
+          <h3>Tres valores en un mismo acto</h3>
+          <ul>
+            <li><b>Económico:</b> tránsito de estudiantes a comercios de San Justo; la universidad mide participación y apoya la retención; costos fijos bajos e ingresos diversificados.</li>
+            <li><b>Social:</b> pertenencia y vínculos entre carreras, hábitos saludables, voluntariado y acceso inclusivo.</li>
+            <li><b>Ambiental:</b> modelo regenerativo: forestación, huertas, reciclaje y compostaje, con cada cifra calculada con método y fuente a la vista.</li>
+          </ul>
+          <button class="mono payer-more fx-more" type="button" data-dlg="fxImpDlg">Evidencia, indicadores y metas ODS →</button>
+        </article>
+      </div>
+
+      <div class="fx-ods reveal">
+        <span class="mono">Contribución a la Agenda 2030</span>
+        <div class="fx-ods-row">
+          <span class="ods main"><b>3</b>Salud y Bienestar</span>
+          <span class="ods main"><b>11</b>Ciudades y Comunidades Sostenibles</span>
+          <span class="ods main"><b>17</b>Alianzas para Lograr los Objetivos</span>
+          <span class="ods"><b>4</b>Educación de Calidad</span>
+          <span class="ods"><b>8</b>Trabajo Decente</span>
+          <span class="ods"><b>12</b>Producción y Consumo</span>
+          <span class="ods"><b>13</b>Acción por el Clima</span>
+          <span class="ods"><b>15</b>Vida de Ecosistemas Terrestres</span>
+        </div>
+      </div>
+    </div>
+
+    <dialog class="rp-dlg rp-dlg-w" id="fxTecDlg" aria-labelledby="fxTecT">
+      <header><span class="mono" id="fxTecT">4.1 · Relevamiento tecnológico</span><button type="button" class="rp-dlg-x" aria-label="Cerrar">×</button></header>
+      <h3>Alcance del MVP</h3>
+      <p>Aplicación móvil para Android e iOS con registro e ingreso, desafío de la semana y catálogo por categoría (Naturaleza, Bienestar, Social y Solidaria), detalle y reserva, validación por QR, puntos y canje en comercios aliados, comunidad, impacto personal y colectivo, y pausas guiadas de desconexión. Las funciones centrales dependen del dispositivo: cámara para el QR, notificaciones, ubicación opcional y uso al aire libre.</p>
+      <h3>Alternativas de plataforma</h3>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>Alternativa</th><th>Ventajas</th><th>Desventajas</th><th>Elección</th></tr></thead>
+        <tbody>
+          <tr><td>App nativa (Kotlin y Swift)</td><td>Máximo rendimiento y acceso a los sensores.</td><td>Dos desarrollos y doble mantenimiento; no se justifica para el MVP.</td><td>Descartada</td></tr>
+          <tr><td><b>App multiplataforma (React Native / Flutter)</b></td><td>Un solo código; cámara, ubicación y push; presencia en las tiendas.</td><td>Costos de publicación; actualizaciones sujetas a revisión.</td><td><b>Seleccionada</b></td></tr>
+          <tr><td>PWA</td><td>Un solo código; sin tiendas.</td><td>Acceso limitado al dispositivo; en iOS las notificaciones requieren instalación; menor visibilidad.</td><td>Descartada como principal</td></tr>
+          <tr><td>Chatbot (WhatsApp / Telegram)</td><td>Sin instalación; canal cotidiano.</td><td>Poca visualización del impacto; costos y reglas de la API.</td><td>Canal complementario</td></tr>
+          <tr><td>Módulo en el campus virtual</td><td>Acceso institucional directo.</td><td>Dependencia de la universidad; baja autonomía.</td><td>Descartada como base</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Arquitectura</h3>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>Componente</th><th>Solución</th><th>Fundamento</th></tr></thead>
+        <tbody>
+          <tr><td>Cliente</td><td>App multiplataforma (React Native con Expo o Flutter)</td><td>Un único código para Android e iOS.</td></tr>
+          <tr><td>Backend y base de datos</td><td>Supabase o Firebase, o API propia en Node.js con PostgreSQL</td><td>Incluye autenticación y almacenamiento; los planes gratuitos cubren el piloto.</td></tr>
+          <tr><td>Autenticación</td><td>Cuenta institucional o correo verificado</td><td>Evita cuentas falsas y permite segmentar por departamento.</td></tr>
+          <tr><td>Validación de participación</td><td>QR dinámico, confirmación del organizador y ubicación opcional</td><td>Resuelve la debilidad del FODA («dificultad para validar actividades»); el QR con vencimiento reduce el fraude sin seguimiento permanente.</td></tr>
+          <tr><td>Notificaciones</td><td>Push con Firebase Cloud Messaging</td><td>Funcionan en Android e iOS sin abrir la app.</td></tr>
+          <tr><td>Mapas</td><td>OpenStreetMap</td><td>Sin costo de licencia.</td></tr>
+          <tr><td>Canje de beneficios</td><td>Código de 4 dígitos; un canje por comercio cada 15 días</td><td>El comercio no requiere integración y los canjes se distribuyen entre locales.</td></tr>
+          <tr><td>Cálculo de impacto</td><td>Factores de conversión por tipo de actividad (árboles, kg reciclados, compost, CO₂)</td><td>Cada cifra expone su método y su fuente.</td></tr>
+          <tr><td>Panel institucional</td><td>Tablero web con métricas agregadas y anónimas</td><td>La universidad ve participación y actividades, nunca el estado de ánimo individual.</td></tr>
+          <tr><td>Distribución</td><td>Google Play y App Store</td><td>Acceso abierto a cualquier estudiante.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Soluciones existentes y diferenciación</h3>
+      <p>Existen apps que premian la actividad física con beneficios en comercios (modelo similar a Pasito), de meditación, trackers de hábitos, retos deportivos y servicios de bienestar de cada universidad. Ninguna combina actividades presenciales y grupales en el entorno universitario, impacto ambiental visible, beneficios en comercios de cercanía y un panel para la institución. Nuestra ventaja es el foco local y de pares («de estudiantes para estudiantes»); la desventaja, la escala y la falta de presupuesto de marketing.</p>
+      <h3>Marco normativo</h3>
+      <ul>
+        <li><b>Ley 25.326 de Protección de Datos Personales:</b> los datos de salud son sensibles. El check-in de energía es opcional, privado y anónimo para la institución, con consentimiento informado.</li>
+        <li><b>Ley 26.657 de Salud Mental:</b> la app no diagnostica ni trata; deriva a Bienestar Estudiantil. Por eso habla de bienestar, pausas, conexión y pertenencia.</li>
+        <li><b>Propiedad intelectual:</b> el código se protege por Derecho de Autor; el nombre y el logo, con registro de marca ante el INPI.</li>
+        <li><b>Actividades presenciales:</b> autorización del espacio (universidad o municipio), seguro y un responsable por actividad.</li>
+      </ul>
+    </dialog>
+
+    <dialog class="rp-dlg rp-dlg-w" id="fxFactDlg" aria-labelledby="fxFactT">
+      <header><span class="mono" id="fxFactT">4.2 · Análisis de factibilidad</span><button type="button" class="rp-dlg-x" aria-label="Cerrar">×</button></header>
+      <h3>Resumen por dimensión</h3>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>Dimensión</th><th>Análisis</th><th>Valoración</th></tr></thead>
+        <tbody>
+          <tr><td>Técnica</td><td>Tecnología madura y de bajo costo. El MVP demuestra el flujo central; autenticación, base de datos, QR y notificaciones son estándar y están en servicios gestionados. El equipo, de estudiantes avanzados de Ingeniería en Informática, tiene la capacidad para construirlo.</td><td>Alta</td></tr>
+          <tr><td>Económica</td><td>Costos tecnológicos muy bajos en el piloto. El costo relevante es humano: coordinar y mantener los desafíos. Los ingresos vienen del convenio con la universidad y del aporte de comercios.</td><td>Media, condicionada al convenio</td></tr>
+          <tr><td>Operativa</td><td>La carga se reparte: Bienestar Estudiantil, Extensión y el Centro de Estudiantes cargan desafíos; los comercios proponen beneficios; los estudiantes proponen ideas.</td><td>Media</td></tr>
+          <tr><td>Legal y ética</td><td>Lenguaje de bienestar (sin discurso clínico), estado de ánimo como dato sensible y derivación a Bienestar Estudiantil.</td><td>Media</td></tr>
+          <tr><td>Mercado y adopción</td><td>Interés creciente en bienestar estudiantil y gamificación. El riesgo es la participación sostenida: desafíos cortos, beneficios tangibles y difusión entre pares.</td><td>Media</td></tr>
+          <tr><td>Temporal</td><td>Un piloto acotado se completa en un cuatrimestre.</td><td>Alta</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Costos estimados del piloto</h3>
+      <p class="rp-note">Valores de referencia de los planes públicos de cada proveedor, en dólares para evitar el efecto de la inflación local.</p>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>Concepto</th><th>Tipo</th><th>Estimación</th><th>Quién lo cubre</th></tr></thead>
+        <tbody>
+          <tr><td>Desarrollo (app, backend, QR, panel)</td><td>Inicial</td><td>Horas del equipo; sin gasto en efectivo</td><td>Equipo</td></tr>
+          <tr><td>Hosting y base de datos</td><td>Fijo mensual</td><td>US$0 en planes gratuitos; US$45 a US$60 por mes en planes pagos</td><td>Equipo en el piloto; luego, licencia de la universidad</td></tr>
+          <tr><td>Publicación en tiendas</td><td>Inicial / anual</td><td>Google Play: US$25 (único); Apple Developer: unos US$99 por año</td><td>Equipo en el piloto; luego, licencia de la universidad</td></tr>
+          <tr><td>Dominio</td><td>Fijo anual</td><td>Unos US$15 por año</td><td>Equipo</td></tr>
+          <tr><td>Insumos de los desafíos</td><td>Variable</td><td>Por jornada, según la actividad</td><td>Comercios, ONG, municipio y extensión</td></tr>
+          <tr><td>Coordinación y curaduría</td><td>Variable (humano)</td><td>Horas semanales de Bienestar o Extensión y voluntarios</td><td>Universidad (en especie)</td></tr>
+        </tbody>
+      </table></div>
+      <p>El equilibrio del piloto no depende de la infraestructura sino del valor que la universidad reconoce (retención, bienestar y metas de sustentabilidad) y del aporte de los comercios. A escala, el criterio es que el valor de vida del cliente (LTV) supere ampliamente el costo de adquisición (CAC), favorecido por costos variables mínimos y un canal de adquisición sin costo (comunicación entre estudiantes y canales de la universidad).</p>
+      <h3>Riesgos y mitigación</h3>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>Riesgo</th><th>Nivel</th><th>Mitigación</th></tr></thead>
+        <tbody>
+          <tr><td>Baja participación sostenida</td><td>Alto</td><td>Desafíos de 10 a 20 minutos; recordatorios con día, hora y lugar; puntos y beneficios cercanos; difusión por el Centro de Estudiantes.</td></tr>
+          <tr><td>Fraude o dificultad para validar asistencia</td><td>Medio</td><td>QR dinámico con vencimiento, confirmación del organizador y límite de canjes por comercio.</td></tr>
+          <tr><td>Cuestionamiento por abordar salud mental sin respaldo profesional</td><td>Alto</td><td>Lenguaje de bienestar y pertenencia; sin diagnósticos ni consejos clínicos; derivación fija a Bienestar Estudiantil; evidencia con fuente.</td></tr>
+          <tr><td>Privacidad de datos</td><td>Alto</td><td>Datos mínimos, consentimiento explícito, estado de ánimo opcional y anónimo para la institución (Ley 25.326).</td></tr>
+          <tr><td>Carga operativa de organizar actividades</td><td>Medio</td><td>Reparto entre universidad, comercios y estudiantes; calendario simple y reutilizable.</td></tr>
+          <tr><td>Brecha de acceso a dispositivos y conectividad</td><td>Medio</td><td>PWA liviana, uso con poca conexión y actividades que no dependen del teléfono.</td></tr>
+          <tr><td>Presupuesto limitado de la universidad</td><td>Medio</td><td>Costos tecnológicos mínimos; fondos de extensión, convenios con el municipio y patrocinio de comercios.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Hoja de ruta</h3>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>Fase</th><th>Alcance</th><th>Criterio de avance</th></tr></thead>
+        <tbody>
+          <tr><td>0. Diseño</td><td>Wireframes y prototipo navegable de alta fidelidad del recorrido completo.</td><td>Flujo y diseño definidos.</td></tr>
+          <tr><td>1. Desarrollo y prueba con usuarios</td><td>MVP móvil; prueba con 5 a 10 estudiantes y una actividad real de bajo riesgo (por ejemplo, una caminata).</td><td>Comprensión de la propuesta y disposición a participar.</td></tr>
+          <tr><td>2. Piloto en la UNLaM</td><td>App con backend; un cuatrimestre; 4 a 6 desafíos; 2 o 3 comercios aliados; participación de Bienestar Estudiantil.</td><td>Metas de participación y tasa de actividades realizadas.</td></tr>
+          <tr><td>3. Replicación</td><td>Marca blanca para otras universidades; alianzas con municipios.</td><td>Convenio de pago y resultados del piloto.</td></tr>
+        </tbody>
+      </table></div>
+      <p><b>Conclusión:</b> el proyecto es factible en las dimensiones técnica y temporal, y viable en las demás con el respaldo de la universidad y los aliados. Puede ponerse en marcha como piloto sin inversión externa.</p>
+    </dialog>
+
+    <dialog class="rp-dlg rp-dlg-w" id="fxImpDlg" aria-labelledby="fxImpT">
+      <header><span class="mono" id="fxImpT">4.3 · Evaluación de triple impacto</span><button type="button" class="rp-dlg-x" aria-label="Cerrar">×</button></header>
+      <p>Bajo el enfoque de triple impacto, el valor económico, social y ambiental no es una acción complementaria al negocio sino un efecto de la propia actividad. En un mismo acto: cuando un estudiante completa una jornada de forestación, se vincula con otros (social), deja una acción ambiental registrada (ambiental) y acumula puntos que canjea en un comercio del barrio (económico).</p>
+      <h3>Valor económico</h3>
+      <ul>
+        <li><b>Comercios de cercanía de San Justo:</b> reciben tránsito de estudiantes que canjean beneficios (cafeterías, librerías, viveros, gimnasios) y ganan visibilidad y responsabilidad social empresaria medible.</li>
+        <li><b>Universidad:</b> difunde sus actividades en un solo lugar, mide la participación y apoya la retención, con costo tecnológico bajo.</li>
+        <li><b>Municipio, ONG y empresas:</b> un canal para financiar o patrocinar acciones ambientales y comunitarias con resultados visibles.</li>
+        <li><b>Sostenibilidad del proyecto:</b> costos fijos bajos y fuentes de ingreso diversificadas (licencia universitaria y aportes de aliados).</li>
+      </ul>
+      <h3>Valor social o comunitario</h3>
+      <ul>
+        <li><b>Pertenencia y vínculos:</b> actividades grupales que reúnen estudiantes de distintas carreras y reducen el aislamiento.</li>
+        <li><b>Hábitos saludables y pausas:</b> propuestas breves compatibles con la carga académica.</li>
+        <li><b>Participación y voluntariado:</b> jornadas solidarias y comunitarias.</li>
+        <li><b>Acceso inclusivo:</b> actividades gratuitas, voluntarias y accesibles.</li>
+      </ul>
+      <p class="rp-note"><b>Respaldo en evidencia.</b> El burnout también afecta a estudiantes (Schaufeli et al., 2002). La actividad física regular se asocia con menor riesgo de depresión (Pearce et al., 2022); los espacios verdes, con menos cortisol (Twohig-Bennett y Jones, 2018); la jardinería, con mejor bienestar y sentido de comunidad (Soga et al., 2017); los vínculos fuertes, con mayor supervivencia (Holt-Lunstad et al., 2010); y limitar las redes redujo la soledad y los síntomas depresivos en universitarios (Hunt et al., 2018).</p>
+      <h3>Valor ambiental · modelo regenerativo</h3>
+      <ul>
+        <li><b>Biodiversidad y espacios verdes:</b> forestación y huertas comunitarias.</li>
+        <li><b>Residuos:</b> reciclaje y compostaje, con registro de kilogramos recuperados.</li>
+        <li><b>Educación ambiental:</b> cada desafío incluye un dato explicativo; el estudiante ve su aporte individual y el colectivo.</li>
+        <li><b>Movilidad activa:</b> las caminatas promueven el uso de espacios abiertos.</li>
+      </ul>
+      <p>Cada indicador se calcula con un método explícito (por ejemplo, kg de CO₂ = unidades × factor de conversión) y la app muestra la fuente en «¿Cómo lo calculamos?».</p>
+      <h3>Indicadores y medición</h3>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>Dimensión</th><th>Indicador</th><th>Cómo se mide</th></tr></thead>
+        <tbody>
+          <tr><td>Adopción</td><td>Estudiantes que instalaron la app</td><td>Registros de la plataforma</td></tr>
+          <tr><td>Participación</td><td>Estudiantes activos ÷ estudiantes con la app (mensual)</td><td>Sellados por QR</td></tr>
+          <tr><td>Operación</td><td>Actividades realizadas ÷ planificadas</td><td>Calendario de desafíos</td></tr>
+          <tr><td>Social</td><td>Personas distintas con las que cada estudiante participó; encuesta de pertenencia</td><td>Datos agregados y encuesta breve</td></tr>
+          <tr><td>Bienestar (piloto)</td><td>Burnout académico antes y después</td><td>MBI-SS, con consentimiento informado</td></tr>
+          <tr><td>Ambiental</td><td>Árboles plantados, kg reciclados, kg de compost, CO₂ estimado</td><td>Registro del organizador y factores documentados</td></tr>
+          <tr><td>Económico</td><td>Canjes realizados, comercios aliados, fondos o insumos aportados</td><td>Registro de canjes y convenios</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Contribución a los ODS de la Agenda 2030</h3>
+      <div class="rp-tw"><table class="rp-tbl">
+        <thead><tr><th>ODS</th><th>Meta</th><th>Cómo contribuye</th><th>Nivel</th></tr></thead>
+        <tbody>
+          <tr><td>3 · Salud y Bienestar</td><td>3.4: promover la salud mental y el bienestar</td><td>Pausas, desconexión digital, movimiento al aire libre y vínculos entre pares, como prevención primaria.</td><td><b>Principal</b></td></tr>
+          <tr><td>11 · Ciudades y Comunidades Sostenibles</td><td>11.7: acceso a zonas verdes y espacios públicos seguros e inclusivos</td><td>Pone en uso los espacios verdes del campus y del barrio con huertas, forestación y caminatas.</td><td><b>Principal</b></td></tr>
+          <tr><td>17 · Alianzas para Lograr los Objetivos</td><td>17.17: alianzas entre sector público, privado y sociedad civil</td><td>Articula universidad, municipio, comercios, ONG y estudiantes en un mismo modelo.</td><td><b>Principal</b></td></tr>
+          <tr><td>4 · Educación de Calidad</td><td>4.7: educación para el desarrollo sostenible</td><td>Cada desafío transmite conocimiento ambiental y de bienestar; la pertenencia apoya la permanencia.</td><td>Complementario</td></tr>
+          <tr><td>8 · Trabajo Decente y Crecimiento Económico</td><td>8.3: apoyo a las micro, pequeñas y medianas empresas</td><td>Dirige consumo y visibilidad a comercios de cercanía mediante los canjes.</td><td>Complementario</td></tr>
+          <tr><td>12 · Producción y Consumo Responsables</td><td>12.5: reducir desechos mediante reciclaje y reutilización</td><td>Jornadas de reciclaje y compostaje con registro de residuos recuperados.</td><td>Complementario</td></tr>
+          <tr><td>13 · Acción por el Clima</td><td>13.3: educación y sensibilización sobre cambio climático</td><td>Visualización del impacto ambiental individual y colectivo; movilidad activa.</td><td>Complementario</td></tr>
+          <tr><td>15 · Vida de Ecosistemas Terrestres</td><td>15.2: aumentar la forestación y la reforestación</td><td>Plantaciones y espacios verdes locales, a escala de campus y barrio.</td><td>Complementario</td></tr>
+        </tbody>
+      </table></div>
+      <p class="rp-note">Los indicadores oficiales de la ONU se miden a escala nacional o global. El proyecto contribuye a escala local, y los indicadores de arriba son aproximaciones (proxy) de esa contribución. No pretende resolver un ODS completo sino hacer un aporte concreto y medible.</p>
+      <p><b>Conclusión:</b> Desafío Bienestar genera valor económico, social y ambiental de forma concurrente y se alinea con ocho metas de la Agenda 2030. Su fortaleza es el acople de las tres dimensiones en una misma acción de bajo costo.</p>
+    </dialog>
   </section>
 
   <footer class="rp-foot reveal">
